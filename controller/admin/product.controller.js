@@ -86,6 +86,6 @@ module.exports.changeStatus = async (req,res) =>{
     },{
         status: changeStatus
     })
-    
+    req.flash('sucess', 'Thay đổi trạng thái sản phẩm thành công');
     res.redirect("back");
 }

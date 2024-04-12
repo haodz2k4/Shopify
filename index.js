@@ -18,6 +18,13 @@ app.use(methodOverride('_method'));
 //Require database here 
 const database = require("./config/database");
 database();
+//require express flash here
+const flash = require('express-flash');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+app.use(cookieParser('keyboard cat'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
 
 //Router
 const adminRouter = require("./router/admin/index.router");

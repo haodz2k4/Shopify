@@ -133,3 +133,18 @@ if(formChangeMulti){
     })
 }
 //end handle
+
+//Handle timeout and close alert here
+const timeOutAlert = document.querySelector("[time-out-alert]");
+if(timeOutAlert){
+    setTimeout(() =>{
+        timeOutAlert.classList.add("d-none");
+    }, 3000)
+}
+const btnCloseAlert = document.querySelector("[btn-close-alert]");
+
+if(btnCloseAlert){
+    btnCloseAlert.addEventListener("click",() => {
+        timeOutAlert.classList.add("d-none");
+    })
+}
