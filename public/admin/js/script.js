@@ -60,6 +60,27 @@ if(btnPagination.length > 0){
         })
     })
 }
+//handle change status product
+const btnChangeStatus = document.querySelectorAll("[btn-change-status]");
+if(btnChangeStatus.length > 0){
+    const formChangeStatus = document.querySelector("[form-change-status]");
+    btnChangeStatus.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            const id = item.getAttribute("btn-change-status");
+            const status = item.innerHTML;
+
+            const dataPath = formChangeStatus.getAttribute("data-path");
+
+            const action = `${dataPath}/${status}/${id}?_method=PATCH`;
+
+            formChangeStatus.action = action;
+            formChangeStatus.submit();
+
+
+            
+        })
+    })
+}
 
 //handle checked change multi here 
 const changeMulti = document.querySelector("[change-multi]");
@@ -111,3 +132,4 @@ if(formChangeMulti){
         
     })
 }
+//end handle

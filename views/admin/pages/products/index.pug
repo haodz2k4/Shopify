@@ -75,16 +75,16 @@ block main
               td #{item.title}
               td
                 h6 #{item.price}
-              td #{item.discountPercentage}%
+              td #{item.discountPercentage}
               td #{item.stock}
               td 
                 img(src=item.thumbnail, alt="", style="width: 100px;")  
               if item.status == 'active'
                 td 
-                  Button.badge.rounded-pill.text-bg-success(style='background-color: green; color: white') #{item.status}
+                  Button.badge.rounded-pill.text-bg-success(style='background-color: green; color: white' btn-change-status=item.id) #{item.status}
               else
                 td 
-                  Button.badge.rounded-pill.text-bg-danger(style='background-color: red; color: white') #{item.status}
+                  Button.badge.rounded-pill.text-bg-danger(style='background-color: red; color: white' btn-change-status=item.id) #{item.status}
               td 
                 input(type="number", style="width: 40px;", value=item.position) 
               td 
@@ -103,4 +103,5 @@ block main
               Button.btn.btn-outline-info(btn-pagination=i class=`${objectPagination.pageCurrent == i ? "btn-danger" : ""}`) #{i}
           
           li.page-item(class=`${objectPagination.pageCurrent < objectPagination.total ? "": "disabled"}`)
-            Button.page-link(btn-pagination = objectPagination.pageCurrent + 1) Next
+            Button.page-link(btn-pagination = objectPagination.pageCurrent + 1) Next 
+    form(action="" form-change-status data-path=`/admin/products/change-status` method="POST") 

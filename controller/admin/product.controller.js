@@ -54,7 +54,6 @@ module.exports.index = async (req,res) =>{
 }
 //[PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req,res) =>{
-    console.log(req.body);
     const type = req.body.typeMulti;
     const id = req.body.id;
     const idList = id.split("; ");
@@ -75,5 +74,18 @@ module.exports.changeMulti = async (req,res) =>{
             break;
 
     }
+    res.redirect("back");
+}
+//[PATCH] /admin/products/change-status
+module.exports.changeStatus = async (req,res) =>{   
+    const status = req.params.status;
+    const id = req.params.id;
+    const changeStatus = (status == 'active')  ? 'inactive' : 'active';
+    await products.updateOne({
+        _id: id
+    },{
+        status: changeStatus
+    })
+    
     res.redirect("back");
 }
