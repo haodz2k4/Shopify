@@ -27,7 +27,8 @@ block main
                   input#searchInput.form-control(type='text', placeholder='Search...').d-none 
                   .input-group-append
                     button.btn.btn-primary(type='submit') Áp dụng 
-        .col
+        form(form-search-product)
+          .col  
                 label.sr-only(for='searchInput') Search
                 .input-group.mb-2
                   input#searchInput.form-control(type='text', placeholder='Nhập thông tin tìm kiếm....' name='keyword')
@@ -47,40 +48,53 @@ block main
               | 99+ 
         
       
-      
-    table.table.table-striped
-      thead
-        tr
-          th #
-          th tiêu đề 
-          th Giá tiền
-          th % Giảm giá 
-          th Sl tồn kho
-          th Hình ảnh
-          th Trạng thái
-          th Vị trí 
-          th Hành động
-      tbody
-        each item, index in product
+    if product.length < 1 
+      h1(style='color: red;').container Không có dữ liệu ! 
+    else
+      table.table.table-striped
+        thead
           tr
-            td #{index + 1}
-            td #{item.title}
-            td #{item.price}
-            td #{item.discountPercentage}
-            td #{item.stock}
-            td 
-              img(src=item.thumbnail, alt="", style="width: 100px;")
-            if item.status == 'active'
+            th #
+            th tiêu đề 
+            th Giá tiền
+            th % Giảm giá 
+            th Sl tồn kho
+            th Hình ảnh
+            th Trạng thái
+            th Vị trí 
+            th Hành động
+        tbody
+          each item, index in product
+            tr
+              td #{objectPagination.skip + index + 1}
+              td #{item.title}
+              td #{item.price}
+              td #{item.discountPercentage}
+              td #{item.stock}
               td 
-                a(href="").badge.text-bg-success #{item.status}
-            else
+                img(src=item.thumbnail, alt="", style="width: 100px;")
+              if item.status == 'active'
+                td 
+                  a(href="").badge.text-bg-success #{item.status}
+              else
+                td 
+                  a(href="").badge.text-bg-danger #{item.status}
               td 
-                a(href="").badge.text-bg-danger #{item.status}
-            td 
-              input(type="number", style="width: 40px;", value=item.position) 
-            td 
-              .btn-group
-                button.btn.btn-danger Sửa
-                button.btn.btn-warning Xóa 
-                button.btn.btn-info Chi tiết
-    
+                input(type="number", style="width: 40px;", value=item.position) 
+              td 
+                .btn-group
+                  button.btn.btn-danger Sửa
+                  button.btn.btn-warning Xóa 
+                  button.btn.btn-info Chi tiết
+    div(style='width: 100%; height: 2px; background-color: black;margin-top: 10px; margin-bottom: 15px;')
+    .container.mt-5
+      nav(aria-label='Page navigation')
+        ul.pagination(style='justify-content: center;')
+          li.page-item(class=`${objectPagination.pageCurrent > 1 ? "": "disabled"}`)
+            Button.page-link(href='#' btn-pagination=objectPagination.pageCurrent - 1) Previous
+          - for(let i = 1; i <= objectPagination.total; i++)
+            li.page-item
+              Button.btn.btn-outline-info(btn-pagination=i class=`${objectPagination.pageCurrent == i ? "btn-danger" : ""}`) #{i}
+          
+          li.page-item(class=`${objectPagination.pageCurrent < objectPagination.total ? "": "disabled"}`)
+            Button.page-link(btn-pagination = objectPagination.pageCurrent + 1) Next

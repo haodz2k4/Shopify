@@ -24,14 +24,31 @@ module.exports.index = async (req,res) =>{
     }
     //end handle filter 
 
-
-
     if(req.query.status){
         find.status = req.query.status
     }
-    const record = await products.find(find);
+    //handle search product
+    if(req.query.keyword){  
+        const keyword = new RegExp(req.query.keyword);
+        find.title = keyword
+    }
+
+    //handle pagaintion here
+    const objectPagination = {
+        pageCurrent: 1,
+        limit: 5
+    }
+    if(req.query.page){
+        objectPagination.pageCurrent = parseInt(req.query.page);
+    }
+    objectPagination.skip = (objectPagination.pageCurrent - 1) * objectPagination.limit;
+    objectPagination.total = Math.ceil(await products.countDocuments(find) / objectPagination.limit);
+
+
+    const record = await products.find(find).limit(objectPagination.limit).skip(objectPagination.skip);
     res.render("admin/pages/products/index.pug",{
         product: record,
-        ListBtnFilter: ListBtnFilter
+        ListBtnFilter: ListBtnFilter,
+        objectPagination: objectPagination
     });
 }
