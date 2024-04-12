@@ -2,24 +2,85 @@ extends ../../layouts/default.pug
 
 block main 
     .container.mt-4
+      h3 Bộ Lọc
+      .btn-group
+        each item in ListBtnFilter
+          Button.btn.btn-outline-secondary(btn-filter-status=item.status class=item.class) #{item.name}
+      
+      h3 Thay đổi nhiều sản phẩm
       .row
         .col-md-6
-          // Search Form with Select Option
           form
             .form-row.align-items-center
-              // Select Option
               .col-auto
                 label.sr-only(for='selectOption') Select Option
                 select#selectOption.form-control.mb-2
-                  option(value='') Select One
-                  option(value='option1') Option 1
-                  option(value='option2') Option 2
-                  option(value='option3') Option 3
+                  option(value='') --- Lựa chọn thay đổi --- 
+                  option(value='active-multi') Hoạt động 
+                  option(value='inactive-multi') Không hoạt động 
+                  option(value='change-position-multi') Thay đổi vị trí 
+                  option(value="delete-multi") Xóa 
               // Search Input
               .col
                 label.sr-only(for='searchInput') Search
                 .input-group.mb-2
-                  input#searchInput.form-control(type='text', placeholder='Search...')
+                  input#searchInput.form-control(type='text', placeholder='Search...').d-none 
                   .input-group-append
-                    button.btn.btn-primary(type='submit') Search
+                    button.btn.btn-primary(type='submit') Áp dụng 
+        .col
+                label.sr-only(for='searchInput') Search
+                .input-group.mb-2
+                  input#searchInput.form-control(type='text', placeholder='Nhập thông tin tìm kiếm....' name='keyword')
+                  .input-group-append
+                    button(type='submit').btn.btn-outline-info Tìm kiếm       
+    div(style='width: 100%; height: 2px; background-color: black;margin-top: 10px; margin-bottom: 15px;')
+    .container.text-center
+      .row
+        .col
+          h2  Danh Sách sản phẩm 
+        .col
+          a(href="").btn.btn-warning + Thêm mới  
+        .col
+          button.btn.btn-primary.position-relative(type='button')
+            | Thùng rác
+            span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger
+              | 99+ 
+        
+      
+      
+    table.table.table-striped
+      thead
+        tr
+          th #
+          th tiêu đề 
+          th Giá tiền
+          th % Giảm giá 
+          th Sl tồn kho
+          th Hình ảnh
+          th Trạng thái
+          th Vị trí 
+          th Hành động
+      tbody
+        each item, index in product
+          tr
+            td #{index + 1}
+            td #{item.title}
+            td #{item.price}
+            td #{item.discountPercentage}
+            td #{item.stock}
+            td 
+              img(src=item.thumbnail, alt="", style="width: 100px;")
+            if item.status == 'active'
+              td 
+                a(href="").badge.text-bg-success #{item.status}
+            else
+              td 
+                a(href="").badge.text-bg-danger #{item.status}
+            td 
+              input(type="number", style="width: 40px;", value=item.position) 
+            td 
+              .btn-group
+                button.btn.btn-danger Sửa
+                button.btn.btn-warning Xóa 
+                button.btn.btn-info Chi tiết
     
