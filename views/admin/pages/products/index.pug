@@ -1,0 +1,25 @@
+extends ../../layouts/default.pug 
+
+block main 
+    .container.mt-4
+      .row
+        .col-md-6
+          // Search Form with Select Option
+          form
+            .form-row.align-items-center
+              // Select Option
+              .col-auto
+                label.sr-only(for='selectOption') Select Option
+                select#selectOption.form-control.mb-2
+                  option(value='') Select One
+                  option(value='option1') Option 1
+                  option(value='option2') Option 2
+                  option(value='option3') Option 3
+              // Search Input
+              .col
+                label.sr-only(for='searchInput') Search
+                .input-group.mb-2
+                  input#searchInput.form-control(type='text', placeholder='Search...')
+                  .input-group-append
+                    button.btn.btn-primary(type='submit') Search
+    

@@ -1,0 +1,31 @@
+body {
+    padding-top: 56px;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      padding-top: 0;
+    }
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1029;
+  }
+
+  .content {
+    margin-left: 250px;
+    padding: 20px;
+  }
