@@ -10,11 +10,11 @@ block main
       h3 Thay đổi nhiều sản phẩm
       .row
         .col-md-6
-          form
+          form(action=`/admin/products/change-multi?_method=PATCH` method="POST", form-change-multi)
             .form-row.align-items-center
               .col-auto
                 label.sr-only(for='selectOption') Select Option
-                select#selectOption.form-control.mb-2
+                select#selectOption.form-control.mb-2(name='typeMulti')
                   option(value='') --- Lựa chọn thay đổi --- 
                   option(value='active-multi') Hoạt động 
                   option(value='inactive-multi') Không hoạt động 
@@ -24,7 +24,7 @@ block main
               .col
                 label.sr-only(for='searchInput') Search
                 .input-group.mb-2
-                  input#searchInput.form-control(type='text', placeholder='Search...').d-none 
+                  input#searchInput.form-control(type='text', placeholder='Search...' name='id').d-none
                   .input-group-append
                     button.btn.btn-primary(type='submit') Áp dụng 
         form(form-search-product)
@@ -51,9 +51,11 @@ block main
     if product.length < 1 
       h1(style='color: red;').container Không có dữ liệu ! 
     else
-      table.table.table-striped
+      table.table.table-striped(change-multi)
         thead
           tr
+            th 
+              input(type="checkbox" name="checkall")
             th #
             th tiêu đề 
             th Giá tiền
@@ -65,20 +67,24 @@ block main
             th Hành động
         tbody
           each item, index in product
+
             tr
+              td
+                input(type="checkbox" name="ids" value=item.id)
               td #{objectPagination.skip + index + 1}
               td #{item.title}
-              td #{item.price}
-              td #{item.discountPercentage}
+              td
+                h6 #{item.price}
+              td #{item.discountPercentage}%
               td #{item.stock}
               td 
-                img(src=item.thumbnail, alt="", style="width: 100px;")
+                img(src=item.thumbnail, alt="", style="width: 100px;")  
               if item.status == 'active'
                 td 
-                  a(href="").badge.text-bg-success #{item.status}
+                  Button.badge.rounded-pill.text-bg-success(style='background-color: green; color: white') #{item.status}
               else
                 td 
-                  a(href="").badge.text-bg-danger #{item.status}
+                  Button.badge.rounded-pill.text-bg-danger(style='background-color: red; color: white') #{item.status}
               td 
                 input(type="number", style="width: 40px;", value=item.position) 
               td 

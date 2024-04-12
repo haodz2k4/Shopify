@@ -60,3 +60,54 @@ if(btnPagination.length > 0){
         })
     })
 }
+
+//handle checked change multi here 
+const changeMulti = document.querySelector("[change-multi]");
+if(changeMulti){
+    const checkAll = changeMulti.querySelector("input[name='checkall']");
+    const checkMulti = changeMulti.querySelectorAll("input[name='ids']");
+    
+    checkAll.addEventListener("click",() =>{
+        if(checkAll.checked){
+            checkMulti.forEach((item) =>{
+                item.checked = true
+            })
+        }else{
+            checkMulti.forEach((item) =>{
+                item.checked = false;
+            })
+        }
+    })
+
+    checkMulti.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            
+        const countChecked = changeMulti.querySelectorAll("input[name='ids']:checked").length;
+        const checkedLength = checkMulti.length;
+        if(countChecked === checkedLength){
+            checkAll.checked = true;
+        }
+        })
+    })
+}
+//end handle 
+
+//handle formChangeMulti
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if(formChangeMulti){
+    formChangeMulti.addEventListener("submit",(event) =>{
+        event.preventDefault();
+        const inputId = formChangeMulti.querySelector("input[name='id']");
+        const checkedList = document.querySelectorAll("input[name='ids']:checked");
+        const IdList = [];
+        for(const item of checkedList){
+            const value = item.value;
+
+            IdList.push(value);
+        }
+        const stringIdJoin = IdList.join("; ");
+        inputId.value = stringIdJoin;
+        formChangeMulti.submit();
+        
+    })
+}

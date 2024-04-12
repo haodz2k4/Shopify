@@ -52,3 +52,28 @@ module.exports.index = async (req,res) =>{
         objectPagination: objectPagination
     });
 }
+//[PATCH] /admin/products/change-multi
+module.exports.changeMulti = async (req,res) =>{
+    console.log(req.body);
+    const type = req.body.typeMulti;
+    const id = req.body.id;
+    const idList = id.split("; ");
+    switch(type){
+        case 'active-multi':
+             await products.updateMany({
+                _id: {$in: idList}
+             },{
+                status: 'active'
+             })
+             break;
+        case 'inactive-multi':
+            await products.updateMany({
+                _id: {$in: idList}
+            },{
+                status: 'inactive'
+            })
+            break;
+
+    }
+    res.redirect("back");
+}

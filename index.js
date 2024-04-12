@@ -8,7 +8,13 @@ app.set('view engine','pug');
 app.set('views', './views');
 //static file here
 app.use(express.static('public'));
-
+//body-parser
+const bodyParser = require('body-parser');
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+//require method override
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
 //Require database here 
 const database = require("./config/database");
 database();
