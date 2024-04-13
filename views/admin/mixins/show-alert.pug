@@ -1,0 +1,13 @@
+mixin showSucesAlert()
+    - if (messages.sucess)
+      .message.info
+        .alert.alert-secondary(role='alert' style='background-color:  rgb(112, 193, 112); ' time-out-alert)
+            | #{messages.sucess} 
+            button.btn-close(type='button', aria-label='Close' btn-close-alert) X 
+
+mixin showErrorAlert()
+    - if (messages.error)
+      .message.info
+        .alert.alert-secondary(role='alert' style='background-color:  red; ' time-out-alert)
+            | #{messages.error} 
+            button.btn-close(type='button', aria-label='Close' btn-close-alert) X 

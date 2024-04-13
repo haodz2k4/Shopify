@@ -1,0 +1,42 @@
+extends ../../layouts/default.pug 
+
+block main 
+    a(href="/admin/products").btn.btn-warning <-- Thoát
+    h2 Đây là trang thùng rác 
+    table.table.table-striped
+        thead
+          tr
+            th #
+            th tiêu đề 
+            th Giá tiền
+            th % Giảm giá 
+            th Sl tồn kho
+            th Hình ảnh
+            th Trạng thái
+            th Vị trí 
+            th Hành động
+        tbody
+          each item, index in product
+
+            tr
+              td #{index + 1}
+              td #{item.title}
+              td
+                h6 #{item.price}
+              td #{item.discountPercentage}
+              td #{item.stock}
+              td 
+                img(src=item.thumbnail, alt="", style="width: 100px;")  
+              if item.status == 'active'
+                td 
+                  Button.badge.rounded-pill.text-bg-success(style='background-color: green; color: white' btn-change-status=item.id) #{item.status}
+              else
+                td 
+                  Button.badge.rounded-pill.text-bg-danger(style='background-color: red; color: white' btn-change-status=item.id) #{item.status}
+              td 
+                input(type="number", style="width: 40px;", value=item.position) 
+              td 
+                .btn-group
+                  a.btn.btn-warning(btn-delete=item.id) Xóa 
+                  
+    form(action="" method="POST" data-path="/admin/products/garbage/delete-forever" form-delete) 

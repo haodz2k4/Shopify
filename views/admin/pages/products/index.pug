@@ -1,16 +1,15 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/show-alert.pug 
 block main 
-    - if (messages.sucess)
-      .message.info
-        .alert.alert-secondary(role='alert' style='background-color:  rgb(112, 193, 112); ' time-out-alert)
-            | #{messages.sucess} 
-            button.btn-close(type='button', aria-label='Close' btn-close-alert) X
+    +showSucesAlert()
+    +showErrorAlert()
     .container.mt-4
       h3 Bộ Lọc
       .btn-group
         each item in ListBtnFilter
-          Button.btn.btn-outline-secondary(btn-filter-status=item.status class=item.class) #{item.name}
+          Button.btn.btn-outline-secondary(btn-filter-status=item.status class=item.class) #{item.name} 
+      
+      
       
       h3 Thay đổi nhiều sản phẩm
       .row
@@ -39,23 +38,40 @@ block main
                   input#searchInput.form-control(type='text', placeholder='Nhập thông tin tìm kiếm....' name='keyword')
                   .input-group-append
                     button(type='submit').btn.btn-outline-info Tìm kiếm       
+         
+              
     div(style='width: 100%; height: 2px; background-color: black;margin-top: 10px; margin-bottom: 15px;')
     .container.text-center
       .row
         .col
-          h2  Danh Sách sản phẩm 
+          Button.btn.btn-primary Thông báo 
         .col
           a(href="").btn.btn-warning + Thêm mới  
         .col
-          button.btn.btn-primary.position-relative(type='button')
+          a(href="/admin/products/garbage").btn.btn-primary.position-relative
             | Thùng rác
             span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger
-              | 99+ 
+              | #{countGarbage}
+        .col 
+          h6 Sắp xếp sản phẩm
+          select#sortingSelect.selectpicker
+            option(value='title-asc') Sorted by Title (A-Z)
+            option(value='title-desc') Sorted by Title (Z-A)
+            option(value='position-asc') Sorted by Position (Ascending)
+            option(value='position-desc') Sorted by Position (Descending)
+            option(value='price-asc') Sorted by Price (Low to High)
+            option(value='price-desc') Sorted by Price (High to Low)
+            option(value='stock-asc') Sorted by Stock (Low to High)
+            option(value='stock-desc') Sorted by Stock (High to Low)
+            option(value='discount-asc') Sorted by Discount (Low to High)
+            option(value='discount-desc') Sorted by Discount (High to Low)
         
       
     if product.length < 1 
       h1(style='color: red;').container Không có dữ liệu ! 
     else
+      .container
+        h2  Danh Sách sản phẩm 
       table.table.table-striped(change-multi)
         thead
           tr
@@ -95,7 +111,7 @@ block main
               td 
                 .btn-group
                   button.btn.btn-danger Sửa
-                  button.btn.btn-warning Xóa 
+                  a.btn.btn-warning(btn-sort-delete=item.id) Xóa 
                   button.btn.btn-info Chi tiết
     div(style='width: 100%; height: 2px; background-color: black;margin-top: 10px; margin-bottom: 15px;')
     .container.mt-5
@@ -110,3 +126,4 @@ block main
           li.page-item(class=`${objectPagination.pageCurrent < objectPagination.total ? "": "disabled"}`)
             Button.page-link(btn-pagination = objectPagination.pageCurrent + 1) Next 
     form(action="" form-change-status data-path=`/admin/products/change-status` method="POST") 
+    form(action="" form-soft-delete data-path=`/admin/products/soft-delete` method="POST") 

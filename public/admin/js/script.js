@@ -112,6 +112,44 @@ if(changeMulti){
     })
 }
 //end handle 
+//Handle soft delete
+const btnSoftDelete = document.querySelectorAll("[btn-sort-delete]");
+if(btnSoftDelete.length > 0){
+    const formSoftDelete = document.querySelector("[form-soft-delete]");
+    btnSoftDelete.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            const id = item.getAttribute("btn-sort-delete");
+
+            const dataPath = formSoftDelete.getAttribute("data-path");
+            const action = `${dataPath}/${id}?_method=PATCH`;
+
+            formSoftDelete.action = action;
+            formSoftDelete.submit();
+
+            
+        })
+    })
+}
+//handle delete
+const btnDelete = document.querySelectorAll("[btn-delete]");
+if(btnDelete){
+    const formDelete = document.querySelector("[form-delete]")
+    btnDelete.forEach((item) =>{
+        
+        item.addEventListener("click",() =>{
+            const isConfirm = confirm("Bạn có muốn chắc xóa sản phẩm không");
+            if(isConfirm){
+                const id = item.getAttribute("btn-delete");
+                const path = formDelete.getAttribute("data-path");
+                const action = `${path}/${id}?_method=DELETE`;
+
+                formDelete.action =action;
+                formDelete.submit();
+            }
+            
+        })
+    })
+}
 
 //handle formChangeMulti
 const formChangeMulti = document.querySelector("[form-change-multi]");

@@ -44,12 +44,14 @@ module.exports.index = async (req,res) =>{
     objectPagination.skip = (objectPagination.pageCurrent - 1) * objectPagination.limit;
     objectPagination.total = Math.ceil(await products.countDocuments(find) / objectPagination.limit);
 
-
+    //count garbage here 
+    const countGarbage = await products.countDocuments({deleted: true});
     const record = await products.find(find).limit(objectPagination.limit).skip(objectPagination.skip);
     res.render("admin/pages/products/index.pug",{
         product: record,
         ListBtnFilter: ListBtnFilter,
-        objectPagination: objectPagination
+        objectPagination: objectPagination,
+        countGarbage: countGarbage
     });
 }
 //[PATCH] /admin/products/change-multi
@@ -87,5 +89,43 @@ module.exports.changeStatus = async (req,res) =>{
         status: changeStatus
     })
     req.flash('sucess', 'Thay đổi trạng thái sản phẩm thành công');
+    res.redirect("back");
+}
+//[PATCH] /admin/products/soft-delete/:id
+module.exports.softDelete = async (req,res) =>{
+    try {
+        await products.updateOne({
+            _id: req.params.id
+        }, {
+            deleted: true
+        })
+        req.flash('sucess','Thêm vào thùng rác thành công')
+    } catch (error) {
+        console.log(error);
+        req.flash('error','Thêm vào thùng rác thất bại')
+    }   
+    res.redirect("back");
+}
+
+//[GET] /admin/products/garbage/
+module.exports.garbage = async (req,res) =>{
+
+    const record = await products.find({deleted: true})
+    res.render("admin/pages/products/garbage.pug",{
+        product: record
+    });
+}
+//[DELETE] /admin/products/garbage/delete-forever/:id
+module.exports.deleteForever = async (req,res) =>{
+
+    try {
+        await products.deleteOne({
+            _id: req.params.id
+        })
+        req.flash('sucess','Xóa sản phẩm thành công');
+    } catch (error) {
+        console.log(error);
+        req.flash('error','Xóa sản phẩm thất bại')
+    }
     res.redirect("back");
 }
