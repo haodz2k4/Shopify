@@ -210,4 +210,16 @@ if(sortingSelect){
         })
 }
 }
-//handle btn Clear
+//handle show image review 
+const inpReview = document.querySelector("[inp-review]");
+
+if(inpReview){
+    const imgReview = document.querySelector("[img-review]");
+    inpReview.addEventListener("change",() =>{
+        const [file] = inpReview.files;
+        if(file){
+            
+            imgReview.src = URL.createObjectURL(file);
+        }
+    })
+}
