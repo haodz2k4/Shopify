@@ -12,13 +12,13 @@ block main
           textarea#productDescription.form-control(name='description', rows='3', placeholder='Enter description')
         .form-group
           label(for='productPrice') Price
-          input#productPrice.form-control(type='number', name='price', placeholder='Enter price')
+          input#productPrice.form-control(type='number', name='price', placeholder='Enter price', value=0)
         .form-group
           label(for='productDiscount') Discount Percentage
-          input#productDiscount.form-control(type='number', name='discountPercentage', place  holder='Enter discount percentage')
+          input#productDiscount.form-control(type='number', name='discountPercentage', place  holder='Enter discount percentage', value=0)
         .form-group
           label(for='productStock') Stock
-          input#productStock.form-control(type='number', name='stock', placeholder='Enter stock')
+          input#productStock.form-control(type='number', name='stock', placeholder='Enter stock', value=0)
         .form-group
           label(for='productThumbnail') Thumbnail URL
           input#productThumbnail.form-control(type='file', name='thumbnail', placeholder='Enter thumbnail URL', accept='image/*', inp-review)
