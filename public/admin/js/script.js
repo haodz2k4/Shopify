@@ -181,7 +181,7 @@ if(timeOutAlert){
 }
 const btnCloseAlert = document.querySelector("[btn-close-alert]");
 
-if(btnCloseAlert){
+if(btnCloseAlert){  
     btnCloseAlert.addEventListener("click",() => {
         timeOutAlert.classList.add("d-none");
     })
@@ -196,10 +196,18 @@ if(sortingSelect){
         const [sortkey, sortValue] = value.split("-");
         if(sortkey && sortValue){
             url.searchParams.set("sortKey",sortkey);
-            url.searchParams.set("sortValue",sortValue)
+            url.searchParams.set("sortValue",sortValue);
+            window.location.href = url.href;
         }
-        window.location.href = url.href;
     })
+    const querySortKey = url.searchParams.get("sortKey");
+       const querySortValue = url.searchParams.get("sortValue");
+       if(querySortKey && querySortValue){
+          const String = `${querySortKey}-${querySortValue}`;
+          const option = sortingSelect.querySelector(`option[value='${String}']`);
+          option.selected = true;
+          
+       }
     const btnClear = document.querySelector("[btn-clear]");
     if(btnClear){
         btnClear.addEventListener("click",() =>{

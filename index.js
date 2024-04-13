@@ -25,6 +25,10 @@ const session = require('express-session');
 app.use(cookieParser('keyboard cat'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+//mce 
+const path = require('path');
+/* New Route to the TinyMCE Node module */
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 //Router
 const adminRouter = require("./router/admin/index.router");
