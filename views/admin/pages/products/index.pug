@@ -55,16 +55,17 @@ block main
         .col 
           h6 Sắp xếp sản phẩm
           select#sortingSelect.selectpicker
-            option(value='title-asc') Sorted by Title (A-Z)
-            option(value='title-desc') Sorted by Title (Z-A)
-            option(value='position-asc') Sorted by Position (Ascending)
-            option(value='position-desc') Sorted by Position (Descending)
-            option(value='price-asc') Sorted by Price (Low to High)
-            option(value='price-desc') Sorted by Price (High to Low)
-            option(value='stock-asc') Sorted by Stock (Low to High)
-            option(value='stock-desc') Sorted by Stock (High to Low)
-            option(value='discount-asc') Sorted by Discount (Low to High)
-            option(value='discount-desc') Sorted by Discount (High to Low)
+            option(value='position-desc') Vị trí giảm dần 
+            option(value='position-asc') vị trí tăng dần 
+            option(value='title-asc') Tiêu đề A-Z 
+            option(value='title-desc') Tiêu đề Z-A 
+            option(value='price-asc') giá thấp -> cao
+            option(value='price-desc') giá cao -> thấp 
+            option(value='stock-asc') Sl Tồn kho cao -> thấp 
+            option(value='stock-desc') Sl Tồn kho thấp -> cao  
+            option(value='discount-asc') Giảm giá cao -> thấp 
+            option(value='discount-desc') Giảm giá thấp -> cao  
+          Button.btn.btn-danger(style="margin-left: 5px;" btn-clear) Clear 
         
       
     if product.length < 1 

@@ -186,3 +186,28 @@ if(btnCloseAlert){
         timeOutAlert.classList.add("d-none");
     })
 }
+//end handle
+//handle sortTingSelect 
+const sortingSelect  = document.querySelector("#sortingSelect");
+if(sortingSelect){
+    const url = new URL(window.location.href);
+    sortingSelect.addEventListener("change",() =>{
+        const value = sortingSelect.value;
+        const [sortkey, sortValue] = value.split("-");
+        if(sortkey && sortValue){
+            url.searchParams.set("sortKey",sortkey);
+            url.searchParams.set("sortValue",sortValue)
+        }
+        window.location.href = url.href;
+    })
+    const btnClear = document.querySelector("[btn-clear]");
+    if(btnClear){
+        btnClear.addEventListener("click",() =>{
+            url.searchParams.delete("sortKey");
+            url.searchParams.delete("sortValue");
+
+            window.location.href = url.href;
+        })
+}
+}
+//handle btn Clear

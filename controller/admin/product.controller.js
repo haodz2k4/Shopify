@@ -43,10 +43,20 @@ module.exports.index = async (req,res) =>{
     }
     objectPagination.skip = (objectPagination.pageCurrent - 1) * objectPagination.limit;
     objectPagination.total = Math.ceil(await products.countDocuments(find) / objectPagination.limit);
-
     //count garbage here 
     const countGarbage = await products.countDocuments({deleted: true});
-    const record = await products.find(find).limit(objectPagination.limit).skip(objectPagination.skip);
+
+    //handle sorting 
+    const sortKey = req.query.sortKey;
+    const sortValue = req.query.sortValue;
+    const sort = {};
+    if(sortKey && sortValue){
+        sort[sortKey] = sortValue;
+    }else{
+        sort.position = 'desc'
+    }
+
+    const record = await products.find(find).limit(objectPagination.limit).skip(objectPagination.skip).sort(sort);
     res.render("admin/pages/products/index.pug",{
         product: record,
         ListBtnFilter: ListBtnFilter,
