@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug 
+
+block main 
+    .container
+      h2(style="text-align: center;") THÊM SẢN PHẨM 
+      form(action="/admin/products/create" method="POST")
+        .form-group
+          label(for='productTitle') Title
+          input#productTitle.form-control(type='text', name='title', placeholder='Enter title')
+        .form-group
+          label(for='productDescription') Description
+          textarea#productDescription.form-control(name='description', rows='3', placeholder='Enter description')
+        .form-group
+          label(for='productPrice') Price
+          input#productPrice.form-control(type='number', name='price', placeholder='Enter price')
+        .form-group
+          label(for='productDiscount') Discount Percentage
+          input#productDiscount.form-control(type='number', name='discountPercentage', placeholder='Enter discount percentage')
+        .form-group
+          label(for='productStock') Stock
+          input#productStock.form-control(type='number', name='stock', placeholder='Enter stock')
+        .form-group
+          label(for='productThumbnail') Thumbnail URL
+          input#productThumbnail.form-control(type='file', name='thumbnail', placeholder='Enter thumbnail URL')
+          img(src='asd', alt='', style='width: 100px;')
+        .form-group
+          label Status
+          br
+          .form-check.form-check-inline
+            input#productActive.form-check-input(type='radio', name='status', value='active', checked='')
+            label.form-check-label(for='productActive') Active
+          .form-check.form-check-inline
+            input#productInactive.form-check-input(type='radio', name='status', value='inactive')
+            label.form-check-label(for='productInactive') Inactive
+        .form-group
+          label(for='productPosition') Position
+          input#productPosition.form-control(type='number', name='position', placeholder='Enter position')
+        button.btn.btn-primary(type='submit') Submit

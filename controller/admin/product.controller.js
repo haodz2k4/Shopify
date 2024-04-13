@@ -139,3 +139,23 @@ module.exports.deleteForever = async (req,res) =>{
     }
     res.redirect("back");
 }
+//[GET] /admin/products/create
+module.exports.create = async (req,res) =>{
+    res.render("admin/pages/products/create");  
+}
+//[POST] /admin/products/create
+module.exports.createPost = async (req,res) =>{
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    if(req.body.position){
+        req.body.position = parseInt(req.body.position);
+    }else{
+        req.body.position = await products.countDocuments();
+    }   
+    const record = new products(req.body);
+    console.log(record);
+    await record.save();
+    req.flash('sucess','Thêm mới sản phẩm thành công')
+    res.redirect("/admin/products");
+}
