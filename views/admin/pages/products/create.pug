@@ -3,7 +3,7 @@ extends ../../layouts/default.pug
 block main 
     .container
       h2(style="text-align: center;") THÊM SẢN PHẨM 
-      form(action="/admin/products/create" method="POST")
+      form(action="/admin/products/create" method="POST" enctype="multipart/form-data")
         .form-group
           label(for='productTitle') Title
           input#productTitle.form-control(type='text', name='title', placeholder='Enter title')
@@ -15,13 +15,13 @@ block main
           input#productPrice.form-control(type='number', name='price', placeholder='Enter price')
         .form-group
           label(for='productDiscount') Discount Percentage
-          input#productDiscount.form-control(type='number', name='discountPercentage', placeholder='Enter discount percentage')
+          input#productDiscount.form-control(type='number', name='discountPercentage', place  holder='Enter discount percentage')
         .form-group
           label(for='productStock') Stock
           input#productStock.form-control(type='number', name='stock', placeholder='Enter stock')
         .form-group
           label(for='productThumbnail') Thumbnail URL
-          input#productThumbnail.form-control(type='file', name='thumbnail', placeholder='Enter thumbnail URL')
+          input#productThumbnail.form-control(type='file', name='thumbnail', placeholder='Enter thumbnail URL', accept='image/*')
           img(src='asd', alt='', style='width: 100px;')
         .form-group
           label Status

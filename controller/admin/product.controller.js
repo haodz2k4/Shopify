@@ -154,7 +154,6 @@ module.exports.createPost = async (req,res) =>{
         req.body.position = await products.countDocuments();
     }   
     const record = new products(req.body);
-    console.log(record);
     await record.save();
     req.flash('sucess','Thêm mới sản phẩm thành công')
     res.redirect("/admin/products");
