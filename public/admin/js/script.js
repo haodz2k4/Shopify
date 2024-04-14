@@ -158,13 +158,32 @@ if(formChangeMulti){
         event.preventDefault();
         const inputId = formChangeMulti.querySelector("input[name='id']");
         const checkedList = document.querySelectorAll("input[name='ids']:checked");
+        const select = formChangeMulti.querySelector("select[name='typeMulti']").value;
+        if(select === 'delete-multi'){
+            const isConfirm = confirm("Bạn có chắc muốn xóa tất cả sản phẩm này");
+            if(!isConfirm){
+                return;
+            }
+        }
         const IdList = [];
         for(const item of checkedList){
-            const value = item.value;
+            let value = "";
+            if(select === 'change-position-multi'){
+                const isConfirm = confirm("Bạn có chắc muốn thay đổi vị trí của sản phẩm");
+                if(isConfirm){
+                    const position = item.closest("tr").querySelector("input[name='position']").value;
+                    const idJoinPosition = `${item.value}-${position}`;
+                    value = idJoinPosition;
+                }
+                
+            }else{
+                 value = item.value;
+            }
 
             IdList.push(value);
         }
         const stringIdJoin = IdList.join("; ");
+        console.log(stringIdJoin);
         inputId.value = stringIdJoin;
         formChangeMulti.submit();
         
@@ -231,3 +250,4 @@ if(inpReview){
         }
     })
 }
+

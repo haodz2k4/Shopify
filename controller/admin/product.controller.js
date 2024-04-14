@@ -69,24 +69,56 @@ module.exports.changeMulti = async (req,res) =>{
     const type = req.body.typeMulti;
     const id = req.body.id;
     const idList = id.split("; ");
-    switch(type){
-        case 'active-multi':
-             await products.updateMany({
-                _id: {$in: idList}
-             },{
-                status: 'active'
-             })
-             break;
-        case 'inactive-multi':
-            await products.updateMany({
-                _id: {$in: idList}
-            },{
-                status: 'inactive'
-            })
-            break;
-
+    try {
+        switch(type){
+            case 'active-multi':
+                 await products.updateMany({
+                    _id: {$in: idList}
+                 },{
+                    status: 'active'
+                 })
+                 req.flash('sucess','Thay đổi trạng thái thành công')
+                 break;
+            case 'inactive-multi':
+                await products.updateMany({
+                    _id: {$in: idList}
+                },{
+                    status: 'inactive'
+                })
+                
+                req.flash('sucess','Thay đổi trạng thái thành công')
+                break;
+            case 'change-position-multi':
+                for(const item of idList){
+                    const [ids,position] = item.split("-");
+                    console.log(item.split("-"));
+                    await products.updateOne({
+                        _id: ids
+                    },{
+                        position: parseInt(position)
+                    })
+                }
+                
+                req.flash('sucess','Thay đổi vị trí sản phẩm thành công')
+                break;
+            case 'delete-multi':
+                await products.updateMany({
+                    _id: {$in: idList}
+                },{
+                    deleted: true
+                })
+                req.flash('sucess','Đã chuyển vào thùng rác')   
+                break;
+            default: break;
+                
+    
+        }
+        res.redirect("back");
+    } catch (error) {
+        req.flash('error','Không thể thay đổi sản phẩm')
+        console.log(error);
+        res.redirect("back");
     }
-    res.redirect("back");
 }
 //[PATCH] /admin/products/change-status
 module.exports.changeStatus = async (req,res) =>{   
