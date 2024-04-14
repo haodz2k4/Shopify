@@ -239,3 +239,20 @@ module.exports.detail = async (req,res) =>{
         res.redirect("back");
    }
 }
+//[PATCH] /admin/products/garbage/restore/:id
+module.exports.restore = async (req,res) =>{
+    
+    try {
+        await products.updateOne({
+            _id: req.params.id
+        },{
+            deleted: false
+        })
+        req.flash('sucess','Khôi phục sản phẩm thành công');
+        res.redirect("back");
+    } catch (error) {
+        console.log(error);
+        req.flash('error','Khôi phục sản phẩm thất bại');
+        req.redirect("back");
+    }
+}

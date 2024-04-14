@@ -1,6 +1,8 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/show-alert.pug 
 block main 
+    +showSucesAlert()
+    +showErrorAlert()
     a(href="/admin/products").btn.btn-warning <-- Thoát
     h2 Đây là trang thùng rác 
     table.table.table-striped
@@ -36,7 +38,11 @@ block main
               td 
                 input(type="number", style="width: 40px;", value=item.position) 
               td 
+
                 .btn-group
+                  a.btn.btn-secondary(btn-restore=item.id) Khôi phục  
                   a.btn.btn-warning(btn-delete=item.id) Xóa 
                   
     form(action="" method="POST" data-path="/admin/products/garbage/delete-forever" form-delete) 
+    //- form restore 
+    form(action="" method="POST" data-path="/admin/products/garbage/restore" form-restore) 

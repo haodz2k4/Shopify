@@ -261,4 +261,18 @@ if(btnEdit){
         
     })
 }
+//handle restore 
+const btnRestore = document.querySelectorAll("[btn-restore]");
+if(btnRestore.length > 0){
+    const formRestore = document.querySelector("[form-restore]");
+    btnRestore.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            const value = item.getAttribute("btn-restore");
+            const path = formRestore.getAttribute("data-path");
+            const action = `${path}/${value}?_method=PATCH`;
+            formRestore.action =action;
+            formRestore.submit();
 
+        })
+    })
+}
