@@ -185,8 +185,40 @@ module.exports.createPost = async (req,res) =>{
     }else{
         req.body.position = await products.countDocuments();
     }   
+    console.log(req.body);
     const record = new products(req.body);
     await record.save();
     req.flash('sucess','Thêm mới sản phẩm thành công')
     res.redirect("/admin/products");
+}
+//[GET] /admin/products/edit/:id
+module.exports.edit = async (req,res) =>{
+
+    const record = await products.findById({
+        _id: req.params.id
+    })
+    res.render("admin/pages/products/edit.pug",{
+        product: record
+    });
+}
+//[PATCH] /admin/products/edit/:id
+module.exports.editPatch = async (req,res) =>{
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    if(req.body.position){
+        req.body.position = parseInt(req.body.position);
+    }else{
+        req.body.position = await products.countDocuments();
+    }   
+    try {
+        await products.updateOne({
+            _id: req.params.id
+        },req.body)
+        req.flash('sucess','Cập nhật sản phẩm thành công')
+    } catch (error) {
+        console.log(error);
+        req.flash('error','Cập nhật sản phẩm thất bại');
+    }
+   res.redirect("/admin/products")
 }

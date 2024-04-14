@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug 
+
+block main 
+
+    
+    .container
+      h2.mt-5 Chỉnh sửa sản phẩm 
+      form(action=`/admin/products/edit/${product.id}?_method=PATCH`, method='POST')
+        .form-group
+          label(for='title') Title:
+          input#title.form-control(type='text', name='title' value=product.title)
+        .form-group
+          label(for='description') Description:
+          textarea#description.form-control(rows='3', placeholder='Enter description') !{product.description}
+        .form-group
+          label(for='price') Price:
+          input#price.form-control(type='number', name='price' value=product.price)
+        .form-group
+          label(for='discountPercentage') Discount Percentage:
+          input#discountPercentage.form-control(type='number', name='discountPercentage', value=product.discountPercentage)
+        .form-group
+          label(for='stock') Stock:
+          input#stock.form-control(type='number', name='stock' value=product.stock)
+        .form-group
+          label(for='thumbnail') Thumbnail:
+          input#thumbnail.form-control(type='file', name='thumbnail', inp-review accept='image/*') 
+          img(src='', alt='', style='width: 80px; height: 100px;', img-review)
+        .form-group
+          label Status:
+          br
+          .form-check.form-check-inline
+            input#active.form-check-input(type='radio', name='status', value='active' checked=`${product.status == 'active' ? true: false}`)
+            label.form-check-label(for='active') Active
+          .form-check.form-check-inline
+            input#inactive.form-check-input(type='radio', name='status', value='inactive' checked=`${product.status == 'inactive' ? true: false}`)
+            label.form-check-label(for='inactive') Inactive
+        .form-group
+          label(for='position') Position:
+          input#position.form-control(type='number', name='position', value=product.position)
+        button.btn.btn-primary(type='submit') Submit

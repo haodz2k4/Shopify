@@ -8,7 +8,8 @@ cloudinary.config({
   api_secret: '2WXG7M91L4pcWcXBEb8YjpRJXqo' 
 });
 module.exports = (req, res, next) => {
-    if(req.file)
+    try {
+      if(req.file)
     {
       let streamUpload = (req) => {
         return new Promise((resolve, reject) => {
@@ -31,7 +32,7 @@ module.exports = (req, res, next) => {
         
           
           req.body[req.file.fieldname] = result.url;
-        
+
         next();
         
     }
@@ -39,6 +40,10 @@ module.exports = (req, res, next) => {
     upload(req);
     }else{
       next();
+    }
+    } catch (error) {
+      console.log(error)
+      req.flash('error','upload file thất bại');
     }
       
   }

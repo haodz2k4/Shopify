@@ -111,7 +111,7 @@ block main
                 input(type="number", style="width: 40px;", value=item.position, name='position') 
               td 
                 .btn-group
-                  button.btn.btn-danger Sửa
+                  a(href=`/admin/products/edit/${item.id}`).btn.btn-danger Sửa
                   a.btn.btn-warning(btn-sort-delete=item.id) Xóa 
                   button.btn.btn-info Chi tiết
     div(style='width: 100%; height: 2px; background-color: black;margin-top: 10px; margin-bottom: 15px;')

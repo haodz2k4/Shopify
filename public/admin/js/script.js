@@ -157,6 +157,10 @@ if(formChangeMulti){
     formChangeMulti.addEventListener("submit",(event) =>{
         event.preventDefault();
         const inputId = formChangeMulti.querySelector("input[name='id']");
+        if(inputId.value === ""){
+            alert("Vui lòng chọn ít nhất 1 bản ghi")
+            return;
+        }
         const checkedList = document.querySelectorAll("input[name='ids']:checked");
         const select = formChangeMulti.querySelector("select[name='typeMulti']").value;
         if(select === 'delete-multi'){
@@ -248,6 +252,14 @@ if(inpReview){
             
             imgReview.src = URL.createObjectURL(file);
         }
+    })
+}
+//handle edit 
+const btnEdit = document.querySelector("[btn-edit]");
+if(btnEdit){
+    btnEdit.addEventListener("click",() =>{
+        const value = btnEdit.getAttribute("btn-edit");
+        
     })
 }
 
