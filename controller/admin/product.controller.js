@@ -222,3 +222,20 @@ module.exports.editPatch = async (req,res) =>{
     }
    res.redirect("/admin/products")
 }
+//[GET] /admin/products/detail
+module.exports.detail = async (req,res) =>{
+    const id = req.params.id;
+   try {
+        const record = await products.findById({
+            _id: id
+        })
+        res.render("admin/pages/products/detail.pug",{
+            product: record
+        })
+   } catch (error) {
+        console.log(error);
+        
+        req.flash('error','Không thể xem chi tiết sản phẩm');
+        res.redirect("back");
+   }
+}

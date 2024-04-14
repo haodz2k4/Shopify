@@ -113,7 +113,7 @@ block main
                 .btn-group
                   a(href=`/admin/products/edit/${item.id}`).btn.btn-danger Sửa
                   a.btn.btn-warning(btn-sort-delete=item.id) Xóa 
-                  button.btn.btn-info Chi tiết
+                  a(href="/admin/products/detail/"+item.id).btn.btn-info Chi tiết
     div(style='width: 100%; height: 2px; background-color: black;margin-top: 10px; margin-bottom: 15px;')
     .container.mt-5
       nav(aria-label='Page navigation')

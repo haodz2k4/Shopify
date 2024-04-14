@@ -29,3 +29,10 @@ body {
     margin-left: 250px;
     padding: 20px;
   }
+  .card {
+    width: 400px; /* Adjust the width of the card */
+  }
+  .card-img-top {
+    width: 100%; /* Make the image fill the card */
+    height: auto; /* Preserve the aspect ratio */
+  }

@@ -187,7 +187,6 @@ if(formChangeMulti){
             IdList.push(value);
         }
         const stringIdJoin = IdList.join("; ");
-        console.log(stringIdJoin);
         inputId.value = stringIdJoin;
         formChangeMulti.submit();
         
