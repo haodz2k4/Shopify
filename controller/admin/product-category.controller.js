@@ -1,9 +1,11 @@
 //Require database here
 const productCategory = require("../../models/product-category.model");
+//require helper here
+const helperCreatree = require("../../helpers/createTree.helper");
 //[GET] /admin/product-category 
 module.exports.index = async (req,res) =>{
 
-    const record = await productCategory.find({});
+    const record = await productCategory.find({}).sort({position: 'desc'});
     
     res.render("admin/pages/product-category/index.pug",{
         productCategory: record
@@ -13,22 +15,9 @@ module.exports.index = async (req,res) =>{
 //[GET] /admin/product-category/create
 module.exports.create = async (req,res) =>{
     //handle create tree parent category here
-    const createTree = (arr,parentId="") =>{
-        const tree = [];
-        for(const item of arr){
-            if(item.parent_category === parentId){
-                const newItem = item;
-                const children = createTree(arr,item.id);
-                if(children.length > 0){
-                    newItem.children =children
-                }
-                tree.push(newItem);
-            }
-        }
-        return tree;
-    }
+    
     const record = await productCategory.find({});
-    const newRecord = createTree(record);
+    const newRecord = helperCreatree(record);
     res.render("admin/pages/product-category/create.pug",{
         listParent: newRecord
     })
@@ -46,5 +35,32 @@ module.exports.createPost = async (req,res) =>{
     }
 
 
+    res.redirect("/admin/product-category");
+}
+//[GET] /admin/product-category/edit/:id
+module.exports.edit = async (req,res) =>{
+    const id = req.params.id;
+    const data = await productCategory.findById({
+        _id: id
+    })
+    const record = await productCategory.find({})
+    const newRecord = helperCreatree(record);
+    res.render("admin/pages/product-category/edit",{
+        listParent: newRecord,
+        currentId: id,
+        data: data
+    })
+} 
+//[PATCH] /admin/product-category/:id
+module.exports.editPatch = async (req,res) =>{
+    try {
+        await productCategory.updateOne({
+            _id: req.params.id
+        },req.body)
+        req.flash('sucess','Cập nhật danh mục sản phẩm thành công')
+    } catch (error) {
+        req.flash('error','Cập nhật danh mục thất bại');
+        console.log(error);
+    }
     res.redirect("/admin/product-category");
 }

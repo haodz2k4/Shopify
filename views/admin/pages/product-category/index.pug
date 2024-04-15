@@ -33,5 +33,5 @@ block main
                     Button.badge.rounded-pill.text-bg-danger(style='background-color: red; color: white' btn-change-status=item.id) #{item.status}
                   
                 td 
-                  a.btn.btn-warning Sửa 
-                  a.btn.btn-danger Xóa 
+                  a(href="/admin/product-category/edit/"+item.id).btn.btn-warning Sửa 
+                  a(href="/admin/product-category/delete").btn.btn-danger Xóa 

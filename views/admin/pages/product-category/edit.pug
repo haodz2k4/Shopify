@@ -1,0 +1,39 @@
+extends ../../layouts/default.pug 
+include ../../mixins/create-tree.pug
+include ../../mixins/show-alert.pug 
+block main 
+    +showSucesAlert()
+    +showErrorAlert()
+    .container  
+      h2.mt-5 Chỉnh sửa danh mục sản phâm 
+      form.mt-4(action=`/admin/product-category/edit/${data.id}?_method=PATCH`, method='POST', ,enctype="multipart/form-data")
+        .form-group
+          label(for='title') Title:
+          input#title.form-control(type='text', name='title', required='' value=data.title)
+        .form-group
+          label(for='parent_category') Parent Category:
+          select#parent_category.form-control(name='parent_category')
+            option(value='') Chọn Danh Mục sản phẩm
+            if listParent 
+                +createTree(listParent,1,data.parent_category)
+
+        .form-group
+          label(for='description') Description:
+          textarea#description.form-control(name='description', rows='4', cols='50', textarea-mce) #{data.description}
+        .form-group(upload-image)
+          label(for='thumbnail') Thumbnail:
+          input#thumbnail.form-control-file(type='file', name='thumbnail' accept="image/*" upload-img-input)
+          img(src=data.thumbnail, alt="" upload-img-preview style="width: 50px; height: 50px;") 
+        .form-group
+          label(for='position') Position:
+          input#position.form-control(type='number', name='position', required='', value=data.position )
+        .form-group
+          label Status:
+          br
+          .form-check.form-check-inline
+            input#active.form-check-input(type='radio', name='status', value='active', checked=(data.status == 'active') ? true : false  )
+            label.form-check-label(for='active') Active
+          .form-check.form-check-inline
+            input#inactive.form-check-input(type='radio', name='status', value='inactive' checked=(data.status == 'inactive') ? true : false)
+            label.form-check-label(for='inactive') Inactive
+        button.btn.btn-primary(type='submit') Submit

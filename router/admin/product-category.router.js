@@ -8,4 +8,6 @@ const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
 router.get("/",controller.index);
 router.get("/create",controller.create);
 router.post("/create",fileUpload.single('thumbnail'),uploadCloud,controller.createPost);   
+router.get("/edit/:id",controller.edit);
+router.patch("/edit/:id",fileUpload.single('thumbnail'),uploadCloud,controller.editPatch);
 module.exports = router;

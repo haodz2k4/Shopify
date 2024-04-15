@@ -1,7 +1,7 @@
-mixin createTree(listParent,level = 1)
+mixin createTree(listParent,level = 1,currentId="")
     each item in listParent 
         - const arr = new Array(level + 1).join("-- ")
-        option(value=item.id) #{arr} #{item.title} 
+        option(value=item.id selected=(currentId == item.id ? true: false)) #{arr} #{item.title} 
         if item.children && item.children.length > 0 
-            +createTree(item.children, level + 1)
+            +createTree(item.children, level + 1,currentId)
             
