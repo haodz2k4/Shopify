@@ -1,0 +1,5 @@
+.btn-view-more {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    margin-top: 30px; /* Adjust margin top as needed */
+  }
