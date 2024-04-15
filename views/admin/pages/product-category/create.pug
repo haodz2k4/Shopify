@@ -1,5 +1,5 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/create-tree.pug
 block main 
 
      
@@ -14,8 +14,7 @@ block main
           select#parent_category.form-control(name='parent_category')
             option(value='') Chọn Danh Mục sản phẩm
             if listParent 
-                each item in listParent 
-                    option(value=item.id) #{item.title} 
+                +createTree(listParent)
 
         .form-group
           label(for='description') Description:
