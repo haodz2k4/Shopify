@@ -1,12 +1,18 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/create-tree.pug 
 block main 
     .container
       h2(style="text-align: center;") THÊM SẢN PHẨM 
       form(action="/admin/products/create" method="POST" enctype="multipart/form-data")
         .form-group
           label(for='productTitle') Title
-          input#productTitle.form-control(type='text', name='title', placeholder='Enter title')
+          input#productTitle.form-control(type='text', name='title', placeholder='Enter title') 
+        .form-group
+          label(for='parent_category') Parent Category:
+          select#parent_category.form-control(name='product_category_id')
+            option(value='') Chọn Danh Mục sản phẩm
+            if productCategory 
+                +createTree(productCategory)
         .form-group
           label(for='productDescription') Description
           textarea#productDescription.form-control(name='description', rows='3', placeholder='Enter description')

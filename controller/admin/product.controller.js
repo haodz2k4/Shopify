@@ -1,5 +1,8 @@
 //require model here 
 const products = require("../../models/product.model");
+const productCategory = require("../../models/product-category.model");
+//require helper here
+const createTree = require("../../helpers/createTree.helper");
 //[GET] /admin/products
 module.exports.index = async (req,res) =>{
     const find = {
@@ -173,7 +176,12 @@ module.exports.deleteForever = async (req,res) =>{
 }
 //[GET] /admin/products/create
 module.exports.create = async (req,res) =>{
-    res.render("admin/pages/products/create");  
+
+    const record = await productCategory.find({});
+    const newRecord = createTree(record);
+    res.render("admin/pages/products/create",{
+        productCategory: newRecord
+    });  
 }
 //[POST] /admin/products/create
 module.exports.createPost = async (req,res) =>{
@@ -185,7 +193,6 @@ module.exports.createPost = async (req,res) =>{
     }else{
         req.body.position = await products.countDocuments();
     }   
-    console.log(req.body);
     const record = new products(req.body);
     await record.save();
     req.flash('sucess','Thêm mới sản phẩm thành công')

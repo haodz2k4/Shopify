@@ -4,6 +4,7 @@ const slug = require('mongoose-slug-updater');
 mongoose.plugin(slug);  
 const productSchema = new Schema({
     title: String,
+    product_category_id: String,
     slug: { type: String, slug: "title" },
     description: String,
     price: Number,
