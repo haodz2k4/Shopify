@@ -204,8 +204,11 @@ module.exports.edit = async (req,res) =>{
     const record = await products.findById({
         _id: req.params.id
     })
+    const categoryRecord = await productCategory.find({});
+    const newCategoryRecord = createTree(categoryRecord);
     res.render("admin/pages/products/edit.pug",{
-        product: record
+        product: record,
+        categoryRecord: newCategoryRecord
     });
 }
 //[PATCH] /admin/products/edit/:id

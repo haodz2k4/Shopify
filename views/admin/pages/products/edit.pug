@@ -1,5 +1,5 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/create-tree.pug
 block main 
 
     
@@ -9,6 +9,12 @@ block main
         .form-group
           label(for='title') Title:
           input#title.form-control(type='text', name='title' value=product.title)
+        .form-group
+          label(for='parent_category') Parent Category: 
+          select#parent_category.form-control(name='product_category_id')
+            option(value='') Chọn Danh Mục sản phẩm
+            if categoryRecord 
+                +createTree(categoryRecord,1,product.product_category_id)
         .form-group
           label(for='description') Description:
           textarea#description.form-control(rows='3', placeholder='Enter description') !{product.description}

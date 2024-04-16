@@ -1,0 +1,13 @@
+extends ../../layouts/default.pug 
+
+block main 
+
+    h1 Thêm mới Nhóm quyền 
+    form(action="/admin/roles/create" method="POST")
+      .form-group
+        label(for='title') Tiêu đề 
+        input#title.form-control(type='text', placeholder='Enter title', name='title')
+      .form-group
+        label(for='description') Mô tả 
+        textarea#description.form-control(rows='3', placeholder='Enter description', name='description')
+      button.btn.btn-primary(type='submit') Thêm mới 

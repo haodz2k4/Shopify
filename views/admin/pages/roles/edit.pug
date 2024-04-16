@@ -1,0 +1,12 @@
+extends ../../layouts/default.pug 
+
+block main 
+    h1 Chỉnh sửa nhóm quyền 
+    form(action=`/admin/roles/edit/${roles.id}?_method=PATCH` method="POST")
+      .form-group
+        label(for='title') Tiêu đề 
+        input#title.form-control(type='text', placeholder='Enter title', name='title', value=roles.title)
+      .form-group
+        label(for='description') Mô tả 
+        textarea#description.form-control(rows='3', placeholder='Enter description', name='description') !{roles.title}
+      button.btn.btn-primary(type='submit') Chỉnh sửa 

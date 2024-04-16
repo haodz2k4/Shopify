@@ -1,0 +1,30 @@
+extends ../../layouts/default.pug 
+include ../../mixins/show-alert.pug 
+block main 
+    +showSucesAlert()
+    +showErrorAlert()
+    a(href="/admin/roles/create").btn.btn-secondary Thêm mới  
+    h1 Danh sách nhóm quyền 
+    table.table.table-striped-columns
+      thead
+        tr
+          th STT
+          th Nh&oacute;m quy&#x1EC1;n
+          th M&ocirc; t&#x1EA3; ng&#x1EAF;n 
+          th H&agrave;nh &dstrok;&#x1ED9;ng
+      tbody
+       if roles.length > 0
+        each item, index in roles
+          tr
+            td #{index + 1}
+            td #{item.title}
+            td !{item.description}  
+            td  
+              a(href="/admin/roles/edit/"+item.id).btn.btn-warning Sửa 
+              Button.btn.btn-danger(btn-delete=item.id) Xóa   
+       else
+        tr
+          td(colspan="4")
+            h1(style='text-align: center;') Chưa có nhóm quyền nào 
+
+    form(action="" data-path="/admin/roles/delete" method="POST" form-delete) 
