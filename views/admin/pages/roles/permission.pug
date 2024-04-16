@@ -1,45 +1,48 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/show-alert.pug 
 block main 
     
     .container
-     
+      +showSucesAlert()
+      +showErrorAlert()
       h2 Phân quyền 
-      Button.btn.btn-primary(btn-submit-permissions) Cập nhật    
-      table.table
+      Button.btn.btn-primary(btn-submit-permissions) Cập nhật  
+      div(data-roles=roles)  
+      table.table(table-permissions)
         thead
-          
             tr
               th Nhóm quyền 
-
-              each item in roles
+               each item in roles
                 th #{item.title}
         tbody
-          tr 
-            td(colspan="3")
-                h5 Danh mục sản phẩm 
-          tr 
-            td Id Nhóm quyền 
+          tr(data-name="id").d-none
+            td Id nhóm quyền
             each item in roles
                 td
                   input(type="text" value=item.id)
-          tr
-            td(data-name="product-category_view") Xem 
+          tr 
+            td(colspan="3")
+                h5 Danh mục sản phẩm 
+          tr(data-name="product-category_view")
+            td Xem 
             each item in roles
               td
-                input(type='checkbox')
-          tr
-            td(data-name="product-category_create") Thêm
+                input(type='checkbox' value=item.id)
+          tr(data-name="product-category_create")
+            td Thêm
             each item in roles
               td
-                input(type='checkbox')
-          tr
-            td(data-name="product-category_edit") Chỉnh sửa 
+                input(type='checkbox' value=item.id)
+          tr(data-name="product-category_edit" ) 
+            td Chỉnh sửa 
             each item in roles
               td
-                input(type='checkbox')
-          tr
-            td(data-name="product-category_delete") Xóa 
+                input(type='checkbox' value=item.id)
+          tr(data-name="product-category_delete")
+            td Xóa 
             each item in roles
               td
-                input(type='checkbox')
+                input(type='checkbox' value=item.id)
+
+    form(action="/admin/roles/permissions?_method=PATCH" method="POST", form-change-permissions).d-none
+      input(type="text" name='roles')

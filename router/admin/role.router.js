@@ -8,4 +8,5 @@ router.get("/edit/:id",controller.edit);
 router.patch("/edit/:id",controller.editPatch);
 router.delete("/delete/:id",controller.delete);
 router.get("/permissions",controller.permission);
+router.patch("/permissions",controller.permissionPatch);
 module.exports = router;

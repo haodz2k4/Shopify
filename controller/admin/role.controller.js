@@ -71,3 +71,22 @@ module.exports.permission = async (req,res) =>{
         roles: record
     })
 }
+//[PATCH] /admin/roles/permissions
+module.exports.permissionPatch = async (req,res) =>{
+    
+    try {
+        const JsonRole = JSON.parse(req.body.roles);
+        for(const item of JsonRole){
+            await roles.updateOne({
+                _id: item.id
+            },{
+                permissions: item.permissions
+            })
+        }
+        req.flash('sucess','Cập nhật thành công')
+    } catch (error) {
+        console.log(error);
+        req.flash('error','Cập nhật thất bại')
+    }
+    res.redirect("back");
+}

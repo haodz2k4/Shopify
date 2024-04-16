@@ -276,3 +276,61 @@ if(btnRestore.length > 0){
         })
     })
 }
+//handle submit permission
+const btnSubmitPermission = document.querySelector("[btn-submit-permissions]");
+if(btnSubmitPermission){
+    const roles = [];
+    btnSubmitPermission.addEventListener("click",() =>{
+        const tablePermission = document.querySelector("[table-permissions]");
+        const row = tablePermission.querySelectorAll("tbody tr[data-name]");
+        
+        for(const item of row){
+            const dataName = item.getAttribute("data-name");
+            const inputs = item.querySelectorAll ("input");
+            
+            if(dataName === "id"){
+                inputs.forEach((item) =>{
+                    const id = item.value;
+                    roles.push({
+                        id: id,
+                        permissions: []
+                    })
+                })
+            }else{
+                inputs.forEach((item, index) =>{
+                    const inpChecked = item.checked
+                    if(inpChecked){
+                        roles[index].permissions.push(dataName)
+                    }
+                })
+            }
+        }
+        console.log(roles);
+    if(roles.length > 0){
+        const formChangePermission = document.querySelector("[form-change-permissions]");
+        const inpRoles = formChangePermission.querySelector("input[name='roles']")
+        inpRoles.value = JSON.stringify(roles);
+        formChangePermission.submit();
+    }
+        
+    })
+    
+};
+//handle data default here
+const dataDefault = document.querySelector("[data-roles]");
+if(dataDefault){
+    const value = JSON.parse(dataDefault.getAttribute("data-roles"));
+    const tablePermission = document.querySelector("[table-permissions]");
+   
+    value.forEach((item, index) =>{
+        const permission = item.permissions;
+        permission.forEach((item) =>{
+            const row = tablePermission.querySelector(`tr[data-name="${item}"]`);
+            const inp = row.querySelectorAll(`input`)[index];
+            inp.checked = true;
+        })
+    })
+    
+    
+    
+}
