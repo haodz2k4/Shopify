@@ -63,3 +63,11 @@ module.exports.delete = async (req,res) =>{
     }
     res.redirect("back");
 }
+//[GET] /admin/roles/permissions 
+module.exports.permission = async (req,res) =>{
+
+    const record = await roles.find({});
+    res.render("admin/pages/roles/permission.pug",{
+        roles: record
+    })
+}

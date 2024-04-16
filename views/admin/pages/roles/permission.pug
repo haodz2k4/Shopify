@@ -1,0 +1,45 @@
+extends ../../layouts/default.pug 
+
+block main 
+    
+    .container
+     
+      h2 Phân quyền 
+      Button.btn.btn-primary(btn-submit-permissions) Cập nhật    
+      table.table
+        thead
+          
+            tr
+              th Nhóm quyền 
+
+              each item in roles
+                th #{item.title}
+        tbody
+          tr 
+            td(colspan="3")
+                h5 Danh mục sản phẩm 
+          tr 
+            td Id Nhóm quyền 
+            each item in roles
+                td
+                  input(type="text" value=item.id)
+          tr
+            td(data-name="product-category_view") Xem 
+            each item in roles
+              td
+                input(type='checkbox')
+          tr
+            td(data-name="product-category_create") Thêm
+            each item in roles
+              td
+                input(type='checkbox')
+          tr
+            td(data-name="product-category_edit") Chỉnh sửa 
+            each item in roles
+              td
+                input(type='checkbox')
+          tr
+            td(data-name="product-category_delete") Xóa 
+            each item in roles
+              td
+                input(type='checkbox')
