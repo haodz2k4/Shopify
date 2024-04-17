@@ -283,11 +283,9 @@ if(btnSubmitPermission){
     btnSubmitPermission.addEventListener("click",() =>{
         const tablePermission = document.querySelector("[table-permissions]");
         const row = tablePermission.querySelectorAll("tbody tr[data-name]");
-        
         for(const item of row){
             const dataName = item.getAttribute("data-name");
             const inputs = item.querySelectorAll ("input");
-            
             if(dataName === "id"){
                 inputs.forEach((item) =>{
                     const id = item.value;

@@ -1,0 +1,45 @@
+extends ../../layouts/default.pug 
+
+block main 
+    h1 Đây là trang thêm mới 
+    .container.mt-5
+      .row.justify-content-center
+        .col-md-6
+          .card
+            .card-header
+              | User Information Form
+            .card-body
+              form
+                .form-group
+                  label(for='fullName') Full Name
+                  input#fullName.form-control(type='text', placeholder='Enter your full name')
+                .form-group
+                  label(for='email') Email
+                  input#email.form-control(type='email', placeholder='Enter your email address')
+                .form-group
+                  label(for='password') Password
+                  input#password.form-control(type='password', placeholder='Enter your password')
+                .form-group
+                  label(for='phone') Phone
+                  input#phone.form-control(type='text', placeholder='Enter your phone number')
+                .form-group
+                  label(for='avatar') Avatar
+                  input#avatar.form-control(type='text', placeholder='Enter URL of your avatar')
+                .form-group
+                  label(for='role_id') Role ID
+                  select#role_id.form-control
+                    option(value='1') Admin
+                    option(value='2') User
+                    option(value='3') Moderator
+                    // Add more options as needed
+                .form-group
+                  label Status
+                  .form-check
+                    input#active.form-check-input(type='radio', name='status', value='active', checked='')
+                    label.form-check-label(for='active')
+                      | Active
+                  .form-check
+                    input#inactive.form-check-input(type='radio', name='status', value='inactive')
+                    label.form-check-label(for='inactive')
+                      | Inactive
+                button.btn.btn-primary(type='submit') Submit
