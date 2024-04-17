@@ -1,36 +1,34 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/show-alert.pug 
 block main 
     h1 Đây là trang thêm mới 
     .container.mt-5
+      +showSucesAlert()
+      +showErrorAlert()
       .row.justify-content-center
-        .col-md-6
-          .card
-            .card-header
-              | User Information Form
             .card-body
-              form
+              form(action="/admin/accounts/create" method="POST" enctype="multipart/form-data")
                 .form-group
                   label(for='fullName') Full Name
-                  input#fullName.form-control(type='text', placeholder='Enter your full name')
+                  input#fullName.form-control(type='text', name='fullName', placeholder='Enter your full name')
                 .form-group
                   label(for='email') Email
-                  input#email.form-control(type='email', placeholder='Enter your email address')
+                  input#email.form-control(type='email', name='email', placeholder='Enter your email address')
                 .form-group
                   label(for='password') Password
-                  input#password.form-control(type='password', placeholder='Enter your password')
+                  input#password.form-control(type='password', name='password', placeholder='Enter your password')
                 .form-group
                   label(for='phone') Phone
-                  input#phone.form-control(type='text', placeholder='Enter your phone number')
+                  input#phone.form-control(type='text', name='phone', placeholder='Enter your phone number')
                 .form-group
                   label(for='avatar') Avatar
-                  input#avatar.form-control(type='text', placeholder='Enter URL of your avatar')
+                  input#avatar.form-control(type='file', name='avatar', placeholder='Enter URL of your avatar')
                 .form-group
                   label(for='role_id') Role ID
-                  select#role_id.form-control
-                    option(value='1') Admin
-                    option(value='2') User
-                    option(value='3') Moderator
+                  select#role_id.form-control(name='role_id')
+                    option(value='') Chọn
+                    each item in role
+                        option(value=item.id) #{item.title}
                     // Add more options as needed
                 .form-group
                   label Status
