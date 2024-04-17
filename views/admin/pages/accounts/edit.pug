@@ -1,0 +1,44 @@
+extends ../../layouts/default.pug 
+include ../../mixins/show-alert.pug
+block main 
+    .container
+      +showSucesAlert()
+      +showErrorAlert()
+      h2 Chỉnh sửa người dùng 
+      form(action=`/admin/accounts/edit/${account.id}?_method=PATCH`, method='POST', enctype="multipart/form-data")
+        .mb-3
+          label.form-label(for='fullName') Họ và tên:
+          input#fullName.form-control(type='text', name='fullName', value=account.fullName)
+        .mb-3
+          label.form-label(for='email') Email:
+          input#email.form-control(type='email', name='email', value=account.email)
+        .mb-3
+          label.form-label(for='password') Mật khẩu:
+          input#password.form-control(type='password', name='password', value=account.password)
+        .mb-3
+          label.form-label(for='token') Token:
+          input#token.form-control(type='text', name='token', value=account.token)
+        .mb-3
+          label.form-label(for='phone') Số điện thoại:
+          input#phone.form-control(type='tel', name='phone', value=account.phone)
+        .mb-3
+          label.form-label(for='avatar') Avatar URL:
+          input#avatar.form-control(type='file', name='avatar')
+          img(src=account.avatar, alt="",style="width: 80px; height: 80px;")
+        .mb-3
+          label.form-label(for='role_id') Role ID:
+          select#role_id.form-select(name='role_id')
+            each item in roles
+                option(value=item.id select=(item.id === account.id ? true : false)) #{item.title}  
+          
+        .mb-3
+        label.form-label Status:
+        br
+        .form-check.form-check-inline
+            input#status_active.form-check-input(type='radio', name='status', value='active', checked=(account.status === "active" ? true: false))
+            label.form-check-label(for='status_active') Active
+        .form-check.form-check-inline
+            input#status_inactive.form-check-input(type='radio', name='status', value='inactive', checked=(account.status === "inactive" ? true: false))
+            label.form-check-label(for='status_inactive') Inactive
+        .mb-3 
+        button.btn.btn-primary(type='submit') Submit

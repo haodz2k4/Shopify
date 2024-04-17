@@ -1,6 +1,33 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/show-alert.pug
 block main 
+    +showSucesAlert()
+    +showErrorAlert()
     .container 
         h1 Quản lý tài khoản 
         a(href="/admin/accounts/create").btn.btn-primary Thêm mới
+
+        table.table 
+            thead 
+                tr 
+                  th #
+                  th Avatar
+                  th Họ và tên
+                  th Phân quyền 
+                  th Email 
+                  th Trạng thái 
+                  th Hành động 
+            tbody 
+              each item, index in accounts
+                tr  
+                  td #{index + 1}
+                  td 
+                    img(src=item.avatar, alt="", style="width: 80px; height: 80px;")
+                  td #{item.fullName}
+                  td #{item.roleTitle}
+                  td #{item.email}
+                  td #{item.status}
+                  td 
+                    a(href="/admin/accounts/edit/"+item.id).btn.btn-warning Sửa 
+                    button.btn.btn-danger Xóa 
+                    button.btn.btn-secondary Chi tiết 
