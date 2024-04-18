@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug 
 include ../../mixins/show-alert.pug 
 block main 
+   if localRoles.permissions.includes("product_view")
     +showSucesAlert()
     +showErrorAlert()
     .container.mt-4
@@ -46,7 +47,8 @@ block main
         .col
           Button.btn.btn-primary Thông báo 
         .col
-          a(href="/admin/products/create").btn.btn-warning + Thêm mới  
+          if localRoles.permissions.includes("product_create")
+            a(href="/admin/products/create").btn.btn-warning + Thêm mới  
         .col
           a(href="/admin/products/garbage").btn.btn-primary.position-relative
             | Thùng rác
@@ -111,8 +113,10 @@ block main
                 input(type="number", style="width: 40px;", value=item.position, name='position') 
               td 
                 .btn-group
-                  a(href=`/admin/products/edit/${item.id}`).btn.btn-danger Sửa
-                  a.btn.btn-warning(btn-sort-delete=item.id) Xóa 
+                  if localRoles.permissions.includes("product_edit")
+                    a(href=`/admin/products/edit/${item.id}`).btn.btn-danger Sửa
+                  if localRoles.permissions.includes("product_delete")
+                    a.btn.btn-warning(btn-sort-delete=item.id) Xóa 
                   a(href="/admin/products/detail/"+item.id).btn.btn-info Chi tiết
     div(style='width: 100%; height: 2px; background-color: black;margin-top: 10px; margin-bottom: 15px;')
     .container.mt-5
@@ -128,3 +132,6 @@ block main
             Button.page-link(btn-pagination = objectPagination.pageCurrent + 1) Next 
     form(action="" form-change-status data-path=`/admin/products/change-status` method="POST") 
     form(action="" form-soft-delete data-path=`/admin/products/soft-delete` method="POST") 
+
+   else 
+    h1 Không có quyèn truy cập 

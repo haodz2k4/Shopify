@@ -7,15 +7,17 @@ html(lang="en")
         link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
         title Document
     body 
-    include ../partials/header.pug 
-    .content
-      block main 
+      if localRoles.permissions.length > 0
+        include ../partials/header.pug 
+        .content
+          block main 
 
-    include ../partials/sider.pug 
+        include ../partials/sider.pug 
 
 
-    script(src="/admin/js/script.js") 
-    script(type='application/javascript', src='/tinymce/tinymce.min.js')
-    // Script element sourcing the TinyMCE configuration
-    script(type='application/javascript', src='/admin/js/my-tinymce-config.js')
-    
+        script(src="/admin/js/script.js") 
+        script(type='application/javascript', src='/tinymce/tinymce.min.js')
+        // Script element sourcing the TinyMCE configuration
+        script(type='application/javascript', src='/admin/js/my-tinymce-config.js') 
+      else 
+        h1 Không có quyền gì cả 
