@@ -36,4 +36,29 @@ body {
     width: 100%; /* Make the image fill the card */
     height: auto; /* Preserve the aspect ratio */
   }
-  
+  /* Login here */
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+  .login-container h2 {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .form-control {
+    border-radius: 5px;
+  }
+
+  .btn-login {
+    border-radius: 5px;
+  }

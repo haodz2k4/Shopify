@@ -1,0 +1,16 @@
+extends ../../layouts/auth.pug 
+include ../../mixins/show-alert.pug 
+block main 
+    .container.mt-5
+      +showSucesAlert()
+      +showErrorAlert()
+      .login-container
+        h2 Đăng nhập 
+        form(action="/admin/auth/login" method="POST")
+          .form-group
+            label(for='username') Email
+            input#username.form-control(type='email', placeholder='Nhập email của bạn', name='email')
+          .form-group
+            label(for='password') Password
+            input#password.form-control(type='password', placeholder='Nhập mật khẩu', name='password')
+          button.btn.btn-primary.btn-block.btn-login(type='submit') Đăng nhập 
