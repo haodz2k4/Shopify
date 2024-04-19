@@ -6,6 +6,10 @@ const md5 = require('md5');
 const generate = require("../../helpers/generate.helper");
 //GET /admin/account
 module.exports.index = async (req,res) =>{
+    if(!res.locals.localRoles.permissions.includes("account_view")){
+        res.render("admin/layouts/access-deny.pug")
+        return;
+    }
     const record = await account.find({})
     for(const item of record){
         const role = await roles.findOne({
@@ -20,6 +24,10 @@ module.exports.index = async (req,res) =>{
 }
 //[GET /admin/account/create
 module.exports.create = async (req,res) =>{
+    if(!res.locals.localRoles.permissions.includes("account_create")){
+        res.render("admin/layouts/access-deny.pug")
+        return;
+    }
     const record = await roles.find({deleted: false});
     res.render("admin/pages/accounts/create.pug",{
         role: record
@@ -27,6 +35,10 @@ module.exports.create = async (req,res) =>{
 }
 //[POST] /admin/account/create  
 module.exports.createPost = async (req,res) =>{
+    if(!res.locals.localRoles.permissions.includes("account_create")){
+        res.render("admin/layouts/access-deny.pug")
+        return;
+    }
     try {
         req.body.password = md5(req.body.password);
         req.body.token = generate.generateString(30);

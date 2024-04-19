@@ -5,6 +5,10 @@ const productCategory = require("../../models/product-category.model");
 const createTree = require("../../helpers/createTree.helper");
 //[GET] /admin/products
 module.exports.index = async (req,res) =>{
+    if(!res.locals.localRoles.permissions.includes("product_view")){
+        res.render("admin/layouts/access-deny.pug")
+        return;
+    }
     const find = {
         deleted: false
     }
@@ -176,7 +180,10 @@ module.exports.deleteForever = async (req,res) =>{
 }
 //[GET] /admin/products/create
 module.exports.create = async (req,res) =>{
-
+    if(!res.locals.localRoles.permissions.includes("product_create")){
+        res.render("admin/layouts/access-deny.pug")
+        return;
+    }
     const record = await productCategory.find({});
     const newRecord = createTree(record);
     res.render("admin/pages/products/create",{
@@ -186,7 +193,7 @@ module.exports.create = async (req,res) =>{
 //[POST] /admin/products/create
 module.exports.createPost = async (req,res) =>{
     if(!res.locals.localRoles.permissions.includes("product_create")){
-        res.send("Không có quyền truy cập");
+        res.render("admin/layouts/access-deny.pug")
         return;
     }
     req.body.price = parseInt(req.body.price);
@@ -204,7 +211,10 @@ module.exports.createPost = async (req,res) =>{
 }
 //[GET] /admin/products/edit/:id
 module.exports.edit = async (req,res) =>{
-
+    if(!res.locals.localRoles.permissions.includes("product_edit")){
+        res.render("admin/layouts/access-deny.pug")
+        return;
+    }
     const record = await products.findById({
         _id: req.params.id
     })
@@ -217,6 +227,11 @@ module.exports.edit = async (req,res) =>{
 }
 //[PATCH] /admin/products/edit/:id
 module.exports.editPatch = async (req,res) =>{
+
+    if(!res.locals.localRoles.permissions.includes("product_edit")){
+        res.send("Bạn khong có quyền truy cập");
+        return;
+    }
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);

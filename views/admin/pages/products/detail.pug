@@ -3,26 +3,28 @@ extends ../../layouts/default.pug
 block main 
     a(href="/admin/products").btn.btn-warning Thoát  
     .container
-
-      .row
-        .col-md-6
-          // Adjust the column size
-          .card
-            img.card-img-top(src=product.thumbnail, alt='Product Thumbnail')
-            .card-body
-              h5.card-title Tiêu đề #{product.title}
-              p.card-text
-                strong Mô tả: 
-                | !{product.description}
-              p.card-text 
-                strong Giá tiền:
-                |  #{product.price}$
-              p.card-text 
-                strong % Giảm giá: 
-                | #{product.discountPercentage}%
-              p.card-text 
-                strong Số lượng tồn kho:
-                | #{product.stock}
-              p.card-text 
-                strong Trạng thái sản phẩm:
-                |  #{product.status}
+      if localRoles.permissions.includes("product-category_view")
+        .row
+          .col-md-6
+            // Adjust the column size
+            .card
+              img.card-img-top(src=product.thumbnail, alt='Product Thumbnail')
+              .card-body
+                h5.card-title Tiêu đề #{product.title}
+                p.card-text
+                  strong Mô tả: 
+                  | !{product.description}
+                p.card-text 
+                  strong Giá tiền:
+                  |  #{product.price}$
+                p.card-text 
+                  strong % Giảm giá: 
+                  | #{product.discountPercentage}%
+                p.card-text 
+                  strong Số lượng tồn kho:
+                  | #{product.stock}
+                p.card-text 
+                  strong Trạng thái sản phẩm:
+                  |  #{product.status}
+      else
+        h1 Bạn không có quyền truy cập  

@@ -1,8 +1,9 @@
 extends ../../layouts/default.pug 
 include ../../mixins/show-alert.pug 
 block main 
-    +showSucesAlert()
-    +showErrorAlert()
+  +showSucesAlert()
+  +showErrorAlert()
+  if localRoles.permissions.includes("roles_view")
     a(href="/admin/roles/create").btn.btn-secondary Thêm mới  
     h1 Danh sách nhóm quyền 
     table.table.table-striped-columns
@@ -28,3 +29,5 @@ block main
             h1(style='text-align: center;') Chưa có nhóm quyền nào 
 
     form(action="" data-path="/admin/roles/delete" method="POST" form-delete) 
+  else 
+    h1 Khong co quyen truy cap 

@@ -2,8 +2,11 @@
 const roles = require("../../models/role.model");
 
 //[GET] /admin/roles
-
 module.exports.index = async (req,res) =>{
+    if(!res.locals.localRoles.permissions.includes("roles_view")){
+        res.render("admin/layouts/access-deny.pug");
+        return;
+    }
     const record = await roles.find({});
     res.render("admin/pages/roles/index.pug",{
         roles: record
@@ -11,6 +14,10 @@ module.exports.index = async (req,res) =>{
 }
 //[GET] /admin/roles/create
 module.exports.create = (req,res) =>{
+    if(!res.locals.localRoles.permissions.includes("roles_create")){
+        res.render("admin/layouts/access-deny.pug");
+        return;
+    }
     res.render("admin/pages/roles/create.pug");
 }
 //[POST] /admin/roles/create 
@@ -28,6 +35,10 @@ module.exports.createPost = async (req,res) =>{
 }
 //[GET] /admin/roles/edit/:id
 module.exports.edit = async (req,res) =>{
+    if(!res.locals.localRoles.permissions.includes("roles_edit")){
+        res.render("admin/layouts/access-deny.pug");
+        return;
+    }
     const id = req.params.id;
     const record = await roles.findById({
         _id: id
@@ -65,7 +76,10 @@ module.exports.delete = async (req,res) =>{
 }
 //[GET] /admin/roles/permissions 
 module.exports.permission = async (req,res) =>{
-
+    if(!res.locals.localRoles.permissions.includes("roles_permission")){
+        res.render("admin/layouts/access-deny.pug");
+        return;
+    }
     const record = await roles.find({});
     res.render("admin/pages/roles/permission.pug",{
         roles: record

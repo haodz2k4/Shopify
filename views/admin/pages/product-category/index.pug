@@ -1,9 +1,11 @@
 extends ../../layouts/default.pug 
 
 block main 
+  if localRoles.permissions.includes("product-category_view")
     h1 Danh sách danh mục sản phẩm 
     .container 
-        a(href="/admin/product-category/create").btn.btn-secondary + Thêm mới 
+        if localRoles.permissions.includes("product-category_create")
+          a(href="/admin/product-category/create").btn.btn-secondary + Thêm mới 
         
         table.table.table-striped.table-hover
             thead
@@ -33,5 +35,11 @@ block main
                     Button.badge.rounded-pill.text-bg-danger(style='background-color: red; color: white' btn-change-status=item.id) #{item.status}
                   
                 td 
-                  a(href="/admin/product-category/edit/"+item.id).btn.btn-warning Sửa 
-                  a(href="/admin/product-category/delete").btn.btn-danger Xóa 
+                  if localRoles.permissions.includes("product-category_edit")
+                    a(href="/admin/product-category/edit/"+item.id).btn.btn-warning Sửa 
+                  if localRoles.permissions.includes("product-category_delete")
+                    a(href="/admin/product-category/delete").btn.btn-danger Xóa 
+                  if localRoles.permissions.includes("product-category_view")
+                    a(href="/admin/product-category/detail/"+item.id).btn.btn-secondary Chi tiết  
+  else 
+    h1 Bạn không có quyền truy cập   
