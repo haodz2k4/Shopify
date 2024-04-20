@@ -7,7 +7,6 @@ html(lang="en")
         link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
         title Document
     body 
-      if localRoles.permissions.length > 0
         include ../partials/header.pug 
         .content
           block main 
@@ -19,5 +18,3 @@ html(lang="en")
         script(type='application/javascript', src='/tinymce/tinymce.min.js')
         // Script element sourcing the TinyMCE configuration
         script(type='application/javascript', src='/admin/js/my-tinymce-config.js') 
-      else 
-        h1 Không có quyền gì cả 

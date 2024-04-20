@@ -1,0 +1,41 @@
+extends ../../layouts/default.pug 
+block main 
+    .container.mt-5
+      .row
+        .col-md-6.mx-auto
+          .card
+            .card-header
+              | Edit User Profile
+            .card-body
+              form(action="/admin/my-account/edit?_method=PATCH" method="POST" enctype="multipart/form-data")
+                .form-group
+                  label(for='fullName') Full Name
+                  input#fullName.form-control(type='text', name='fullName', value=user.fullName required='')
+                .form-group
+                  label(for='email') Email
+                  input#email.form-control(type='email', name='email', value=user.email, required='')
+                .form-group
+                  label(for='phone') Phone
+                  input#phone.form-control(type='text', name='phone', value=user.phone, required='')
+                .form-group 
+                  label(for='avatar') Avatar
+                  input#avatar.form-control(type='file', name='avatar',inp-review)
+                  img(src=user.avatar, alt="",style='width: 80px; height: 80px' img-review)
+                .form-group
+                  label(for='role') Role ID
+                  select#roleId.form-control(name='roleId', required='')
+                    each item in roles   
+                        option(value=item.id, selected=(item.id === user.role_id ? true: false)) #{item.title}
+                .form-group
+                    label Status
+                    .form-check
+                        input#active.form-check-input(type='radio', name='status', value='active', checked=(user.status === "active" ? true: false))
+                    label.form-check-label(for='active')
+                    | Active
+                    .form-check
+                        input#active.form-check-input(type='radio', name='status', value='active', checked=(user.status === "inactive" ? true: false))
+                    label.form-check-label(for='active')
+                    | inactive
+                   
+                .form-group
+                  button.btn.btn-primary(type='submit') Save Changes

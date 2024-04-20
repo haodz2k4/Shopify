@@ -4,6 +4,7 @@ const productCategoryRouter = require("./product-category.router");
 const roleRouter = require("./role.router");
 const accountRouter = require("./account.router");
 const authRouter = require("./auth.router");
+const myAccountRouter = require("./my-account.router");
 const auth = require("../../middlewares/admin/auth.middleware");
 module.exports = (app) =>{
     app.use("/admin/dashboard",auth.requireAuth,dashboardRouter);
@@ -11,5 +12,6 @@ module.exports = (app) =>{
     app.use("/admin/product-category",auth.requireAuth,productCategoryRouter);
     app.use("/admin/roles",auth.requireAuth,roleRouter);
     app.use("/admin/accounts",auth.requireAuth,accountRouter);
-    app.use("/admin/auth",authRouter)
+    app.use("/admin/auth",authRouter);
+    app.use("/admin/my-account",auth.requireAuth,myAccountRouter);
 }   
