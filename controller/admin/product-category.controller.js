@@ -8,7 +8,14 @@ module.exports.index = async (req,res) =>{
         res.render("admin/layouts/access-deny.pug")
         return;
     }
-    const record = await productCategory.find({}).sort({position: 'desc'});
+    const find = {
+        deleted: false
+    };
+    if(req.query.keyword){
+        const regrex = new RegExp(req.query.keyword)
+        find.title = regrex;
+    }
+    const record = await productCategory.find(find).sort({position: 'desc'});
     
     res.render("admin/pages/product-category/index.pug",{
         productCategory: record
@@ -28,6 +35,30 @@ module.exports.create = async (req,res) =>{
     res.render("admin/pages/product-category/create.pug",{
         listParent: newRecord
     })
+}
+//[PATCH] /admin/product-category/change-status/:status/:id
+module.exports.changeStatus = async (req,res) =>{
+    const status = req.params.status;
+    const id = req.params.id;
+    switch(status){
+        case "active": 
+            await productCategory.updateOne({
+                _id: id
+            },{
+                status: "inactive"
+            })
+            break;
+        case "inactive": 
+            await productCategory.updateOne({
+                _id: id
+            },{
+                status: "active"
+            })
+            break;
+        default:
+            break;
+    }
+    res.redirect("back");
 }
 //[POST] /admin/product-category/create
 module.exports.createPost = async (req,res) =>{
@@ -62,7 +93,7 @@ module.exports.edit = async (req,res) =>{
         data: data
     })
 } 
-//[PATCH] /admin/product-category/:id
+//[PATCH] /admin/product-category/edit/:id
 module.exports.editPatch = async (req,res) =>{
     try {
         await productCategory.updateOne({
@@ -74,4 +105,14 @@ module.exports.editPatch = async (req,res) =>{
         console.log(error);
     }
     res.redirect("/admin/product-category");
+}
+//[GET] /admin/product-category/detail/:id
+module.exports.detail =  async (req,res) =>{
+    const id = req.params.id;
+    const record = await productCategory.findById({
+        _id: id
+    })
+    res.render("admin/pages/product-category/detail.pug",{
+        productCategory: record
+    })
 }

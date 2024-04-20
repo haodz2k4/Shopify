@@ -21,7 +21,7 @@ if(btnFilterStatus.length > 0){
 //end handle filter status 
 
 //handle formSearch here 
-const formSearch = document.querySelector("[form-search-product]");
+const formSearch = document.querySelector("[form-search]");
 if(formSearch){
     const url = new URL(window.location.href);
     formSearch.addEventListener("submit",(event) =>{
@@ -331,4 +331,15 @@ if(dataDefault){
     
     
     
+}
+//btn logout 
+const btnLogout = document.querySelector("[btn-logout]");
+if(btnLogout){
+    btnLogout.addEventListener("click",() =>{
+        const isConfirm = confirm("Bạn có chắc muốn thoát không");
+        if(!isConfirm){
+            return;
+        }
+        window.location.href = '/admin/auth/logout'
+    })
 }

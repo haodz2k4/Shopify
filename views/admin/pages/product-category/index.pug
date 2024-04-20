@@ -5,8 +5,10 @@ block main
     h1 Danh sách danh mục sản phẩm 
     .container 
         if localRoles.permissions.includes("product-category_create")
-          a(href="/admin/product-category/create").btn.btn-secondary + Thêm mới 
-        
+           a(href="/admin/product-category/create").btn.btn-secondary + Thêm mới 
+        form.form-inline(form-search)
+          input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search', name='keyword')
+          button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
         table.table.table-striped.table-hover
             thead
                 tr 
@@ -41,5 +43,6 @@ block main
                     a(href="/admin/product-category/delete").btn.btn-danger Xóa 
                   if localRoles.permissions.includes("product-category_view")
                     a(href="/admin/product-category/detail/"+item.id).btn.btn-secondary Chi tiết  
+    form(action="" method="POST" data-path="/admin/product-category/change-status" form-change-status) 
   else 
     h1 Bạn không có quyền truy cập   

@@ -5,7 +5,7 @@ block main
     
     .container
       h2.mt-5 Chỉnh sửa sản phẩm 
-      form(action=`/admin/products/edit/${product.id}?_method=PATCH`, method='POST')
+      form(action=`/admin/products/edit/${product.id}?_method=PATCH`, method='POST', enctype="multipart/form-data")
         .form-group
           label(for='title') Title:
           input#title.form-control(type='text', name='title' value=product.title)

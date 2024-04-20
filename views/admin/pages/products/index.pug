@@ -32,7 +32,7 @@ block main
                   input#searchInput.form-control(type='text', placeholder='Search...' name='id').d-none
                   .input-group-append
                     button.btn.btn-primary(type='submit') Áp dụng 
-        form(form-search-product)
+        form(form-search)
           .col  
                 label.sr-only(for='searchInput') Search
                 .input-group.mb-2
@@ -87,6 +87,7 @@ block main
             th Sl tồn kho
             th Hình ảnh
             th Trạng thái
+            th Được tạo bởi 
             th Vị trí 
             th Hành động
         tbody
@@ -109,6 +110,10 @@ block main
               else
                 td 
                   Button.badge.rounded-pill.text-bg-danger(style='background-color: red; color: white' btn-change-status=item.id) #{item.status}
+              td 
+                span #{item.createdByfullname}
+                br
+                span #{moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a') }
               td 
                 input(type="number", style="width: 40px;", value=item.position, name='position') 
               td 

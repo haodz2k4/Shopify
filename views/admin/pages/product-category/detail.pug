@@ -1,0 +1,17 @@
+extends ../../layouts/default.pug 
+
+
+block main 
+    .container.mt-5
+      .card
+        img(src=productCategory.thumbnail, alt='Clothing Thumbnail')
+        .card-body
+          h5.card-title #{productCategory.title}
+          p.card-text !{productCategory.description}
+          ul.list-group.list-group-flush
+            li.list-group-item Parent Category: #{productCategory.parent_category}
+            li.list-group-item Position: #{productCategory.position}
+            li.list-group-item Status: #{productCategory.status}
+            li.list-group-item Deleted: #{productCategory.deleted}
+            li.list-group-item Được tạo vào: #{productCategory.createdAt}
+            li.list-group-item Được cập nhật vào: #{productCategory.updatedAt}

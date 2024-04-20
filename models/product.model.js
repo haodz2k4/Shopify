@@ -13,6 +13,10 @@ const productSchema = new Schema({
     thumbnail: String,
     status: String,
     position: Number,
+    createdBy: String,
+    deletedAt: Date,
+    deletedBy: String,
+    updatedBy: String,
     deleted: {
         type: Boolean,
         default: false

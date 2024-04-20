@@ -3,6 +3,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
         a.navbar-brand(href='#') #{user.fullName} 
       else 
         a.navbar-brand(href='#') Admin Panel 
+      img(src=user.avatar, alt="", style="width: 30px; height: 30px; border-radius: 30px;")
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarNav.collapse.navbar-collapse
@@ -14,6 +15,4 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
           li.nav-item
             a.nav-link(href='#') Dashboard
           li.nav-item
-            a.nav-link(href='/admin/auth/logout') Logout 
-          li.nav-item
-            a.nav-link(href='/admin/auth/login') Login
+            button.nav-link(btn-logout) Logout 

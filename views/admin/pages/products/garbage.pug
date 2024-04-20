@@ -16,6 +16,7 @@ block main
             th Hình ảnh
             th Trạng thái
             th Vị trí 
+            th Được xóa bởi 
             th Hành động
         tbody
           each item, index in product
@@ -37,6 +38,11 @@ block main
                   Button.badge.rounded-pill.text-bg-danger(style='background-color: red; color: white' btn-change-status=item.id) #{item.status}
               td 
                 input(type="number", style="width: 40px;", value=item.position) 
+              td
+                span #{item.deletedByfullName}
+                br 
+                span 
+                    strong #{moment(item.deletedAt).format('MMMM Do YYYY, h:mm:ss a')};
               td 
 
                 .btn-group

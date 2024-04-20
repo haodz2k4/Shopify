@@ -1,6 +1,7 @@
 //require model here 
 const products = require("../../models/product.model");
 const productCategory = require("../../models/product-category.model");
+const account = require("../../models/account.model");
 //require helper here
 const createTree = require("../../helpers/createTree.helper");
 //[GET] /admin/products
@@ -64,6 +65,12 @@ module.exports.index = async (req,res) =>{
     }
 
     const record = await products.find(find).limit(objectPagination.limit).skip(objectPagination.skip).sort(sort);
+    for(const item of record){
+        const createdBy = await account.findOne({
+            _id: item.createdBy
+        })
+        item.createdByfullname = createdBy?.fullName;
+    }
     res.render("admin/pages/products/index.pug",{
         product: record,
         ListBtnFilter: ListBtnFilter,
@@ -146,7 +153,9 @@ module.exports.softDelete = async (req,res) =>{
         await products.updateOne({
             _id: req.params.id
         }, {
-            deleted: true
+            deleted: true,
+            deletedAt: new Date(),
+            deletedBy: res.locals.user.id 
         })
         req.flash('sucess','Thêm vào thùng rác thành công')
     } catch (error) {
@@ -160,6 +169,16 @@ module.exports.softDelete = async (req,res) =>{
 module.exports.garbage = async (req,res) =>{
 
     const record = await products.find({deleted: true})
+    for(const item of record){
+       try {
+         const createBy = await account.findOne({
+             _id: item.deletedBy
+         })
+         item.deletedByfullName = createBy?.fullName
+       } catch (error) {
+            console.log(error);
+       }
+    }
     res.render("admin/pages/products/garbage.pug",{
         product: record
     });
@@ -203,7 +222,8 @@ module.exports.createPost = async (req,res) =>{
         req.body.position = parseInt(req.body.position);
     }else{
         req.body.position = await products.countDocuments();
-    }   
+    }  
+    req.body.createdBy = res.locals.user.id; 
     const record = new products(req.body);
     await record.save();
     req.flash('sucess','Thêm mới sản phẩm thành công')
@@ -235,6 +255,8 @@ module.exports.editPatch = async (req,res) =>{
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
+    req.body.updatedBy = res.locals.user.id;
+    
     if(req.body.position){
         req.body.position = parseInt(req.body.position);
     }else{
@@ -258,6 +280,15 @@ module.exports.detail = async (req,res) =>{
         const record = await products.findById({
             _id: id
         })
+        const recordAccount = await account.findOne({
+            _id: record.createdBy
+        })
+        record.createdByfullName = recordAccount?.fullName;
+        const findUpdateBy = await account.findOne({
+            _id: record.updatedBy
+         })
+         record.fullNameUpdated = findUpdateBy?.fullName;
+        
         res.render("admin/pages/products/detail.pug",{
             product: record
         })

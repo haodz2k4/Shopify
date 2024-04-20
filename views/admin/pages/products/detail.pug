@@ -26,5 +26,19 @@ block main
                 p.card-text 
                   strong Trạng thái sản phẩm:
                   |  #{product.status}
+                p.card-text 
+                  strong Tạo bởi :
+                  |  #{product.createdByfullName}
+                  br
+                  | #{moment(product.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                if product.updatedBy
+                  p.card-text 
+                    strong Chỉnh sửa bởi: 
+                    |  #{product.fullNameUpdated}
+                    br 
+                    |  #{moment(product.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}
+                else 
+                  p.card-text 
+                    strong Chưa có lần chỉnh sửa 
       else
         h1 Bạn không có quyền truy cập  

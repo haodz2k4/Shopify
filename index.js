@@ -35,6 +35,9 @@ const adminRouter = require("./router/admin/index.router");
 adminRouter(app);
 const clientRouter = require("./router/clients/index.router");
 clientRouter(app);
+//app local variable 
+const moment = require("moment");
+app.locals.moment =moment;
 
 
 app.listen(port,() =>{

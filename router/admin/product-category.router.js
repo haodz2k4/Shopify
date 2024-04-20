@@ -10,4 +10,6 @@ router.get("/create",controller.create);
 router.post("/create",fileUpload.single('thumbnail'),uploadCloud,controller.createPost);   
 router.get("/edit/:id",controller.edit);
 router.patch("/edit/:id",fileUpload.single('thumbnail'),uploadCloud,controller.editPatch);
+router.get("/detail/:id",controller.detail);
+router.patch("/change-status/:status/:id",controller.changeStatus);
 module.exports = router;
