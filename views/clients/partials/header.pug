@@ -1,3 +1,4 @@
+include ../mixins/sub-menu.pug
 header.p-3.bg-dark.text-white
       .container
         .d-flex.flex-wrap.align-items-center.justify-content-center.justify-content-lg-start
@@ -9,10 +10,13 @@ header.p-3.bg-dark.text-white
               a.nav-link.px-2.text-secondary(href='/') Trang chủ 
             li
               a.nav-link.px-2.text-white(href='/About') Về chúng tôi 
-            li
-              a.nav-link.px-2.text-white(href='/products') Sản phẩm 
-            li
+            
+            li  
               a.nav-link.px-2.text-white(href='#') FAQs
+            li(class="sub-menu")
+                a.nav-link.px-2.text-white(href='/products') Sản phẩm 
+                  +sub-menu(layoutProductCategory)
           .text-end
+            
             button.btn.btn-outline-light.me-2(type='button') Login
             button.btn.btn-warning(type='button') Sign-up

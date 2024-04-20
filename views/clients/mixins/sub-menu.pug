@@ -1,0 +1,7 @@
+mixin sub-menu(record)
+    ul
+      each item in record
+        li
+            a.nav-link.px-2(href="/products/"+item.slug) #{item.title} 
+            if item.children && item.children.length >  0
+                +sub-menu(item.children)
