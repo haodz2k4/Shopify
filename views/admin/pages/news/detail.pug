@@ -1,0 +1,16 @@
+extends ../../layouts/default.pug 
+
+block main 
+    .container.mt-5
+      h2 Chi tiết tin tức 
+      .card
+        .card-body
+          h5.card-title #{news.title}
+          p.card-text
+            | !{news.content}
+          ul.list-group.list-group-flush
+            li.list-group-item 
+            li.list-group-item Info 2: Value 2
+            li.list-group-item Info 3: Value 3
+          a.card-link(href='#') Card Link
+          a.card-link(href='#') Another Link

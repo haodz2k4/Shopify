@@ -5,6 +5,7 @@ const roleRouter = require("./role.router");
 const accountRouter = require("./account.router");
 const authRouter = require("./auth.router");
 const myAccountRouter = require("./my-account.router");
+const newsRouter = require("./news.router");
 const auth = require("../../middlewares/admin/auth.middleware");
 module.exports = (app) =>{
     app.use("/admin/dashboard",auth.requireAuth,dashboardRouter);
@@ -14,4 +15,5 @@ module.exports = (app) =>{
     app.use("/admin/accounts",auth.requireAuth,accountRouter);
     app.use("/admin/auth",authRouter);
     app.use("/admin/my-account",auth.requireAuth,myAccountRouter);
+    app.use("/admin/news",auth.requireAuth,newsRouter);
 }   

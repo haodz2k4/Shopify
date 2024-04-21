@@ -1,0 +1,25 @@
+extends ../../layouts/default.pug 
+
+block main 
+    .container.mt-5
+      h2 Chỉnh sửa sản phẩm 
+      form(action=`/admin/news/edit/${news.id}?_method=PATCH` method="POST")
+        .form-group
+          label(for='title') Tiêu đề:
+          input#title.form-control(type='text', name='title', value=news.title )
+        .form-group
+          label(for='content') Nội dung:
+          textarea#content.form-control(name='content') !{news.content}
+        .form-group
+          label(for='title') Vị trí:
+          input#title.form-control(type='number', name='position'   value=news.position)
+        .form-group
+          label Trạng thái:
+          br
+          .form-check.form-check-inline
+            input#status1.form-check-input(type='radio', name='status', value='active', checked=(news.status == "active" ? true: false))
+            label.form-check-label(for='status1') Hoạt động 
+          .form-check.form-check-inline
+            input#status2.form-check-input(type='radio', name='status', value='inactive', checked=(news.status == "inactive" ? true: false))
+            label.form-check-label(for='status2') Không hoạt động 
+        button.btn.btn-primary(type='submit') Cập nhật  

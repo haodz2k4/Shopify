@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug 
+include ../../mixins/show-alert.pug 
+block main 
+    +showSucesAlert()
+    +showErrorAlert()
+    h1 Quản lý tin tức 
+    a(href="/admin/news/create" style="margin-bottom: 8px").btn.btn-secondary Thêm mới  
+    table.table.table-striped
+        thead 
+            tr 
+              th(scope="col") #
+              th(scope="col") Tiêu đề 
+              th(scope="col") Trạng thái 
+              th(scope="col") Tạo bởi 
+              th(scope="col") Hành động 
+        tbody 
+          each item, index in news
+            tr 
+              td(scope="row") #{index + 1}
+              td #{item.title}
+              td #{item.status}
+              td #{item.createByFullName}
+              td 
+                .btn-group(role='group', aria-label='Basic mixed styles example')
+                    a(href="/admin/news/edit/"+item.id).btn.btn-danger Sửa 
+                    a(btn-sort-delete=item.id).btn.btn-warning Xóa
+                    a(href="/admin/news/detail/"+item.id).btn.btn-info Chi tiết 
+
+    form(action="" data-path="/admin/news/sort-delete" form-soft-delete method="POST") 
