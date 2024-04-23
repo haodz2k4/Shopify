@@ -11,7 +11,7 @@
         if localRoles.permissions.includes("product-category_view")
           li.nav-item
             a.nav-link(href='/admin/product-category') Categories
-        if localRoles.permissions.includes("product-category_view")
+        if localRoles.permissions.includes("role_view")
           li.nav-item
             a.nav-link(href='/admin/roles') Role
         if localRoles.permissions.includes("roles_permission")
@@ -20,5 +20,6 @@
         if localRoles.permissions.includes("account_view")
           li.nav-item
             a.nav-link(href='/admin/accounts') Tài khoản  
+        if localRoles.permissions.includes("news_view")
           li.nav-item
             a.nav-link(href='/admin/news') Tin tức  

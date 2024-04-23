@@ -17,6 +17,10 @@ const productSchema = new Schema({
     deletedAt: Date,
     deletedBy: String,
     updatedBy: String,
+    featured: {
+        type: String,
+        default: "0"
+    },
     deleted: {
         type: Boolean,
         default: false

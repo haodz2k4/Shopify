@@ -16,6 +16,15 @@ block main
             if categoryRecord 
                 +createTree(categoryRecord,1,product.product_category_id)
         .form-group
+          label Nối bậc
+          br
+          .form-check.form-check-inline
+            input.form-check-input(type='radio', name='featured', value='1' checked=(product.featured == "1" ? true: false))
+            label.form-check-label(for='asdd') Có
+          .form-check.form-check-inline
+            input.form-check-input(type='radio', name='featured', value='0' checked=(product.featured == "0" ? true: false))
+            label.form-check-label(for='feaatured') Không
+        .form-group
           label(for='description') Description:
           textarea#description.form-control(rows='3', placeholder='Enter description') !{product.description}
         .form-group
@@ -27,6 +36,7 @@ block main
         .form-group
           label(for='stock') Stock:
           input#stock.form-control(type='number', name='stock' value=product.stock)
+        
         .form-group
           label(for='thumbnail') Thumbnail:
           input#thumbnail.form-control(type='file', name='thumbnail', inp-review accept='image/*') 

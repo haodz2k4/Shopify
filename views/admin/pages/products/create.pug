@@ -14,6 +14,15 @@ block main
             if productCategory 
                 +createTree(productCategory)
         .form-group
+          label Nối bậc
+          br
+          .form-check.form-check-inline
+            input#productActive.form-check-input(type='radio', name='featured', value='1')
+            label.form-check-label(for='productActive') Có
+          .form-check.form-check-inline
+            input#productInactive.form-check-input(type='radio', name='featured', value='0', checked='')
+            label.form-check-label(for='productInactive') Không
+        .form-group
           label(for='productDescription') Description
           textarea#productDescription.form-control(name='description', rows='3', placeholder='Enter description')
         .form-group

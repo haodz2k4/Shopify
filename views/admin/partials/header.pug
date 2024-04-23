@@ -1,14 +1,17 @@
 nav.navbar.navbar-expand-lg.navbar-light.bg-light
       if user.fullName
         a.navbar-brand(href='#') #{user.fullName} 
+        
       else 
         a.navbar-brand(href='#') Admin Panel 
       if user.avatar
         a(href="/admin/my-account") 
           img(src=user.avatar, alt="", style="width: 30px; height: 30px; border-radius: 30px;")
+        
       else 
         a(href="/admin/my-account") 
           img(src="/admin/images/logo_default.png", alt="", style="width: 30px; height: 30px; border-radius: 30px;")
+        p #{localRoles.title} 
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarNav.collapse.navbar-collapse
