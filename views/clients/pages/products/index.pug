@@ -30,21 +30,22 @@ block main
                 p.card-text Price: $#{item.price}
                 p.card-text Old Price: 30
                 a.btn.btn-primary(href='#') Add to Category
-    if pagination.currentPage === 1
-        .container
+    if pagination 
+      if pagination.currentPage === 1
+          .container
+              .btn-view-more
+                  a.btn.btn-secondary(btn-see-more) Xem th&ecirc;m 
+      else 
+          .container 
             .btn-view-more
-                a.btn.btn-secondary(btn-see-more) Xem th&ecirc;m 
-    else 
-        .container 
-          .btn-view-more
-            ul.pagination
-                li.page-item
-                  if pagination.currentPage > 1
-                    a.page-link(href='#' btn-pagination=pagination.currentPage -1 ) <--
-                - for(let i = 1; i <= pagination.total; i++)
-                    li.page-item
-                        a.btn(href='#' class=`${pagination.currentPage == i ? "btn-primary": ""}` btn-pagination=i) #{i}
-                  
-                li.page-item
-                  if pagination.currentPage < pagination.total
-                    a.page-link(href='#' btn-pagination=pagination.currentPage + 1) -->
+              ul.pagination
+                  li.page-item
+                    if pagination.currentPage > 1
+                      a.page-link(href='#' btn-pagination=pagination.currentPage -1 ) <--
+                  - for(let i = 1; i <= pagination.total; i++)
+                      li.page-item
+                          a.btn(href='#' class=`${pagination.currentPage == i ? "btn-primary": ""}` btn-pagination=i) #{i}
+                    
+                  li.page-item
+                    if pagination.currentPage < pagination.total
+                      a.page-link(href='#' btn-pagination=pagination.currentPage + 1) -->

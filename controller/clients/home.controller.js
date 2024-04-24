@@ -2,6 +2,7 @@
 const product = require("../../models/product.model");
 //[GET] "/"
 module.exports.index = async (req,res) =>{
+    
     const productFeatured = await product.find({
         deleted: false,
         status: "active",
@@ -10,8 +11,18 @@ module.exports.index = async (req,res) =>{
     for(const item of productFeatured){
         item.priceNew = (item.price * (100 - item.discountPercentage)/100).toFixed(0); 
     }
-    console.log(productFeatured);
+
+    const productNews = await product.find({
+        deleted: false,
+        status: "active"
+    }).sort({position: "desc"}).limit(6);
+    for(const item of productNews){
+        item.priceNew = (item.price * (100 - item.discountPercentage)/100).toFixed(0); 
+    }
+    
+    
     res.render("clients/pages/home/index.pug",{
-        product: productFeatured
+        productFeatured: productFeatured,
+        productNews: productNews
     });
 }

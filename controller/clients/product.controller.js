@@ -1,3 +1,6 @@
+//require model here
+const productCategory = require("../../models/product-category.model");
+const products = require("../../models/product.model");
 //[GET] "/products"
 const product = require("../../models/product.model");
 module.exports.index = async (req,res) =>{  
@@ -32,5 +35,21 @@ module.exports.index = async (req,res) =>{
     res.render("clients/pages/products/index.pug",{
         product: record,
         pagination: objectpagination
+    });
+}
+//[GET "/products/:slugCategory"
+module.exports.category = async (req,res) =>{
+    const recordProductCategory = await productCategory.findOne({deleted: false, status: "active",slug: req.params.slugCategory});
+    const recordProduct = await product.find({
+        deleted: false,
+        status: "active",
+        product_category_id: recordProductCategory.id
+
+    })
+    
+    
+
+    res.render("clients/pages/products/index.pug",{
+        product: recordProduct
     });
 }
