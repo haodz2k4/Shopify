@@ -26,9 +26,9 @@ block main
             .card.product-card.mb-4
               img.card-img-top.product-img(src=item.thumbnail, alt='Product Image' style='height: 350px')
               .card-body
-                h5.card-title #{item.title}
-                p.card-text Price: $#{item.price}
-                p.card-text Old Price: 30
+                a(href="/products/detail/"+item.slug).card-title #{item.title}
+                p.card-text Price: $#{item.priceNew}
+                p.card-text Old Price: $#{item.price}
                 a.btn.btn-primary(href='#') Add to Category
     if pagination 
       if pagination.currentPage === 1
