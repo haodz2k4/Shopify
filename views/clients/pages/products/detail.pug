@@ -22,7 +22,7 @@ block main
                 li.list-group-item Còn: 
                   strong #{productDetail.stock}
                 li.list-group-item Số lượng 
-                  input(type="number", name="quantity", value=1)
+                  input(type="number", name="quantity", value=1, min=1, max=productDetail.stock)
               button.btn.btn-success.mt-3(type='submit') Thêm vào giỏ hàng  
             
         

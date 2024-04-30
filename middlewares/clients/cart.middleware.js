@@ -6,6 +6,12 @@ module.exports.cart = async (req,res, next) =>{
         const record = new Cart();
         await record.save();
         res.cookie("cartId",record.id);
+    }else{
+        const cart = await Cart.findOne({
+            _id: req.cookies.cartId
+        })
+        res.locals.miniCart = cart
     }
+    
     next();
 }

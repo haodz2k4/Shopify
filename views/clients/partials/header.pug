@@ -17,7 +17,12 @@ header.p-3.bg-dark.text-white
                 a.nav-link.px-2.text-white(href='/products') Sản phẩm 
                   +sub-menu(layoutProductCategory)
           form.col-12.col-lg-auto.mb-3.mb-lg-0.me-lg-3(action="/search")
-            input.form-control.form-control-dark(type='search', placeholder='Search...', aria-label='Search', name="keyword", value=keyword)
+            input.form-control.form-control-dark(type='search', p laceholder='Search...', aria-label='Search', name="keyword", value=keyword)
+          a(href="/cart").btn.btn-primary.position-relative
+            i.fa-solid.fa-cart-shopping
+            span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger
+              | #{miniCart ? miniCart.products.length : 0}
+              span.visually-hidden unread messages
           .text-end
             
             button.btn.btn-outline-light.me-2(type='button') Login
