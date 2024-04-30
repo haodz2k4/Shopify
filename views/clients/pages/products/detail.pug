@@ -1,33 +1,28 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/show-alert.pug 
 block main 
-    h1 Chi tiết sản phẩm 
-    .container
-      .row
-        .col-xs-4.item-photo
-          img(style='max-width:100%;', src=productDetail.thumbnail)
-        .col-xs-5(style='border:0px solid gray')
-          h1 #{productDetail.title}
-          h2.title-price Giá tiền 
-          h3(style='margin-top:0px;') USD:  #{productDetail.priceNew}
-          p Giá cũ: #{productDetail.price}
-          p Số Lượng: #{productDetail.stock}
-          
-          .section(style='padding-bottom:20px;')
-            h6.title-attr
-              small Số lượng
-            div
-              .btn-minus
-                span.glyphicon.glyphicon-minus
-              input(min="1" max=`${productDetail.stock}` type='number' value="1")
-              .btn-plus
-                span.glyphicon.glyphicon-plus
-          // Botones de compra
-          .section(style='padding-bottom:20px;')
-            h4 Mô tả sản phẩm 
-            p !{productDetail.description}
-            button.btn.btn-success
-              span.glyphicon.glyphicon-shopping-cart(style='margin-right:20px', aria-hidden='true')
-              |  Thêm vào giỏ hàng 
+  .container 
+    +alertSuccess()
+    +alertError()
+    .card.mb-3(style='max-width: 1200px; margin-top: 20px')
+      .row.g-0
+        .col-md-6
+          img.img-fluid.rounded-start(src=productDetail.thumbnail, alt='Product Thumbnail')
+        .col-md-6
+          .card-body
+            h5.card-title #{productDetail.title}
+            p.card-text
+              | !{productDetail.description}
+            form(action="/cart/add/"+productDetail.id method="POST")
+              ul.list-group.list-group-flush
+                li.list-group-item Giá mới:
+                  strong #{productDetail.priceNew}  
+                li.list-group-item Giá cũ: 
+                  strong(style='text-decoration: line-through') #{productDetail.price}
+                li.list-group-item Còn: 
+                  strong #{productDetail.stock}
+                li.list-group-item Số lượng 
+                  input(type="number", name="quantity", value=1)
+              button.btn.btn-success.mt-3(type='submit') Thêm vào giỏ hàng  
             
         
