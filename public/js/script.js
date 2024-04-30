@@ -68,3 +68,64 @@ if(timeOutAlert){
         timeOutAlert.classList.add("d-none")
     },5000)
 }
+//end start time out 
+//start checked cart 
+const checkCartMulti = document.querySelector("[check-cart-multi]");
+if(checkCartMulti){
+    const checkAll = checkCartMulti.querySelector("input[name='checkall']");
+    const checkMulti = checkCartMulti.querySelectorAll("input[name='ids']");
+    let total = 0;
+    checkAll.addEventListener("click",() =>{
+        if(checkAll.checked){
+            
+            checkMulti.forEach((item) =>{
+                const value = parseInt(item.closest("tr").querySelector("[total]").innerHTML);
+                total += value;
+                item.checked = true;
+                
+                totalPrice.innerHTML = "Tổng tiền: "+total
+            })
+        }else{
+            checkMulti.forEach((item) =>{
+                item.checked = false;
+                total = 0
+                totalPrice.innerHTML = "Tổng tiền: "+total
+
+            })
+        }
+    })
+    //handle total price
+    const totalPrice = document.querySelector("[total-price]");
+    checkMulti.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            const countChecked = checkCartMulti.querySelectorAll("input[name='ids']:checked").length;
+            const lengthData = checkMulti.length;
+            if(countChecked === lengthData){
+                checkAll.checked = true;
+            }
+            if(item.checked){
+                const value = parseInt(item.closest("tr").querySelector("[total]").innerHTML);
+                total += value;
+            }else{
+
+            }
+            totalPrice.innerHTML = "Tổng tiền: "+total
+        })
+    })
+     
+
+}
+//end checked cart
+//start update quantity
+const inpQuantity = document.querySelectorAll("[inp-quantity]");
+if(inpQuantity.length > 0){
+    inpQuantity.forEach((item) =>{
+        item.addEventListener("change",() =>{
+            //quantity
+            const value = item.value;
+            const id = item.getAttribute("inp-quantity");
+            window.location.href = `/cart/update/${value}/${id}`
+
+        })
+    })
+}
