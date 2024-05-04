@@ -4,6 +4,7 @@ const products = require("../../models/product.model")
 //[GET] "/cart"
 module.exports.index = async (req,res) =>{
     const recordCart = await cart.findOne({_id: req.cookies.cartId});
+    let totalPrice = 0;
     for (const item of recordCart.products) {
         const inforProducts = await products.findOne({
             _id: item.productId
@@ -12,10 +13,12 @@ module.exports.index = async (req,res) =>{
         item.inforProducts = inforProducts
         item.inforProducts.priceNew = item.inforProducts.price * (100 - item.inforProducts.discountPercentage)/100;
         item.sum = item.inforProducts.priceNew * item.quantity;
+        totalPrice += item.sum;
         
     }
     res.render("clients/pages/cart/index.pug",{
-        cart: recordCart
+        cart: recordCart,
+        totalPrice: totalPrice
     });
 }
 //[POST] "/cart/addPost/:id"

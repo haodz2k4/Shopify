@@ -25,5 +25,10 @@ header.p-3.bg-dark.text-white
               span.visually-hidden unread messages
           .text-end
             
-            button.btn.btn-outline-light.me-2(type='button') Login
-            button.btn.btn-warning(type='button') Sign-up
+            if user 
+              a(href="/user/profiles" style='text-decoration: none')
+                img(src=(user.avatar ? user.avatar: '/images/logo_default.png'), alt="" style='width: 50px; height: 50px')
+                h6(style='color: white') #{user.fullName} 
+            else 
+              a(href="/user/login").btn.btn-outline-light.me-2 Login
+              a(href="/user/register").btn.btn-warning Sign-up 

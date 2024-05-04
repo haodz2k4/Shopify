@@ -21,13 +21,13 @@ block main
             each item, index in cart.products
               tr 
                 td 
-                  input(type="checkbox", name="ids", value=item.id)
+                  input(type="checkbox", name="ids", value=item.productId)
                 td #{index + 1}
                 td 
                   img(src=item.inforProducts.thumbnail, alt="", style='width: 50px; height: 50px')
                 td 
                   a(href="" style='text-decoration: none')  #{item.inforProducts.title}
-                td #{item.inforProducts.priceNew}
+                td(price=`${item.inforProducts.price}` discount=item.inforProducts.discountPercentage ) #{item.inforProducts.priceNew}
                 td 
                   input(type="number", name="",value=item.quantity style='width: 50px' inp-quantity=item.productId)
                 td(total) #{item.sum}
@@ -38,5 +38,11 @@ block main
               tr 
                 td(colspan='8')
                  h3.text-center Không có sản phẩm nào hết 
-        h3(total-price) Tổng tiền: 0 
-        button.btn.btn-success Thanh Toán 
+        h3(total-price) Tổng tiền: #{totalPrice}
+        if cart.products.length > 0
+          button.btn.btn-success(btn-checkout) Thanh Toán 
+        else 
+          button.btn.btn-success Chưa có sản phẩm nào trong giỏ hàng 
+
+        form(action="/checkout" method="POST" form-checkout).d-none
+          input(type="text" name='infoCheckout') 

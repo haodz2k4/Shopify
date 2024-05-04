@@ -129,3 +129,29 @@ if(inpQuantity.length > 0){
         })
     })
 }
+//end update quantity 
+//start checkout here 
+const btnCheckout = document.querySelector("[btn-checkout]");
+if(btnCheckout){
+    const formCheckout = document.querySelector("[form-checkout]");
+    btnCheckout.addEventListener("click",() =>{
+        
+        const ids = checkCartMulti.querySelectorAll("input[name='ids']:checked");
+        console.log(ids);
+        if(ids.length === 0){
+            alert("Vui lòng chọn ít nhất 1 sản phẩm")
+            return;
+        }
+        const inpCheckout = formCheckout.querySelector("input");
+        const listCheckout = [];
+        for(const item of ids){
+            const productId = item.value;
+            const quantity = item.closest("tr").querySelector("input[inp-quantity]").value;
+            const stringCheckout = `${productId}-${quantity}`;
+            listCheckout.push(stringCheckout)
+        }
+        inpCheckout.value = JSON.stringify(listCheckout);
+        formCheckout.submit();
+        
+    })
+}

@@ -1,0 +1,45 @@
+extends ../../layouts/user.pug 
+include ../../mixins/show-alert.pug 
+block main 
+    
+    section.vh-100(style='background-color: #eee;')
+      .container.h-100
+        +alertSuccess()
+        +alertError()
+        .row.d-flex.justify-content-center.align-items-center.h-100
+          .col-lg-12.col-xl-11
+            .card.text-black(style='border-radius: 25px;')
+              .card-body.p-md-5
+                .row.justify-content-center
+                  .col-md-10.col-lg-6.col-xl-5.order-2.order-lg-1
+                    p.text-center.h1.fw-bold.mb-5.mx-1.mx-md-4.mt-4 Đăng ký 
+                    form(action="/user/register" method="POST").mx-1.mx-md-4
+                      .d-flex.flex-row.align-items-center.mb-4
+                        i.fas.fa-user.fa-lg.me-3.fa-fw
+                        .form-outline.flex-fill.mb-0(data-mdb-input-init='')
+                          input#form3Example1c.form-control(type='text' name='fullName' placeholder='Họ và tên' require=true)
+                          label.form-label(for='form3Example1c') Họ và tên
+                      .d-flex.flex-row.align-items-center.mb-4
+                        i.fas.fa-envelope.fa-lg.me-3.fa-fw
+                        .form-outline.flex-fill.mb-0(data-mdb-input-init='')
+                          input#form3Example3c.form-control(type='email' name='email' placeholder='email' require=true)
+                          label.form-label(for='form3Example3c') Email 
+                      .d-flex.flex-row.align-items-center.mb-4
+                        i.fas.fa-lock.fa-lg.me-3.fa-fw
+                        .form-outline.flex-fill.mb-0(data-mdb-input-init='')
+                          input#form3Example4c.form-control(type='password' name='password' placeholder='Mật khẩu' require=true)
+                          label.form-label(for='form3Example4c') mật khẩu 
+                      .d-flex.flex-row.align-items-center.mb-4
+                        i.fas.fa-key.fa-lg.me-3.fa-fw
+                        .form-outline.flex-fill.mb-0(data-mdb-input-init='')
+                          input#form3Example4cd.form-control(type='password' name='repeatPassword' placeholder='Nhập lại mật khẩu' require=true)
+                          label.form-label(for='form3Example4cd') Nhập lại mật khẩu 
+                      .form-check.d-flex.justify-content-center.mb-5
+                        input#form2Example3c.form-check-input.me-2(type='checkbox', value='')
+                        label.form-check-label(for='form2Example3')
+                          | Tôi đồng ý với các thảo thuận trên 
+                          a(href='#!') 
+                      .d-flex.justify-content-center.mx-4.mb-3.mb-lg-4
+                        button.btn.btn-warning.btn-lg(type='submit', data-mdb-button-init='', data-mdb-ripple-init='') Đăng ký 
+                  .col-md-10.col-lg-6.col-xl-7.d-flex.align-items-center.order-1.order-lg-2
+                    img.img-fluid(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp', alt='Sample image')

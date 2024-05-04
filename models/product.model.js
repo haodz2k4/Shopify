@@ -17,6 +17,14 @@ const productSchema = new Schema({
     deletedAt: Date,
     deletedBy: String,
     updatedBy: String,
+    comments: [
+        {
+            _id: String,
+            rating: Number,
+            content: String,
+            dateSend: Date
+        }
+    ],
     featured: {
         type: String,
         default: "0"
@@ -25,6 +33,7 @@ const productSchema = new Schema({
         type: Boolean,
         default: false
     },
+
     
 },{
     timestamps: true
