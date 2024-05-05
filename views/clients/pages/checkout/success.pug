@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug 
+
+block main 
+    .container 
+        h3 Đặt hàng thành công 
+        h3 Thông tin người dùng 
+        ul 
+          li Họ tên: #{order.userInfo.fullName}
+          li Số điện thoại: #{order.userInfo.phone}
+          li Dia chi: #{order.userInfo.address.street}-#{order.userInfo.address.city}-#{order.userInfo.address.country}
+        h3 Thông tin sản phẩm 
+        table.table
+          thead 
+            tr 
+              th Tiêu đề 
+              th Ảnh
+              th Giá tiền   
+              th Số lượng
+              th Tổng tiền 
+          tbody 
+            each item in order.products
+              tr 
+                td #{item.recordProducts.title}
+                td 
+                  img(src=item.recordProducts.thumbnail, alt="" style='width: 50px; height: 50px')
+                td #{item.recordProducts.priceNew}
+                td #{item.quantity}
+                td #{item.total}
+        h3 Tổng tiền: #{totalPrice}

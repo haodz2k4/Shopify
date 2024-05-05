@@ -7,6 +7,15 @@ const userSchema = new Schema({
     tokenUser: String,
     phone: String,
     avatar: String,
+    address: [{
+        street: String,
+        city: String,
+        country: String
+    }],
+    defaultAddressIndex: {
+        type: Number,
+        default: 0 
+    },
     status: {
         type: String,
         default: "active"

@@ -4,11 +4,23 @@ block main
     
     .container 
         h2 Hiện đang có #{cart.products.length} sản phẩm trong giỏ hàng 
+        .container.text-center
+          .row.align-items-start
+            .col
+              button.btn.btn-warning Xóa 
+            .col
+              button.btn.btn-danger thêm vào mục yêu thích 
+                i.fa-solid.fa-heart 
+                  
+            .col
+              | One of three columns
         table.table(check-cart-multi)
           thead
             tr 
               th 
-                input(type="checkbox", name="checkall")
+                p #{cart.products.length}
+                input(type="checkbox", name="checkall") 
+                
               th STT
               th Ảnh 
               th Tên 
@@ -38,7 +50,7 @@ block main
               tr 
                 td(colspan='8')
                  h3.text-center Không có sản phẩm nào hết 
-        h3(total-price) Tổng tiền: #{totalPrice}
+        h3(total-price) Tổng tiền: 0
         if cart.products.length > 0
           button.btn.btn-success(btn-checkout) Thanh Toán 
         else 

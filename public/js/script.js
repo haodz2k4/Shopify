@@ -107,7 +107,8 @@ if(checkCartMulti){
                 const value = parseInt(item.closest("tr").querySelector("[total]").innerHTML);
                 total += value;
             }else{
-
+                const value = parseInt(item.closest("tr").querySelector("[total]").innerHTML);
+                total -= value;
             }
             totalPrice.innerHTML = "Tổng tiền: "+total
         })
@@ -137,7 +138,6 @@ if(btnCheckout){
     btnCheckout.addEventListener("click",() =>{
         
         const ids = checkCartMulti.querySelectorAll("input[name='ids']:checked");
-        console.log(ids);
         if(ids.length === 0){
             alert("Vui lòng chọn ít nhất 1 sản phẩm")
             return;
@@ -153,5 +153,65 @@ if(btnCheckout){
         inpCheckout.value = JSON.stringify(listCheckout);
         formCheckout.submit();
         
+    })
+}
+//end checkout here 
+//start order here 
+const btnOrder = document.querySelector("[btn-submit-order]");
+if(btnOrder){
+    const orderProducts = document.querySelector("[order-products]")
+    btnOrder.addEventListener("click",(event) =>{
+        const formOrder = document.querySelector("[form-order]")
+        event.preventDefault();
+        const inpOrder = document.querySelector("[inp-order]");
+        const dataId = orderProducts.querySelectorAll("tbody tr td[data-id]");
+        const listOrder = [];
+        dataId.forEach((item) =>{
+            const EachId = item.getAttribute("data-id");
+            const quantity = item.closest("tr").querySelector("[quantity]").innerHTML;
+            const stringOrders = `${EachId}-${quantity}`;
+            listOrder.push(stringOrders);
+            
+        })
+        inpOrder.value = JSON.stringify(listOrder);
+        formOrder.submit();
+
+         
+    })
+}
+//end handle order here 
+const btnShowFormAddress = document.querySelector("[btn-show-form-addAddress]");
+if(btnShowFormAddress){
+    let count = 0; 
+    btnShowFormAddress.addEventListener("click", () =>{
+        
+        const formAddress = document.querySelector("[form-address]");
+        formAddress.classList.toggle("d-none");
+        count++;
+        if(count % 2 === 0){
+            btnShowFormAddress.innerHTML = "Thêm địa chỉ"
+        }else{
+            btnShowFormAddress.innerHTML = "Ẩn"
+        }
+    })
+}
+//start select-address-default
+const selectAddressDefault = document.querySelector("[select-address-default]");
+if(selectAddressDefault){
+    selectAddressDefault.addEventListener("change",(event) =>{
+        event.preventDefault();
+        window.location.href = `/user/profiles/address/update/${selectAddressDefault.value}`
+    })
+}
+//end select address default 
+//start logout 
+const btnLogout = document.querySelector("[btn-logout]");
+if(btnLogout){
+    btnLogout.addEventListener("click",() =>{
+        const isConfirm = confirm("Bạn có chắc muốn đăng xuất không");
+        if(!isConfirm){
+            return;
+        }
+        window.location.href = `/user/logout`
     })
 }

@@ -3,6 +3,10 @@ const cart = require("../../models/cart.model");
 const products = require("../../models/product.model")
 //[GET] "/cart"
 module.exports.index = async (req,res) =>{
+    if(!res.locals.user){
+        res.redirect("/login")
+        return;
+    }
     const recordCart = await cart.findOne({_id: req.cookies.cartId});
     let totalPrice = 0;
     for (const item of recordCart.products) {

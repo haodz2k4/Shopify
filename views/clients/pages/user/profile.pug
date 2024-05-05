@@ -1,0 +1,124 @@
+extends ../../layouts/default.pug 
+include ../../mixins/show-alert.pug 
+block main  
+    section(style='background-color: #eee;')
+      .container.py-5
+        +alertSuccess()
+        +alertError()
+        .row
+          .col-lg-4
+            .card.mb-4
+              .card-body.text-center
+                img.rounded-circle.img-fluid(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp', alt='avatar', style='width: 150px;')
+                h5.my-3 #{user.fullName}
+                p.text-muted.mb-1 Thành viên mới 
+                p.text-muted.mb-4 Bay Area, San Francisco, CA
+                .d-flex.justify-content-center.mb-2
+                  button.btn.btn-primary(type='button',btn-logout, data-mdb-button-init='', data-mdb-ripple-init='') Đăng xuất 
+                  button.btn.btn-outline-primary.ms-1(type='button', data-mdb-button-init='', data-mdb-ripple-init='') Chỉnh sửa 
+            .card.mb-4.mb-lg-0
+              .card-body.p-0
+                ul.list-group.list-group-flush.rounded-3
+                  li.list-group-item.d-flex.justify-content-between.align-items-center.p-3
+                    i.fas.fa-globe.fa-lg.text-warning
+                    p.mb-0 https://mdbootstrap.com
+                  li.list-group-item.d-flex.justify-content-between.align-items-center.p-3
+                    i.fab.fa-github.fa-lg(style='color: #333333;')
+                    p.mb-0 mdbootstrap
+                  li.list-group-item.d-flex.justify-content-between.align-items-center.p-3
+                    i.fab.fa-twitter.fa-lg(style='color: #55acee;')
+                    p.mb-0 @mdbootstrap
+                  li.list-group-item.d-flex.justify-content-between.align-items-center.p-3
+                    i.fab.fa-instagram.fa-lg(style='color: #ac2bac;')
+                    p.mb-0 mdbootstrap
+                  li.list-group-item.d-flex.justify-content-between.align-items-center.p-3
+                    i.fab.fa-facebook-f.fa-lg(style='color: #3b5998;')
+                    p.mb-0 mdbootstrap
+          .col-lg-8
+            .card.mb-4
+              .card-body
+                .row
+                  .col-sm-3
+                    p.mb-0 Full Name
+                  .col-sm-9
+                    p.text-muted.mb-0 #{user.fullName}
+                hr
+                .row
+                  .col-sm-3
+                    p.mb-0 Email
+                  .col-sm-9
+                    p.text-muted.mb-0 #{user.email}
+                hr
+                .row
+                  .col-sm-3
+                    p.mb-0 Phone
+                  .col-sm-9
+                    p.text-muted.mb-0  #{user.phone ? user.phone : "Chưa có"}
+                hr
+                .row
+                  .col-sm-3
+                    p.mb-0 Mobile
+                  .col-sm-9
+                    p.text-muted.mb-0 (098) 765-4321
+                hr
+                .row
+                  .col-sm-3
+                    p.mb-0 Địa chỉ đặt hàng mặc định 
+                  .col-sm-9
+                    if user.address.length > 0 
+                      
+                        select#exampleSelect(select-address-default)
+                          each item, index in user.address 
+                            option(value=index, selected=(user.defaultAddressIndex === index ? true: false)) #{item.street}-#{item.city}-#{item.country}
+                        button(btn-show-form-addAddress).btn.btn-secondary thêm 
+                    else 
+                      button.btn.btn-secondary(btn-show-form-addAddress) Thêm địa chỉ  
+                    form(action="/user/profiles/address/add" method="POST" form-address).d-none
+                        input(type="text", name="street" placeholder='Nhập tên đường') 
+                        input(type="text", name="city" placeholder='Nhập tên thành phố') 
+                        input(type="text", name="country" placeholder='Nhập tên quốc gia' value='Việt Nam') 
+                        button(type='submit').btn.btn-primary Thêm   
+                        
+            .row
+              .col-md-6
+                .card.mb-4.mb-md-0
+                  .card-body
+                    p.mb-4
+                      span.text-primary.font-italic.me-1 assigment
+                      |  Project Status
+                    p.mb-1(style='font-size: .77rem;') Web Design
+                    .progress.rounded(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 80%', aria-valuenow='80', aria-valuemin='0', aria-valuemax='100')
+                    p.mt-4.mb-1(style='font-size: .77rem;') Website Markup
+                    .progress.rounded(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 72%', aria-valuenow='72', aria-valuemin='0', aria-valuemax='100')
+                    p.mt-4.mb-1(style='font-size: .77rem;') One Page
+                    .progress.rounded(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 89%', aria-valuenow='89', aria-valuemin='0', aria-valuemax='100')
+                    p.mt-4.mb-1(style='font-size: .77rem;') Mobile Template
+                    .progress.rounded(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 55%', aria-valuenow='55', aria-valuemin='0', aria-valuemax='100')
+                    p.mt-4.mb-1(style='font-size: .77rem;') Backend API
+                    .progress.rounded.mb-2(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 66%', aria-valuenow='66', aria-valuemin='0', aria-valuemax='100')
+              .col-md-6
+                .card.mb-4.mb-md-0
+                  .card-body
+                    p.mb-4
+                      span.text-primary.font-italic.me-1 assigment
+                      |  Project Status
+                    p.mb-1(style='font-size: .77rem;') Web Design
+                    .progress.rounded(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 80%', aria-valuenow='80', aria-valuemin='0', aria-valuemax='100')
+                    p.mt-4.mb-1(style='font-size: .77rem;') Website Markup
+                    .progress.rounded(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 72%', aria-valuenow='72', aria-valuemin='0', aria-valuemax='100')
+                    p.mt-4.mb-1(style='font-size: .77rem;') One Page
+                    .progress.rounded(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 89%', aria-valuenow='89', aria-valuemin='0', aria-valuemax='100')
+                    p.mt-4.mb-1(style='font-size: .77rem;') Mobile Template
+                    .progress.rounded(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 55%', aria-valuenow='55', aria-valuemin='0', aria-valuemax='100')
+                    p.mt-4.mb-1(style='font-size: .77rem;') Backend API
+                    .progress.rounded.mb-2(style='height: 5px;')
+                      .progress-bar(role='progressbar', style='width: 66%', aria-valuenow='66', aria-valuemin='0', aria-valuemax='100')

@@ -5,7 +5,11 @@ const orderSchema = new Schema({
     userInfo: {
         fullName: String,
         phone: String,
-        address: String
+        address: {
+            street: String,
+            city: String,
+            country: String
+        }
     },
     products: [
         {
