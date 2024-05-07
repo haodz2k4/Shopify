@@ -235,3 +235,14 @@ if(btnLike.length > 0){
         })
     })
 }
+//end like post 
+// start handle show comments 
+const btnShowComments = document.querySelectorAll("[btn-show-comment]");
+if(btnShowComments.length > 0){
+    btnShowComments.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            const listComments = item.closest(".timeline-footer").querySelector("[list-comments]");
+            listComments.classList.toggle("d-none")
+        })
+    })
+}

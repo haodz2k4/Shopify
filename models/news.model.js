@@ -18,7 +18,6 @@ const newSchema = new Schema({
         }
     ],
     comment: [{
-        
             userId: { type: String, required: true},
             content: String,
             dateComment: { type: Date, default: Date.now }

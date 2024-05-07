@@ -1,8 +1,10 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/show-alert.pug
 block main 
      
     .container
+      +alertSuccess()
+      +alertError()
       h3.text-center Trang tin tức 
       .row
         .col-md-12
@@ -44,7 +46,7 @@ block main
                         .timeline-likes
                           .stats-right
                             span.stats-text 259 Shares
-                            span.stats-text 21 Comments
+                            span.stats-text #{item.comment.length} Comments
                           .stats
                             
                             span.fa-stack.fa-fw.stats-icon
@@ -60,21 +62,23 @@ block main
                             a.m-r-15.text-inverse-lighter(href='javascript:;' btn-like=item.id isLiked=``)
                               i.fa.fa-thumbs-up.fa-fw.fa-lg.m-r-3()
                               |  Like
-                          a.m-r-15.text-inverse-lighter(href='javascript:;')
+                          a.m-r-15.text-inverse-lighter(href='javascript:;' btn-show-comment)
                             i.fa.fa-comments.fa-fw.fa-lg.m-r-3
                             |  Comment
                             |  
-                          a.m-r-15.text-inverse-lighter(href='javascript:;')
                             i.fa.fa-share.fa-fw.fa-lg.m-r-3
                             |  Share
+                          ul.list-group.list-group-flush.d-none(list-comments)
+                            each eachComments in item.comment
+                              li.list-group-item #{eachComments.infoUser.fullName}: #{eachComments.content}
                         .timeline-comment-box
                           .user
                             img(src='https://bootdey.com/img/Content/avatar/avatar3.png')
                           .input
-                            form(action='')
+                            form(action='/news/comments/add/'+item.id method="POST")
                               .input-group
-                                input.form-control.rounded-corner(type='text', placeholder='Write a comment...')
+                                input.form-control.rounded-corner(type='text', placeholder='Viết Bình Luận...', name='content')
                                 span.input-group-btn.p-l-10
-                                  button.btn.btn-primary.f-s-12.rounded-corner(type='button') Comment
+                                  button.btn.btn-primary.f-s-12.rounded-corner(type='submit') Gửi 
                       // end timeline-body
                     
