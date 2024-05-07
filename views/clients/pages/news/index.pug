@@ -1,4 +1,80 @@
 extends ../../layouts/default.pug 
 
 block main 
-    h1 Trang tin tức 
+     
+    .container
+      h3.text-center Trang tin tức 
+      .row
+        .col-md-12
+          #content.content.content-full-width
+            // begin profile
+            // end profile
+            // begin profile-content
+            .profile-content
+              // begin tab-content
+              .tab-content.p-0
+                // begin #profile-post tab
+                #profile-post.tab-pane.fade.active.show
+                  // begin timeline
+                  ul.timeline
+                   each item in news
+                    li
+                      // begin timeline-time
+                      .timeline-time
+                        span.date today
+                        span.time #{moment(item.createdAt).startOf('day').fromNow()}
+                      // end timeline-time
+                      // begin timeline-icon
+                      .timeline-icon
+                        a(href='javascript:;') &nbsp;
+                      // end timeline-icon
+                      // begin timeline-body
+                      .timeline-body
+                        .timeline-header
+                          span.userimage
+                            img(src='https://bootdey.com/img/Content/avatar/avatar3.png', alt='')
+                          span.username
+                            a(href='javascript:;')  #{item.infoAdmin.fullName}
+                            |  
+                            small
+                          span.pull-right.text-muted 18 Views
+                        .timeline-content
+                          p
+                            | !{item.content}
+                        .timeline-likes
+                          .stats-right
+                            span.stats-text 259 Shares
+                            span.stats-text 21 Comments
+                          .stats
+                            
+                            span.fa-stack.fa-fw.stats-icon
+                              i.fa.fa-circle.fa-stack-2x.text-primary
+                              i.fa.fa-thumbs-up.fa-stack-1x.fa-inverse
+                            span.stats-total #{item.liked.length}
+                        .timeline-footer
+                          if (item.isLiked != null)
+                            a.m-r-15.text-inverse-lighter(href='javascript:;' btn-like=item.id isLiked=`${item.isLiked}`)
+                              i.fa.fa-thumbs-up.fa-fw.fa-lg.m-r-3(class=(item.isLiked === true ? "like-change-color" : ""))
+                              |  Like
+                          else 
+                            a.m-r-15.text-inverse-lighter(href='javascript:;' btn-like=item.id isLiked=``)
+                              i.fa.fa-thumbs-up.fa-fw.fa-lg.m-r-3()
+                              |  Like
+                          a.m-r-15.text-inverse-lighter(href='javascript:;')
+                            i.fa.fa-comments.fa-fw.fa-lg.m-r-3
+                            |  Comment
+                            |  
+                          a.m-r-15.text-inverse-lighter(href='javascript:;')
+                            i.fa.fa-share.fa-fw.fa-lg.m-r-3
+                            |  Share
+                        .timeline-comment-box
+                          .user
+                            img(src='https://bootdey.com/img/Content/avatar/avatar3.png')
+                          .input
+                            form(action='')
+                              .input-group
+                                input.form-control.rounded-corner(type='text', placeholder='Write a comment...')
+                                span.input-group-btn.p-l-10
+                                  button.btn.btn-primary.f-s-12.rounded-corner(type='button') Comment
+                      // end timeline-body
+                    

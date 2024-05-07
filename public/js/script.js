@@ -215,3 +215,23 @@ if(btnLogout){
         window.location.href = `/user/logout`
     })
 }
+//end logout 
+//handle like post 
+const btnLike = document.querySelectorAll("[btn-like]");
+if(btnLike.length > 0){
+    btnLike.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            const id = item.getAttribute("btn-like");
+            const isLiked = item.getAttribute("isLiked");
+            if(!isLiked){
+                alert('Bạn chưa đăng nhập nên không thể like bài viết');
+                return;
+            }
+            if(isLiked === 'false'){
+                window.location.href =  `/news/like/add/${id}`
+            }else{
+                window.location.href = `/news/like/remove/${id}`
+            }
+        })
+    })
+}

@@ -1,13 +1,13 @@
 const news = require("../../models/news.model");
 module.exports.createPost = async (req,res, next) =>{
-    
+        console.log(req.body);
     if(!req.body.title){
         
         req.flash('error','Tiêu đề không được bỏ trống');
         res.redirect("back");
         return;
     }else if (req.body.title.length < 5){
-        req.flash('error','Tiêu đề không được quá 5 ký tự');
+        req.flash('error','Tiêu đề không được dưới 5 ký tự');
         res.redirect("back");
         return;
     }

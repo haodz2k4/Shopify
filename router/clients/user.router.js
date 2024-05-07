@@ -10,5 +10,7 @@ router.post("/login",userValidates.login,controller.loginPost)
 router.get("/profiles",controller.profile);
 router.post("/profiles/address/add",controller.addAddress);
 router.get("/profiles/address/update/:defaultAddress",controller.update);
-router.get("/logout",controller.logout)
+router.get("/logout",controller.logout);
+router.get("/password/forgot",controller.forgotPassword)
+router.post("/password/forgot",controller.forgotPasswordPost)
 module.exports = router;

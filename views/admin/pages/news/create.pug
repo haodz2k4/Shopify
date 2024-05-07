@@ -1,15 +1,21 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/show-alert.pug 
 block main 
+    +showSucesAlert()
+    +showErrorAlert()
     h1.text-center Thêm mới tin tức 
     .container.mt-5
-      form(action="/admin/news/create" method="POST")
+      form(action="/admin/news/create" method="POST", enctype="multipart/form-data")
         .form-group
           label(for='title') Tiêu đề:
           input#title.form-control(type='text', name='title', require='')
         .form-group
           label(for='content') Nội dung:
           textarea#content.form-control(name='content')
+        .form-group
+          label(for='content') Nội dung:
+          input#title.form-control(type='file', name='thumbnail', require='', inp-review)
+          img(src="", alt="", img-review,style='width: 50px; height: 50px')
         .form-group
           label(for='title') Vị trí:
           input#title.form-control(type='number', name='position'   )

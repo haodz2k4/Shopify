@@ -2,7 +2,9 @@
 const md5 = require("md5");
 const user = require("../../models/user.model");
 const cart = require("../../models/cart.model");
-
+const forgotPassword = require("../../models/forgot-password.model");
+//require helper 
+const generateHelper = require("../../helpers/generate.helper");
 //[GET] "/user/login"
 module.exports.login = (req,res) =>{
     res.render("clients/pages/user/login.pug")
@@ -93,4 +95,29 @@ module.exports.logout = async (req,res) =>{
     res.clearCookie("tokenUser");
     res.clearCookie("cartId");
     res.redirect("/user/login")
+}
+//[GET] "user/password/forgot"
+module.exports.forgotPassword = (req,res) =>{
+    res.render("clients/pages/user/forgot-password")
+}
+//[POST] "user/password/forgot"
+module.exports.forgotPasswordPost = async (req,res) =>{
+    const email = req.body.email;
+    const isExistsEmail = await user.findOne({
+        email: email
+    })
+    if(!isExistsEmail){
+        res.redirect("back");
+        req.flash('error','Không tìm thấy địa chỉ Email');
+        return;
+    }
+    //create otp and save to database 
+    const objectPassword = {
+        email: email,
+        otp: generateHelper.generateRandomNumber(6),
+        expireAt: Date.now() + 3*60*1000
+    }
+    const recordForgot = new forgotPassword(objectPassword);
+    await recordForgot.save();
+    res.redirect("back");
 }

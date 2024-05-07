@@ -10,6 +10,7 @@ block main
             tr 
               th(scope="col") #
               th(scope="col") Tiêu đề 
+              th(scope="col") Ảnh 
               th(scope="col") Trạng thái 
               th(scope="col") Tạo bởi 
               th(scope="col") Hành động 
@@ -18,6 +19,8 @@ block main
             tr 
               td(scope="row") #{index + 1}
               td #{item.title}
+              td 
+                img(src=item.thumbnail, alt="", style='width: 50px; height: 50px')
               td #{item.status}
               td #{item.createByFullName}
               td 

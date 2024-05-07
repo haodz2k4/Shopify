@@ -16,6 +16,8 @@ header.p-3.bg-dark.text-white
             li(class="sub-menu")
                 a.nav-link.px-2.text-white(href='/products') Sản phẩm 
                   +sub-menu(layoutProductCategory)
+            li  
+              a.nav-link.px-2.text-white(href='/news') Tin tức 
           form.col-12.col-lg-auto.mb-3.mb-lg-0.me-lg-3(action="/search")
             input.form-control.form-control-dark(type='search', p laceholder='Search...', aria-label='Search', name="keyword", value=keyword)
           a(href="/cart").btn.btn-primary.position-relative
