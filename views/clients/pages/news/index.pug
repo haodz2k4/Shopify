@@ -70,7 +70,7 @@ block main
                             |  Share
                           ul.list-group.list-group-flush.d-none(list-comments)
                             each eachComments in item.comment
-                              li.list-group-item #{eachComments.infoUser.fullName}: #{eachComments.content}
+                              li.list-group-item #{eachComments.infoUser.fullName}: #{eachComments.content}      #{moment(eachComments.dateComment).format('MMMM Do YYYY, h:mm:ss a')}
                         .timeline-comment-box
                           .user
                             img(src='https://bootdey.com/img/Content/avatar/avatar3.png')

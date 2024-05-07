@@ -1,0 +1,65 @@
+extends ../../layouts/user.pug 
+
+block main  
+    .container.rounded.bg-white.mt-5.mb-5
+      .row
+        .col-md-3.border-right
+          .d-flex.flex-column.align-items-center.text-center.p-3.py-5
+            img.rounded-circle.mt-5(src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQF2psCzfbB611rnUhxgMi-lc2oB78ykqDGYb4v83xQ1pAbhPiB&usqp=CAU')
+            span.font-weight-bold Amelly
+            span.text-black-50 amelly12@bbb.com
+            span  
+        |  
+        .col-md-5.border-right
+          .p-3.py-5
+            .d-flex.justify-content-between.align-items-center.mb-3
+              h4.text-right Chỉnh sửa trang cá nhân     
+            |  
+            
+            .row.mt-3
+              .col-md-12
+                label.labels Họ và tên
+                input.form-control(type='text', placeholder='Điền họ và tên', value='')
+              | 
+              .col-md-12
+                label.labels Số Điện Thoại
+                input.form-control(type='text', placeholder='enter phone number', value='')
+              |  
+              .col-md-12
+                label.labels Địa chỉ 
+                input.form-control(type='text', placeholder='enter address', value='')
+              | 
+              .col-md-12
+                label.labels Education
+                input.form-control(type='text', placeholder='education', value='')
+            |  
+            .row.mt-3
+              .col-md-6
+                label.labels Country
+                input.form-control(type='text', placeholder='country', value='  Việt Nam')
+              |  
+              .col-md-6
+                label.labels State/Region
+                input.form-control(type='text', value='', placeholder='state')
+            |  
+            .mt-5.text-center
+              button.btn.btn-primary.profile-button(type='button') Lưu thông tin 
+        |  
+        .col-md-4
+          .p-3.py-5
+            .d-flex.justify-content-between.align-items-center.experience
+              span Edit Experience
+              span.border.px-3.p-1.add-experience
+                i.fa.fa-plus
+                | &nbsp;Experience
+            br
+            |  
+            .col-md-12
+              label.labels Experience in Designing
+              input.form-control(type='text', placeholder='experience', value='')
+            |  
+            br
+            |  
+            .col-md-12
+              label.labels Additional Details
+              input.form-control(type='text', placeholder='additional details', value='')
