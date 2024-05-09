@@ -15,11 +15,13 @@ module.exports.sendEmail = (email,subject,content) =>{
     text: content
     };
 
-    transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-    console.log(error);
-    } else {
-        console.log('Email sent: ' + info.response);
-    }
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+            return { success: false, message: "Email không tồn tại." };
+        } else {
+            console.log('Email sent: ' + info.response);
+            return { success: true, message: "Email đã được gửi thành công." };
+        }
     });
 }

@@ -1,52 +1,65 @@
 extends ../../layouts/default.pug 
 
 block main 
-    .container.mt-5
-      .row.justify-content-center
-        .col-md-6 
-          h3 Sắp xếp theo 
-          .btn-group(role='group', aria-label='Basic mixed styles example')
-            button.btn.btn-outline-warning(type='button' btn-sorted="price-desc") Cao Đến thấp 
-            button.btn.btn-outline-warning(type='button' btn-sorted="price-asc") Thấp đến cao 
-            button.btn.btn-outline-warning(type='button' btn-sorted="discountPercentage-desc") Giảm giá nhiều nhất
-            button.btn.btn-outline-warning(type='button' btn-sorted="view-desc") Xem nhiều nhất 
-    .container.mt-5 
-      .row.justify-content-center
-        .col-md-6 
-          h2 Tìm kiếm 
-          form.form-inline
-            .input-group
-              input.form-control(type='text', placeholder='Search', aria-label='Search', aria-describedby='search-btn', name='keyword')
-              .input-group-append
-                button#search-btn.btn.btn-outline-secondary(type='button') Tìm kiếm 
-      .container(style='margin-top: 30px')
-        .row
-          each item in product 
-           .col-md-4
-             a(href="/products/detail/"+item.slug style='text-decoration: none') 
-              .card.product-card.mb-4
-                img.card-img-top.product-img(src=item.thumbnail, alt='Product Image' style='height: 350px')
-                .card-body
-                  h5.card-title #{item.title}
-                  p.card-text Price: $#{item.priceNew}
-                  p.card-text Old Price: $#{item.price}
-                  a.btn.btn-primary(href='#') Add to Category
-    if pagination 
-      if pagination.currentPage === 1
-          .container
-              .btn-view-more
-                  a.btn.btn-secondary(btn-see-more) Xem th&ecirc;m 
-      else 
-          .container 
-            .btn-view-more
-              ul.pagination
-                  li.page-item
-                    if pagination.currentPage > 1
-                      a.page-link(href='#' btn-pagination=pagination.currentPage -1 ) <--
-                  - for(let i = 1; i <= pagination.total; i++)
-                      li.page-item
-                          a.btn(href='#' class=`${pagination.currentPage == i ? "btn-primary": ""}` btn-pagination=i) #{i}
-                    
-                  li.page-item
-                    if pagination.currentPage < pagination.total
-                      a.page-link(href='#' btn-pagination=pagination.currentPage + 1) -->
+    .container
+      .row
+        .col-md-3
+          // Bộ lọc và thanh sắp xếp
+          .filter
+            h4 B&#x1ED9; l&#x1ECD;c
+            form
+              .form-group
+                label Danh m&#x1EE5;c:
+                .form-check
+                  input#category1.form-check-input(type='checkbox', value='category1')
+                  label.form-check-label(for='category1')
+                    | Danh m&#x1EE5;c 1
+                .form-check
+                  input#category2.form-check-input(type='checkbox', value='category2')
+                  label.form-check-label(for='category2')
+                    | Danh m&#x1EE5;c 2
+                .form-check
+                  input#category3.form-check-input(type='checkbox', value='category3')
+                  label.form-check-label(for='category3')
+                    | Danh m&#x1EE5;c 3
+
+              h6 Chọn Giá 
+              form(action="") 
+                .form-group
+                  label(for='price-from') &#x20AB; T&#x1EEB;:
+                  input#price-from.form-control(type='text')
+                .form-group
+                  label(for='price-to') &#x20AB; &Dstrok;&#x1EBF;n:
+                  input#price-to.form-control(type='text')
+                button.btn.btn-primary(type='submit') L&#x1ECD;c
+            hr
+        .col-md-9
+          h4 Th&#x1EE9; t&#x1EF1;:
+          .btn-group.btn-group-toggle(data-toggle='buttons')
+            label.btn.btn-secondary.active
+              input#newest(type='radio', name='order', value='newest', checked='')
+              |  M&#x1EDB;i nh&#x1EA5;t
+            label.btn.btn-secondary
+              input#oldest(type='radio', name='order', value='oldest')
+              |  C&utilde; nh&#x1EA5;t
+            label.btn.btn-secondary
+              input#bestselling(type='radio', name='order', value='bestselling')
+              |  B&aacute;n ch&#x1EA1;y nh&#x1EA5;t
+          // Danh sách sản phẩm
+          .product-list
+            .row
+              each item in product
+                .col-md-3
+                  .product-item
+                    img.product-image(src=item.thumbnail, alt='Product' style='width: 211px; height: 200px;')
+                    h5.product-title #{item.title}
+                    p &Dstrok;&atilde; b&aacute;n
+    nav(aria-label='Page navigation example')
+      ul.pagination.justify-content-center
+        li.page-item(class=(objectPagination.currentPages === 1 ? "disabled": ""))
+          a.page-link(href='#', tabindex='-1', aria-disabled='true',btn-pagination=objectPagination.currentPages - 1) Previous
+        - for (let i = 1; i <= objectPagination.listPages; i++)
+          li.page-item(class=(objectPagination.currentPages === i ? "active" : ""))
+            a.page-link(href='#' btn-pagination=i) #{i}
+        li.page-item(class=(objectPagination.currentPages === objectPagination.listPages ? "disabled": ""))
+          a.page-link(href='#' btn-pagination=objectPagination.currentPages + 1) Next

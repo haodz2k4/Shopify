@@ -4,37 +4,20 @@ const products = require("../../models/product.model");
 //[GET] "/products"
 const product = require("../../models/product.model");
 module.exports.index = async (req,res) =>{  
-    const find = {
-        deleted: false
+    const objectPagination = {
+        currentPages: 1,
+        limitPages: 16
     }
-    //handle pagination 
-    const objectpagination = {
-        currentPage: 1,
-        limit: 9
+    
+    if(req.query.pages){
+        objectPagination.currentPages = parseInt(req.query.pages);
     }
-    if(req.query.page){
-        objectpagination.currentPage = parseInt(req.query.page);
-    }
-    objectpagination.skip = (objectpagination.currentPage - 1) * objectpagination.limit;
-    objectpagination.total = Math.ceil(await product.countDocuments({deleted: false}) / objectpagination.limit);
-    //handle keyword here   
-    if(req.query.keyword){
-        const regrex = new RegExp(req.query.keyword);
-        find.title = regrex;
-    }
-    const sort = {
-
-    };
-    //handle sorting here
-    if(req.query.keySort && req.query.valueSort){
-        sort[req.query.keySort] = req.query.valueSort
-    }else{
-        sort.position = "desc"
-    }
-    const record = await product.find(find).limit(objectpagination.limit).skip(objectpagination.skip).sort(sort);
+    objectPagination.skipPages = (objectPagination.currentPages - 1) * objectPagination.limitPages;
+    const record = await products.find({deleted: false, status: "active"}).sort({position: "desc"}).limit(objectPagination.limitPages).skip(objectPagination.skipPages);
+    objectPagination.listPages = Math.ceil(await products.countDocuments({deleted: false,status: "active"}) / objectPagination.limitPages);
     res.render("clients/pages/products/index.pug",{
         product: record,
-        pagination: objectpagination
+        objectPagination: objectPagination
     });
 }
 //[GET "/products/:slugCategory"

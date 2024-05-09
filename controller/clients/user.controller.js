@@ -24,6 +24,12 @@ module.exports.registerPost = async (req,res) =>{
     } catch (error) {
         console.log(error);
     }
+    sendMailHelper.sendEmail(req.body.email,'Đăng Ký Tài Khoản Thành Công','Chúc mừng bạn đăng ký tài khoản vào trang web Shopify')
+    if (!emailResult.success) {
+        req.flash('error', emailResult.message);
+    } else {
+        req.flash('success', 'Đăng ký tài khoản thành công');
+    }
     req.flash('success','Đăng ký tài khoản thành công')
     res.redirect("/user/login");
 }

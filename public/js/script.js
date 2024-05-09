@@ -16,13 +16,14 @@ if(btnPagination){
     let url = new URL(window.location.href);
     btnPagination.forEach((item) =>{
             item.addEventListener("click",() =>{
-                const value = item.getAttribute("btn-pagination");
-                if(value === '1'){
-                    url.searchParams.delete("page")
-                }else if(value){
-                    url.searchParams.set("page",value);
+                const pages = item.getAttribute("btn-pagination");
+                if(pages){
+                    url.searchParams.set("pages",pages)
+                }else{
+                    url.searchParams.delete("pages");
                 }
                 window.location.href = url.href;
+
             })
     })
 }
