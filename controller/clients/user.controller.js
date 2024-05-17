@@ -3,6 +3,8 @@ const md5 = require("md5");
 const user = require("../../models/user.model");
 const cart = require("../../models/cart.model");
 const forgotPassword = require("../../models/forgot-password.model");
+const order = require("../../models/order.model");
+const products = require("../../models/product.model");
 //require helper 
 const generateHelper = require("../../helpers/generate.helper");
 const sendMailHelper = require("../../helpers/sendEmail.helper");
@@ -24,12 +26,7 @@ module.exports.registerPost = async (req,res) =>{
     } catch (error) {
         console.log(error);
     }
-    sendMailHelper.sendEmail(req.body.email,'Đăng Ký Tài Khoản Thành Công','Chúc mừng bạn đăng ký tài khoản vào trang web Shopify')
-    if (!emailResult.success) {
-        req.flash('error', emailResult.message);
-    } else {
-        req.flash('success', 'Đăng ký tài khoản thành công');
-    }
+    
     req.flash('success','Đăng ký tài khoản thành công')
     res.redirect("/user/login");
 }
@@ -53,12 +50,27 @@ module.exports.loginPost = async (req,res) =>{
 }
 //[GET] "/user/profile"
 module.exports.profile = async (req,res) =>{
-    const recordUser = await user.findOne({
-        tokenUser: req.cookies.tokenUser
-    })
+    const recordUser = res.locals.user;
+    recordUser.totalOrder = await  order.countDocuments({"userInfo.userId": recordUser.id})
+    const productBought = await order.findOne({"userInfo.userId": recordUser.id});
+    recordUser.totalProduct = !productBought ? 0 : productBought.products.length;
+    const userId = recordUser.id;
+    const recordOrder = await order.find({ "userInfo.userId": userId });
+    for(const item of recordOrder){
+
+        for(product of item.products){
+            
+            const infoProduct = await products.findOne({_id: product.productId});
+            product.infoProduct = infoProduct
+        }
+        
+        
+    }
+    
     
     res.render("clients/pages/user/profile.pug",{
-        user: recordUser
+        user: recordUser,
+        order: recordOrder
     })
 }
 //[POST] "/user/profiles/address/add"

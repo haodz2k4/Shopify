@@ -17,10 +17,12 @@ if(btnPagination){
     btnPagination.forEach((item) =>{
             item.addEventListener("click",() =>{
                 const pages = item.getAttribute("btn-pagination");
-                if(pages){
-                    url.searchParams.set("pages",pages)
-                }else{
+                
+                if(pages == 1){
                     url.searchParams.delete("pages");
+                }
+                else if(pages){
+                    url.searchParams.set("pages",pages)
                 }
                 window.location.href = url.href;
 
@@ -162,8 +164,13 @@ const btnOrder = document.querySelector("[btn-submit-order]");
 if(btnOrder){
     const orderProducts = document.querySelector("[order-products]")
     btnOrder.addEventListener("click",(event) =>{
-        const formOrder = document.querySelector("[form-order]")
         event.preventDefault();
+        const isConfirm = confirm("Bạn có muốn mua sản phẩm không");
+        if(!isConfirm){
+            return;
+        }
+        const formOrder = document.querySelector("[form-order]")
+        
         const inpOrder = document.querySelector("[inp-order]");
         const dataId = orderProducts.querySelectorAll("tbody tr td[data-id]");
         const listOrder = [];
@@ -217,33 +224,172 @@ if(btnLogout){
     })
 }
 //end logout 
-//handle like post 
-const btnLike = document.querySelectorAll("[btn-like]");
-if(btnLike.length > 0){
-    btnLike.forEach((item) =>{
+
+//start filter
+const checkBoxCategory = document.querySelectorAll("[chb-category]");
+if(checkBoxCategory.length > 0){
+    checkBoxCategory.forEach((item) =>{
         item.addEventListener("click",() =>{
-            const id = item.getAttribute("btn-like");
-            const isLiked = item.getAttribute("isLiked");
-            if(!isLiked){
-                alert('Bạn chưa đăng nhập nên không thể like bài viết');
+            const slug = item.value;
+            if(item.checked == false){
+                window.location.href = `/products/`
                 return;
             }
-            if(isLiked === 'false'){
-                window.location.href =  `/news/like/add/${id}`
-            }else{
-                window.location.href = `/news/like/remove/${id}`
-            }
+            window.location.href = `/products/${slug}`;
+
+            
         })
     })
 }
-//end like post 
-// start handle show comments 
-const btnShowComments = document.querySelectorAll("[btn-show-comment]");
-if(btnShowComments.length > 0){
-    btnShowComments.forEach((item) =>{
+//end filter
+//start price range 
+const priceRange = document.querySelector("[price-range]");
+if(priceRange){
+    const button = priceRange.querySelector("button");
+    const url = new URL(window.location.href);
+    button.addEventListener("click",() =>{
+        const minPrice = priceRange.querySelector("input[name='minPrice']").value;
+        const maxPrice = priceRange.querySelector("input[name='maxPrice']").value;
+        if(minPrice >= maxPrice){
+            alert("Giá trị bắt đầu phải nhỏ hơn giá trị xuất phát");
+            return;
+        }
+        if(minPrice && maxPrice){
+            url.searchParams.set("minPrice",minPrice);
+            url.searchParams.set("maxPrice",maxPrice);
+        }else{
+            alert("Bạn chưa nhập gì cả");
+            return;
+        }
+        
+
+        window.location.href = url.href
+    })
+}
+//handle chating side clients here
+const formSendMessage = document.querySelector("[form-send-message]");
+if(formSendMessage){
+    formSendMessage.addEventListener("submit",(e) =>{
+        e.preventDefault();
+        const TextArea = formSendMessage.querySelector("textarea");
+        if(TextArea.value){
+            socket.emit("CLIENT_SEND_MESSAGE",TextArea.value);
+            TextArea.value = "";
+        }
+        
+    })
+}
+socket.on("SERVER_RETURN_MESSAGE",(data) =>{
+    const contentChat = document.querySelector("[content-chat]");
+    const div = document.createElement("div");
+    const userId = contentChat.getAttribute("content-chat");
+    if(userId === data.userId){
+        div.innerHTML = `
+        <div class="d-flex flex-row justify-content-end mb-4">
+        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+            <p class="small mb-0"> ${data.content} </p>
+        </div><img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;" /></div>
+        `
+    }else{
+        div.innerHTML = `
+        <p> ${data.fullName} </p>
+        <div class="d-flex flex-row justify-content-start mb-4"><img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;" />
+        <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+            <p class="small mb-0"> ${data.content}</p>
+        </div>
+    </div>
+        `
+    }
+    contentChat.appendChild(div);
+    contentChat.scrollTop = contentChat.scrollHeight;
+    
+})  
+//scroll top 
+const contentChat = document.querySelector("[content-chat]");
+if(contentChat){
+    contentChat.scrollTop = contentChat.scrollHeight;
+}
+//handle emoji picker 
+const emojiPicker = document.querySelector('emoji-picker')
+if(emojiPicker){
+    emojiPicker.addEventListener('emoji-click', event => {
+        const unicode = event.detail.unicode;
+        
+        const TextArea = formSendMessage.querySelector("textarea");
+        TextArea.value += unicode;
+    });
+}
+//end emoji picker 
+//show emoji picker 
+const btnShowEmoji = document.querySelector("[btn-show-emoji]");
+if(btnShowEmoji){
+    btnShowEmoji.addEventListener("click",() =>{
+        emojiPicker.classList.toggle("d-none")
+    })
+}
+//end emoji picker 
+//typing 
+const TextArea = document.querySelector("textarea");
+if(TextArea){
+    TextArea.addEventListener("keyup",() =>{
+
+        socket.emit("CLIENTS_SEND_TYPING","show");
+    })
+}
+const listTyping = document.querySelector(".list-typing")
+socket.on("SERVER_RETURN_TYPING",(data) =>{
+    if(data.type === "show"){
+        const existsBoxTyping = listTyping.querySelector(`[box-typing="${data.userId}"]`);
+        if(!existsBoxTyping){
+            const boxTyping = document.createElement("div");
+            boxTyping.setAttribute("box-typing",data.userId)
+            boxTyping.innerHTML= 
+                `
+                    <p style="color: red">${data.fullName} </p>
+                    <p>Đang nhắn</p>
+                `
+            listTyping.appendChild(boxTyping);
+            setTimeout(() =>{
+                boxTyping.classList.add("d-none")
+            },2000)
+        }
+        
+    }
+    
+})
+//end typing 
+//handle sorting here 
+const btnSorting = document.querySelectorAll("[btn-sorting]");
+if(btnSorting.length > 0){
+    const url = new URL(window.location.href);
+    btnSorting.forEach((item) =>{
         item.addEventListener("click",() =>{
-            const listComments = item.closest(".timeline-footer").querySelector("[list-comments]");
-            listComments.classList.toggle("d-none")
+            const value = item.getAttribute("btn-sorting");
+            const [sortKey,sortValue] = value.split("-");
+            url.searchParams.set("sortKey",sortKey);
+            url.searchParams.set("sortValue",sortValue);
+            
+            window.location.href = url.href;
+        })
+    })
+}
+//show form feed back 
+const showFeedback = document.querySelectorAll("[show-feedback]");
+if(showFeedback.length > 0){
+    showFeedback.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            const formFeedback = document.querySelector("[form-feedback]");
+            const name = item.closest("tr").querySelector("[name]").innerHTML;
+            const id = item.closest("tr").querySelector("[data-id]").getAttribute("data-id");
+            const inp = formFeedback.querySelector("input[name='productId']");
+            
+            inp.value = id;
+            const title = formFeedback.querySelector("h2");
+            if(formFeedback.classList.contains("d-none")){
+                
+                formFeedback.classList.toggle("d-none");
+            }
+            title.innerHTML = `Bình Luận Sản Phẩm ${name}`
         })
     })
 }

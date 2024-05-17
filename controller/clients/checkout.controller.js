@@ -2,6 +2,8 @@
 const order = require("../../models/order.model");
 const products = require("../../models/product.model");
 const user = require("../../models/user.model");
+const feedback = require("../../models/feedback.models");
+const cart = require("../../models/cart.model");
 //[GET] "/checkout"
 module.exports.index = (req,res) =>{
     res.render("clients/pages/checkout/index.pug")
@@ -38,13 +40,11 @@ module.exports.indexPost = async (req,res) =>{
 //[POST] "/checkout/order"
 module.exports.order = async (req,res) =>{
     const listOrder = JSON.parse(req.body.listOrder);
-    const infoUser = await user.findOne({
-        tokenUser: req.cookies.tokenUser
-    })
     const objectUser = {
-        fullName: infoUser.fullName,
-        phone: infoUser.phone,
-        address: infoUser.address[infoUser.defaultAddressIndex]
+        userId: res.locals.user.id,
+        fullName: res.locals.user.fullName,
+        phone: res.locals.user.phone,
+        address: res.locals.user.address[res.locals.user.defaultAddressIndex]
     }
     const listProducts = [];
     
@@ -69,6 +69,14 @@ module.exports.order = async (req,res) =>{
         products: listProducts
     });
     await orderRecord.save();
+    for(const item of listProducts){
+        await cart.updateOne({
+            _id: res.locals.miniCart.id
+        },{
+            $pull: {products: {productId: item.productId}}
+        })
+    }
+    
     res.redirect("/checkout/order/success/"+orderRecord.id)
 }
 //[GET] "/checkout/order/sucess/:orderId"
@@ -92,5 +100,33 @@ module.exports.success = async (req,res) =>{
     res.render("clients/pages/checkout/success.pug",{
         order: record,
         totalPrice: totalPrice
+    })
+}
+
+//[POST] "/checkout/feedback"
+module.exports.feedbackPost = async (req,res) =>{
+        const record = new feedback({
+            userId: res.locals.user.id,
+            productId: req.body.productId,
+            rating: req.body.rating,
+            comment: req.body.comment
+        })
+        await record.save();
+        req.flash('success','Thêm Bình Luận Thành Công');
+        
+        res.redirect("/");
+}
+//[GET] "/checkout/order/detail/:orderId"
+module.exports.orderDetail = async (req,res) =>{
+    const orderId = req.params.orderId;
+    const record = await order.findOne({
+        _id: orderId
+    })
+    for(const item of record.products){
+        item.infoProducts = await products.findOne({_id: item.productId});
+        
+    }
+    res.render("clients/pages/checkout/orderDetail.pug",{
+        order: record
     })
 }

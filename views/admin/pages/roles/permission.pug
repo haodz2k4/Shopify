@@ -67,6 +67,54 @@ block main
             each item in roles
               td
                 input(type='checkbox' value=item.id)
+          //- Users 
+          tr 
+            td(colspan="3")
+                h5 Người dùng 
+          tr(data-name="user_view")
+            td Xem 
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          tr(data-name="user_create")
+            td Thêm
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          tr(data-name="user_edit" ) 
+            td Chỉnh sửa 
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          tr(data-name="user_delete")
+            td Xóa 
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          //- Hóa Đơn 
+          tr 
+            td(colspan="3")
+                h5 Hóa Đơn
+          tr(data-name="order_view")
+            td Xem 
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          tr(data-name="order_create")
+            td Thêm
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          tr(data-name="order_edit" ) 
+            td Chỉnh sửa 
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          tr(data-name="order_delete")
+            td Xóa 
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
           //- roles
           tr 
             td(colspan="3")
@@ -140,6 +188,30 @@ block main
               td
                 input(type='checkbox' value=item.id)
           tr(data-name="news_delete")
+            td Xóa 
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          //- Cài đặt chung  
+          tr 
+            td(colspan="3")
+                h5 Cài đặt chung  
+          tr(data-name="general_view")
+            td Xem 
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          tr(data-name="general_create")
+            td Thêm
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          tr(data-name="general_edit" ) 
+            td Chỉnh sửa 
+            each item in roles
+              td
+                input(type='checkbox' value=item.id)
+          tr(data-name="general_delete")
             td Xóa 
             each item in roles
               td

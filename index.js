@@ -38,9 +38,13 @@ clientRouter(app);
 //app local variable 
 const moment = require("moment");
 app.locals.moment =moment;
-
-
-app.listen(port,() =>{
+//handle socket here 
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+global.io = io;
+server.listen(port,() =>{
     console.log(`Server is running on port: ${port}`);
 })
 

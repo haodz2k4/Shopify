@@ -1,0 +1,12 @@
+extends ../../layouts/default.pug 
+block main 
+    .container
+      .row
+        .col-md-8.offset-md-2.my-4
+          .card
+            h5.card-title #{news.title}
+            p #{moment(news.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+            img.card-img-top(src=news.thumbnail, alt='Ảnh Thumbnail', style='width: 800px; height: 400px')
+            .card-body
+              
+              p.card-text !{news.content}

@@ -2,4 +2,89 @@ extends ../../layouts/default.pug
 
 block main 
 
-    h1 Đây là trang DashBoard
+    section#accountInfo
+      h2 Trang quản trị 
+      .row
+        .col-md-6
+          h4 Thông tin tài khoản 
+          ul
+            li
+              strong H&#x1ECD; v&agrave; t&ecirc;n:
+              |  #{user.fullName}
+            li
+              strong Email:
+              |  #{user.email}
+            li
+              strong S&#x1ED1; &dstrok;i&#x1EC7;n tho&#x1EA1;i:
+              |  #{user.phone}
+            li
+              strong Ph&acirc;n quy&#x1EC1;n:
+              |  #{localRoles.title}
+        
+    hr
+    section#productCategories
+      .row
+        .col-md-6
+          h4 Danh mục sản phẩm 
+          ul
+            li 
+              strong Số lượng 
+              | #{statistis.productCategory.total}
+            li 
+              strong Hoạt động 
+              | #{statistis.productCategory.active}
+            li
+              strong Dừng hoạt động 
+              | #{statistis.productCategory.inactive}
+        .col-md-6
+          h4 Sản phẩm 
+          ul
+            li 
+              strong Số lượng 
+              | #{statistis.products.total}
+            li 
+              strong Hoạt động 
+              | #{statistis.products.active}
+            li
+              strong Dừng hoạt động 
+              | #{statistis.products.inactive}
+    section#productCategories
+      .row
+        .col-md-6
+          h4 Tài khoản Admin 
+          ul
+            li 
+              strong Số lượng 
+              | #{statistis.account.total}
+            li 
+              strong Hoạt động 
+              | #{statistis.account.active}
+            li
+              strong Dừng hoạt động 
+              | #{statistis.account.inactive}
+        .col-md-6
+          h4 Tài khoản khách hàng 
+          ul
+            li 
+              strong Số lượng 
+              | #{statistis.user.total}
+            li 
+              strong Hoạt động 
+              | #{statistis.user.active}
+            li
+              strong Dừng hoạt động 
+              | #{statistis.user.inactive}
+    section#productCategories
+      .row
+        .col-md-6
+          h4 Tin tức  
+          ul
+            li 
+              strong Số lượng 
+              | #{statistis.news.total}
+            li 
+              strong Hoạt động 
+              | #{statistis.news.active}
+            li
+              strong Dừng hoạt động 
+              | #{statistis.news.inactive}

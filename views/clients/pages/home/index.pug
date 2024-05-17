@@ -1,9 +1,9 @@
 extends ../../layouts/default.pug 
-
+include ../../mixins/show-alert.pug 
 
 block main 
-
-
+    +alertSuccess()
+    +alertError()
     .container(style='margin-top: 30px')
       h2 Sản phẩm nổi bậc
       .row

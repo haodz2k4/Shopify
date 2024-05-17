@@ -1,0 +1,27 @@
+extends ../../layouts/default.pug 
+
+block main 
+    .container 
+      h2 Quản lý hóa đơn hàng 
+      table.table 
+        thead 
+            tr 
+              th #
+              th Tên người dùng
+              th Tổng sản phẩm 
+              th Tổng giá tiền 
+              th Ngày mua 
+              th Thao tác 
+        tbody 
+          each item, index in order
+            tr 
+              td #{index}
+              td #{item.userInfo.fullName}
+              td #{item.countProduct}
+              td #{item.totalPrice}
+              td #{moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+              td 
+                .btn-group(role='group', aria-label='Basic mixed styles example')
+                    button.btn.btn-danger(type='button') Thêm 
+                    button.btn.btn-warning(type='button') Sửa 
+                    button.btn.btn-success(type='button') Xóa 

@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug 
+block main 
+    section(style='background-color: #eee;')
+      .container.py-5
+        .row.d-flex.justify-content-center(chating='')
+          .size-chat
+            #chat1.card(style='border-radius: 15px;')
+              .card-header.d-flex.justify-content-between.align-items-center.p-3.bg-info.text-white.border-bottom-0(style='border-top-left-radius: 15px; border-top-right-radius: 15px;')
+                button.btn-close(type='button', aria-label='Close')
+                i.fas.fa-angle-left
+                p.mb-0.fw-bold      Chat Chung Với Mọi Người 
+                i.fas.fa-times
+                button.btn-close(type='button', aria-label='Close', btn-close-chat='')
+              .card-body(content-chat=user.id)
+                each item in chat
+                  if item.userId === user.id
+                    // send
+                    .d-flex.flex-row.justify-content-end.mb-4
+                      .p-3.me-3.border(style='border-radius: 15px; background-color: #fbfbfb;')
+                        p.small.mb-0 #{item.content}.
+                      img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
+                    
+                  else 
+                    // receive 
+                    p #{item.fullName}
+                    .d-flex.flex-row.justify-content-start.mb-4
+                      img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
+                      
+                      .p-3.ms-3(style='border-radius: 15px; background-color: rgba(57, 192, 237,.2);')
+                        p.small.mb-0
+                          | #{item.content} 
+                .list-typing
+                  
+                
+              form(action="" form-send-message).form-outline(data-mdb-input-init='')
+                  textarea#textAreaExample.form-control(rows='4')
+                  button(type='submit').btn.btn-primary Send
+                  button(type='button' btn-show-emoji).btn
+                    i.fa-regular.fa-face-smile 
+            emoji-picker.d-none

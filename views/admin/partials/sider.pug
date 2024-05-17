@@ -1,7 +1,7 @@
 .sidebar.bg-light
       ul.nav.flex-column
         li.nav-item
-          a.nav-link.active(href='#') Dashboard
+          a.nav-link.active(href='/admin/dashboard') Dashboard
         
         li.nav-item
           a.nav-link(href='/admin/users') Users
@@ -23,3 +23,9 @@
         if localRoles.permissions.includes("news_view")
           li.nav-item
             a.nav-link(href='/admin/news') Tin tức  
+        if localRoles.permissions.includes("general_view")
+          li.nav-item
+            a.nav-link(href='/admin/settings/general') Cài đặt chung   
+        if localRoles.permissions.includes("order_view")
+          li.nav-item
+            a.nav-link(href='/admin/order') Hóa đơn 

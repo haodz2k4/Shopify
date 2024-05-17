@@ -7,53 +7,49 @@ block main
           // Bộ lọc và thanh sắp xếp
           .filter
             h4 B&#x1ED9; l&#x1ECD;c
-            form
+            form(action="/admin") 
               .form-group
-                label Danh m&#x1EE5;c:
-                .form-check
-                  input#category1.form-check-input(type='checkbox', value='category1')
-                  label.form-check-label(for='category1')
-                    | Danh m&#x1EE5;c 1
-                .form-check
-                  input#category2.form-check-input(type='checkbox', value='category2')
-                  label.form-check-label(for='category2')
-                    | Danh m&#x1EE5;c 2
-                .form-check
-                  input#category3.form-check-input(type='checkbox', value='category3')
-                  label.form-check-label(for='category3')
-                    | Danh m&#x1EE5;c 3
-
+                label Danh mục:
+                if defaultCategory 
+                  each item in productCategory
+                    .form-check
+                      input#category1.form-check-input(type='checkbox', value=item.slug , chb-category,checked=(item.id === defaultCategory.id ? true : false))
+                      label.form-check-label(for='category1')
+                        | #{item.title}
+                else 
+                  each item in productCategory
+                    .form-check
+                      input#category1.form-check-input(type='checkbox', value=item.slug , chb-category  )
+                      label.form-check-label(for='category1')
+                        | #{item.title} 
               h6 Chọn Giá 
-              form(action="") 
+            form(action="" method="POST" price-range)
                 .form-group
-                  label(for='price-from') &#x20AB; T&#x1EEB;:
-                  input#price-from.form-control(type='text')
+                  label(for='price-from') Từ 
+                  input#price-from.form-control(type='text' name='minPrice' value=objectRangePrice.minPrice)
                 .form-group
-                  label(for='price-to') &#x20AB; &Dstrok;&#x1EBF;n:
-                  input#price-to.form-control(type='text')
-                button.btn.btn-primary(type='submit') L&#x1ECD;c
+                  label(for='price-to') Đến 
+                  input#price-to.form-control(type='text' name='maxPrice' value=objectRangePrice.maxPrice)
+                button.btn.btn-primary(type='button' ) Áp dụng 
             hr
         .col-md-9
-          h4 Th&#x1EE9; t&#x1EF1;:
+          h4 Sắp xếp theo: 
           .btn-group.btn-group-toggle(data-toggle='buttons')
-            label.btn.btn-secondary.active
-              input#newest(type='radio', name='order', value='newest', checked='')
-              |  M&#x1EDB;i nh&#x1EA5;t
-            label.btn.btn-secondary
-              input#oldest(type='radio', name='order', value='oldest')
-              |  C&utilde; nh&#x1EA5;t
-            label.btn.btn-secondary
-              input#bestselling(type='radio', name='order', value='bestselling')
-              |  B&aacute;n ch&#x1EA1;y nh&#x1EA5;t
+            each item in listButtonSorted
+              button.btn.btn-outline-info(btn-sorting=item.name class=item.class) #{item.value}
+
           // Danh sách sản phẩm
           .product-list
             .row
               each item in product
                 .col-md-3
+                 a(href="/products/detail/"+item.slug style='text-decoration: none; color: black  ') 
                   .product-item
                     img.product-image(src=item.thumbnail, alt='Product' style='width: 211px; height: 200px;')
                     h5.product-title #{item.title}
-                    p &Dstrok;&atilde; b&aacute;n
+                    p Đã bán: #{item.sold} 
+                    p Giá tiền: #{item.newPrice}
+        
     nav(aria-label='Page navigation example')
       ul.pagination.justify-content-center
         li.page-item(class=(objectPagination.currentPages === 1 ? "disabled": ""))

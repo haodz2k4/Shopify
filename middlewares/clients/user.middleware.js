@@ -8,7 +8,6 @@ module.exports.user = async (req,res,next) =>{
         });
         res.locals.user = recordUser
     }
-
     next();
     
 }

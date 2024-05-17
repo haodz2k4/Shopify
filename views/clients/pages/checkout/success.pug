@@ -12,18 +12,48 @@ block main
         table.table
           thead 
             tr 
+              th.d-none 
               th Tiêu đề 
               th Ảnh
               th Giá tiền   
               th Số lượng
               th Tổng tiền 
+              th Thao tác 
           tbody 
             each item in order.products
               tr 
-                td #{item.recordProducts.title}
+                td(data-id=item.productId).d-none
+                td(name) #{item.recordProducts.title}
                 td 
                   img(src=item.recordProducts.thumbnail, alt="" style='width: 50px; height: 50px')
                 td #{item.recordProducts.priceNew}
                 td #{item.quantity}
                 td #{item.total}
-        h3 Tổng tiền: #{totalPrice}
+                th 
+                  button.btn.btn-outline-warning(show-feedback) Bình luận 
+              
+        h3 Tổng tiền: #{totalPrice} 
+        .container.mt-5(style="max-width: 600px;" form-feedback).d-none
+                h2.text-center Bình Luận Sản Phẩm 
+                form(action="/checkout/feedback" method="POST") 
+                  input(type="text" name='productId').d-none
+                  .mb-3
+                    label.form-label 
+                      strong Đánh giá 
+                    .rating
+                      input#star5(type='radio', name='rating', value='5')
+                      label.fas.fa-star(for='star5')
+                      input#star4(type='radio', name='rating', value='4')
+                      label.fas.fa-star(for='star4')
+                      input#star3(type='radio', name='rating', value='3')
+                      label.fas.fa-star(for='star3')
+                      input#star2(type='radio', name='rating', value='2')
+                      label.fas.fa-star(for='star2')
+                      input#star1(type='radio', name='rating', value='1')
+                      label.fas.fa-star(for='star1')
+                  .mb-3
+                    label.form-label(for='comment') 
+                      strong Bình Luận
+                    textarea#name.form-control.form-control-sm(rows='3', placeholder='Nhập bình luận của bạn vào đây' name='comment')
+                  button.btn.btn-primary(type='submit') Gửi 
+        

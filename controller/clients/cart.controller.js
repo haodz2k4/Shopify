@@ -4,7 +4,7 @@ const products = require("../../models/product.model")
 //[GET] "/cart"
 module.exports.index = async (req,res) =>{
     if(!res.locals.user){
-        res.redirect("/login")
+        res.redirect("/user/login")
         return;
     }
     const recordCart = await cart.findOne({_id: req.cookies.cartId});
@@ -27,6 +27,10 @@ module.exports.index = async (req,res) =>{
 }
 //[POST] "/cart/addPost/:id"
 module.exports.addPost = async (req,res) =>{
+    if(!res.locals.user){
+        res.redirect("/user/login");
+        return;
+    }
     const productId = req.params.productId;
     const quantity = parseInt(req.body.quantity);
     try {

@@ -35,7 +35,6 @@ block main
         h1 Tổng tiền cần thanh toán: #{totalPrice}  
         if user.address.length > 0 
           .container
-            h2 Điền thông tin 
             form(action="/checkout/order" method="POST" form-order) 
               input(type="text", name="listOrder" inp-order).d-none
               button.btn.btn-primary(type='submit' btn-submit-order) Xác nhận thanh toán 

@@ -1,0 +1,25 @@
+extends ../../layouts/default.pug 
+block main 
+    .container.mt-5
+      h2 Cài đặt chung
+      form(action="/admin/settings/general?_method=PATCH" method="POST" enctype="multipart/form-data") 
+        .form-group
+          label(for='websiteName') Tên website:
+          input#websiteName.form-control(type='text', name='websiteName', placeholder='Enter Website Name', value=recordSetting.websiteName)
+        .form-group
+          label(for='logo') Logo:
+          input#logo.form-control(type='file', name='logo', placeholder='Enter Logo URL')
+          img(alt="", style='width: 80px; height: 80px', src=recordSetting.logo)
+        .form-group
+          label(for='phone') Số điện thoại:
+          input#phone.form-control(type='text', name='phone', placeholder='Enter Phone Number', value=recordSetting.phone)
+        .form-group
+          label(for='email') Email:
+          input#email.form-control(type='email', name='email', placeholder='Enter Email',value=recordSetting.email)
+        .form-group
+          label(for='address') Địa chỉ:
+          input#address.form-control(type='text', name='address', placeholder='Enter Address', value=recordSetting.address)
+        .form-group
+          label(for='copyRight') Copyright:
+          input#copyRight.form-control(type='text', name='copyRight', placeholder='Enter Copyright Information', value=recordSetting.copyRight)
+        button.btn.btn-primary(type='submit') Cập nhật

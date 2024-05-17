@@ -735,3 +735,118 @@ select.form-control:not([size]):not([multiple]) {
 .product-title {
   font-weight: bold;
 }
+.card {
+  background: #fff;
+  transition: .5s;
+  border: 0;
+  margin-bottom: 30px;
+  border-radius: .55rem;
+  position: relative;
+  width: 100%;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+}
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  width: 5px;
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 1em;
+  background-color: #ddd;
+  outline: 1px solid slategrey;
+  border-radius: 1rem;
+}
+
+.text-small {
+  font-size: 0.9rem;
+}
+
+.messages-box,
+.chat-box {
+  height: 510px;
+  overflow-y: scroll;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+input::placeholder {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+#chat1 {
+  max-height: 500px;
+  overflow: hidden;
+}
+
+#chat1 .card-body {
+  max-height: 700px; /* Đặt chiều cao tối đa cho khung chat */
+  overflow-y: auto;  /* Bật tính năng cuộn dọc */
+}
+
+.bg-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-image img {
+  transition: transform 0.25s ease;
+}
+
+.bg-image:hover img {
+  transform: scale(1.05);
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.bg-image:hover .mask {
+  opacity: 1;
+}
+/* rating  */
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+.rating input {
+  display: none;
+}
+.rating label {
+  color: #ccc;
+  font-size: 2rem;
+  padding: 0 0.1rem;
+  cursor: pointer;
+}
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #f90;
+}
+/* end rating  */
+.checked {
+  color: orange;
+}
+

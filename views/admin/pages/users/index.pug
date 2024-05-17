@@ -1,0 +1,68 @@
+extends ../../layouts/default.pug 
+block main 
+    .container
+      h4 Quản lý người dùng 
+      .btn-group
+        each item in ListBtnFilter
+          Button.btn.btn-outline-secondary(btn-filter-status=item.status class=item.class) #{item.name} 
+      
+      
+      
+      h3 Thay đổi nhiều sản phẩm
+      .row
+        .col-md-6
+          form(action=`/admin/products/change-multi?_method=PATCH` method="POST", form-change-multi)
+            .form-row.align-items-center
+              .col-auto
+                label.sr-only(for='selectOption') Select Option
+                select#selectOption.form-control.mb-2(name='typeMulti')
+                  option(value='') --- Lựa chọn thay đổi --- 
+                  option(value='active-multi') Hoạt động 
+                  option(value='inactive-multi') Không hoạt động 
+                  option(value='change-position-multi') Thay đổi vị trí 
+                  option(value="delete-multi") Xóa 
+              // Search Input
+              .col
+                label.sr-only(for='searchInput') Search
+                .input-group.mb-2
+                  input#searchInput.form-control(type='text', placeholder='Search...' name='id').d-none
+                  .input-group-append
+                    button.btn.btn-primary(type='submit') Áp dụng 
+        form(form-search)
+          .col  
+                label.sr-only(for='searchInput') Search
+                .input-group.mb-2
+                  input#searchInput.form-control(type='text', placeholder='Nhập thông tin tìm kiếm....' name='keyword')
+                  .input-group-append
+                    button(type='submit').btn.btn-outline-info Tìm kiếm
+        table.table.table-striped.table-hover(check-multi)
+            thead
+              tr 
+                th 
+                  input(type="checkbox", name="checkall")
+                th #
+                th Avatar 
+                th Họ và Tên
+                th Email 
+                th Số điện thoại 
+                th Trạng Thái 
+                th Thao tác 
+            tbody 
+              each item, index in user
+                tr 
+                  th  
+                    input(type="checkbox", name="ids" value=item.value)
+                  th #{index}
+                  th 
+                    img(src=(item.avatar ? "" : "/images/logo_default.png"), alt="", style="width: 60px; height: 60px ")
+                  th #{item.fullName}
+                  th #{item.email}
+                  th #{item.phone ? item.phone : "Chưa có" }
+                  th 
+                    button(class=(item.status === "active" ? "btn btn-success" : "btn btn-danger") btn-change-status=item.id) #{item.status}
+                  th 
+                    .btn-group(role='group', aria-label='Basic mixed styles example')
+                        button.btn.btn-danger(type='button') Thêm
+                        button.btn.btn-warning(type='button') Sửa 
+                        button.btn.btn-success(type='button') Xóa 
+        form(action="" data-path="/admin/users/change-status" form-change-status method="POST") 

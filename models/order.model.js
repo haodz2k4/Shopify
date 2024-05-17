@@ -3,6 +3,7 @@ const {Schema} = mongoose;
 const orderSchema = new Schema({
     cartId: String,
     userInfo: {
+        userId: String,
         fullName: String,
         phone: String,
         address: {

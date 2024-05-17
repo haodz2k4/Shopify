@@ -2,6 +2,7 @@
 const user = require("../../models/user.model");
 
 const generateString = require("../../helpers/generate.helper");
+const sendMailHelper = require("../../helpers/sendEmail.helper");
 const md5 = require("md5");
 module.exports.register = async (req,res, next) =>{
     const existsUser = await user.findOne({
@@ -20,7 +21,14 @@ module.exports.register = async (req,res, next) =>{
         res.redirect("back");
         return;
     }
-
+    const existsEmail = await sendMailHelper.sendEmail(req.body.email,'Đăng Ký Tài Khoản Thành Công','Chúc mừng bạn đăng ký tài khoản vào trang web Shopify');
+    console.log(existsEmail);
+    if (!existsEmail.success) {
+        req.flash('error', existsEmail.message);
+        return;
+    } else {
+        req.flash('success', 'Đăng ký tài khoản thành công');
+    }
     req.body.password = md5(req.body.password);
     req.body.tokenUser = generateString.generateString(30);
 

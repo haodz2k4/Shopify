@@ -3,82 +3,13 @@ include ../../mixins/show-alert.pug
 block main 
      
     .container
-      +alertSuccess()
-      +alertError()
-      h3.text-center Trang tin tức 
+      h1.my-4 Danh S&aacute;ch Tin T&#x1EE9;c
       .row
-        .col-md-12
-          #content.content.content-full-width
-            // begin profile
-            // end profile
-            // begin profile-content
-            .profile-content
-              // begin tab-content
-              .tab-content.p-0
-                // begin #profile-post tab
-                #profile-post.tab-pane.fade.active.show
-                  // begin timeline
-                  ul.timeline
-                   each item in news
-                    li
-                      // begin timeline-time
-                      .timeline-time
-                        span.date today
-                        span.time #{moment(item.createdAt).startOf('day').fromNow()}
-                      // end timeline-time
-                      // begin timeline-icon
-                      .timeline-icon
-                        a(href='javascript:;') &nbsp;
-                      // end timeline-icon
-                      // begin timeline-body
-                      .timeline-body
-                        .timeline-header
-                          span.userimage
-                            img(src='https://bootdey.com/img/Content/avatar/avatar3.png', alt='')
-                          span.username
-                            a(href='javascript:;')  #{item.infoAdmin.fullName}
-                            |  
-                            small
-                          span.pull-right.text-muted 18 Views
-                        .timeline-content
-                          p
-                            | !{item.content}
-                        .timeline-likes
-                          .stats-right
-                            span.stats-text 259 Shares
-                            span.stats-text #{item.comment.length} Comments
-                          .stats
-                            
-                            span.fa-stack.fa-fw.stats-icon
-                              i.fa.fa-circle.fa-stack-2x.text-primary
-                              i.fa.fa-thumbs-up.fa-stack-1x.fa-inverse
-                            span.stats-total #{item.liked.length}
-                        .timeline-footer
-                          if (item.isLiked != null)
-                            a.m-r-15.text-inverse-lighter(href='javascript:;' btn-like=item.id isLiked=`${item.isLiked}`)
-                              i.fa.fa-thumbs-up.fa-fw.fa-lg.m-r-3(class=(item.isLiked === true ? "like-change-color" : ""))
-                              |  Like
-                          else 
-                            a.m-r-15.text-inverse-lighter(href='javascript:;' btn-like=item.id isLiked=``)
-                              i.fa.fa-thumbs-up.fa-fw.fa-lg.m-r-3()
-                              |  Like
-                          a.m-r-15.text-inverse-lighter(href='javascript:;' btn-show-comment)
-                            i.fa.fa-comments.fa-fw.fa-lg.m-r-3
-                            |  Comment
-                            |  
-                            i.fa.fa-share.fa-fw.fa-lg.m-r-3
-                            |  Share
-                          ul.list-group.list-group-flush.d-none(list-comments)
-                            each eachComments in item.comment
-                              li.list-group-item #{eachComments.infoUser.fullName}: #{eachComments.content}      #{moment(eachComments.dateComment).format('MMMM Do YYYY, h:mm:ss a')}
-                        .timeline-comment-box
-                          .user
-                            img(src='https://bootdey.com/img/Content/avatar/avatar3.png')
-                          .input
-                            form(action='/news/comments/add/'+item.id method="POST")
-                              .input-group
-                                input.form-control.rounded-corner(type='text', placeholder='Viết Bình Luận...', name='content')
-                                span.input-group-btn.p-l-10
-                                  button.btn.btn-primary.f-s-12.rounded-corner(type='submit') Gửi 
-                      // end timeline-body
-                    
+       each item in news
+          .col-md-4.mb-4
+           a(href="/news/detail/"+item.slug style='text-decoration: none') 
+            .card
+              img.card-img-top(src=item.thumbnail, alt='Ảnh Thumbnail' style='width: 300px; height: 200px')
+              .card-body
+                h5.card-title #{item.title}
+       
