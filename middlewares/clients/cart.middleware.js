@@ -5,6 +5,5 @@ module.exports.cart = async (req,res, next) =>{
         _id: req.cookies.cartId
     })
     res.locals.miniCart = cart
-    
     next();
 }

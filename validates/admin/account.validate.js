@@ -16,6 +16,7 @@ module.exports.createPost = async (req,res,next) =>{
     
     const existsEmail = await account.findOne({
         email: req.body.email});
+    console.log(existsEmail)
     if(existsEmail){
         req.flash('error','Email đã tồn tại');
         res.redirect("back")

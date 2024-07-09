@@ -1,65 +1,69 @@
-.container
-      footer.py-5
-        .row
-          .col-6.col-md-2.mb-3
-            h5 Thông tin 
-            ul.nav.flex-column
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Tên website: #{settingGeneral.websiteName}
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Số điện thoại: #{settingGeneral.phone}
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Email: #{settingGeneral.email}
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Địa chỉ: #{settingGeneral.address}
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') CopyRight: #{settingGeneral.copyRight}
-          .col-6.col-md-2.mb-3
-            h5 Section
-            ul.nav.flex-column
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Home
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Features
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Pricing
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') FAQs
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') About
-          .col-6.col-md-2.mb-3
-            h5 Section
-            ul.nav.flex-column
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Home
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Features
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') Pricing
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') FAQs
-              li.nav-item.mb-2
-                a.nav-link.p-0.text-muted(href='#') About
-          .col-md-5.offset-md-1.mb-3
-            form
-              h5 Subscribe to our newsletter
-              p Monthly digest of what&apos;s new and exciting from us.
-              .d-flex.flex-column.flex-sm-row.w-100.gap-2
-                label.visually-hidden(for='newsletter1') Email address
-                input#newsletter1.form-control(type='text', placeholder='Email address', fdprocessedid='8e9z6d')
-                button.btn.btn-primary(type='button', fdprocessedid='if65ty') Subscribe
-        .d-flex.flex-column.flex-sm-row.justify-content-between.py-4.my-4.border-top
-          p &copy; 2022 Company, Inc. All rights reserved.
-          ul.list-unstyled.d-flex
-            li.ms-3
-              a.link-dark(href='#')
-                svg.bi(width='24', height='24')
-                  use(xlink:href='#twitter')
-            li.ms-3
-              a.link-dark(href='#')
-                svg.bi(width='24', height='24')
-                  use(xlink:href='#instagram')
-            li.ms-3
-              a.link-dark(href='#')
-                svg.bi(width='24', height='24')
-                  use(xlink:href='#facebook')
+footer
+      .footer-container
+        .footer-section.logo
+          img(src='./images/logo.png.img', alt=' Logo')
+          p
+            | L&#x1EA7;u 5, 387-389 Hai B&agrave; Tr&#x1B0;ng Qu&#x1EAD;n 3 TP HCM
+            br
+            |                  C&ocirc;ng Ty C&#x1ED5; Ph&#x1EA7;n Ph&aacute;t H&agrave;nh S&aacute;ch TP HCM - FAHASA
+            br
+            |                  60 - 62 L&ecirc; L&#x1EE3;i, Qu&#x1EAD;n 1, TP. HCM, Vi&#x1EC7;t Nam
+          p
+            | Nh&#x1EAD;n &dstrok;&#x1EB7;t h&agrave;ng tr&#x1EF1;c tuy&#x1EBF;n v&agrave; giao h&agrave;ng t&#x1EAD;n n&#x1A1;i.
+            | KH&Ocirc;NG h&#x1ED7; tr&#x1EE3; &dstrok;&#x1EB7;t mua v&agrave; nh&#x1EAD;n h&agrave;ng tr&#x1EF1;c ti&#x1EBF;p t&#x1EA1;i v&abreve;n ph&ograve;ng c&utilde;ng nh&#x1B0; t&#x1EA5;t c&#x1EA3; H&#x1EC7; Th&#x1ED1;ng Fahasa tr&ecirc;n to&agrave;n qu&#x1ED1;c.
+          .social-media
+            a(href='#')
+              img(src='./images/facebook.png', alt='Facebook')
+            a(href='#')
+              img(src='./images/instagram.png', alt='Instagram')
+            a(href='#')
+              img(src='./images/youtube.png', alt='YouTube')
+            a(href='#')
+              img(src='./images/twitter.png', alt='Twitter')
+          .app-download
+            a(href='#')
+              img(src='./images/google-play.png', alt='Google Play')
+            a(href='#')
+              img(src='./images/app-store.png', alt='App Store')
+        .footer-section.services
+          h4 D&#x1ECA;CH V&#x1EE4;
+          ul
+            li &Dstrok;i&#x1EC1;u kho&#x1EA3;n s&#x1EED; d&#x1EE5;ng
+            li Ch&iacute;nh s&aacute;ch b&#x1EA3;o m&#x1EAD;t th&ocirc;ng tin c&aacute; nh&acirc;n
+            li Ch&iacute;nh s&aacute;ch b&#x1EA3;o m&#x1EAD;t thanh to&aacute;n
+            li Gi&#x1EDB;i thi&#x1EC7;u Fahasa
+            li H&#x1EC7; th&#x1ED1;ng trung t&acirc;m - nh&agrave; s&aacute;ch
+        .footer-section.support
+          h4 H&#x1ED6; TR&#x1EE2;
+          ul
+            li Ch&iacute;nh s&aacute;ch &dstrok;&#x1ED5;i - tr&#x1EA3; - ho&agrave;n ti&#x1EC1;n
+            li Ch&iacute;nh s&aacute;ch b&#x1EA3;o h&agrave;nh - b&#x1ED3;i ho&agrave;n
+            li Ch&iacute;nh s&aacute;ch v&#x1EAD;n chuy&#x1EC3;n
+            li Ch&iacute;nh s&aacute;ch kh&aacute;ch s&#x1EC9;
+            li Ph&#x1B0;&#x1A1;ng th&#x1EE9;c thanh to&aacute;n v&agrave; xu&#x1EA5;t H&Dstrok;
+        .footer-section.account
+          h4 T&Agrave;I KHO&#x1EA2;N C&#x1EE6;A T&Ocirc;I
+          ul
+            li &Dstrok;&abreve;ng nh&#x1EAD;p/T&#x1EA1;o m&#x1EDB;i t&agrave;i kho&#x1EA3;n
+            li Thay &dstrok;&#x1ED5;i &dstrok;&#x1ECB;a ch&#x1EC9; kh&aacute;ch h&agrave;ng
+            li Chi ti&#x1EBF;t t&agrave;i kho&#x1EA3;n
+            li L&#x1ECB;ch s&#x1EED; mua h&agrave;ng
+        .footer-section.contact
+          h4 LI&Ecirc;N H&#x1EC6;
+          p
+            span.contact-address 60-62 L&ecirc; L&#x1EE3;i, Q.1, TP. HCM
+            br
+            span.contact-email cskh@fahasa.com.vn
+            br
+            span.contact-phone 1900636467
+          .partners
+            img(src='./images/ahamove.png', alt='Ahamove')
+            img(src='./images/Snappy.png', alt='Snappy')
+          .payment-methods
+            img(src='./images/VNPay.png', alt='VNPay')
+            img(src='./images/ZaloPay.png', alt='ZaloPay')
+            img(src='./images/momo.png', alt='Momo')
+            img(src='./images/ShopeePay.png', alt='ShopeePay')
+      .footer-bottom
+        p
+          | Gi&#x1EA5;y ch&#x1EE9;ng nh&#x1EAD;n &Dstrok;&abreve;ng k&yacute; Kinh doanh s&#x1ED1; 0304132047 do S&#x1EDF; K&#x1EBF; ho&#x1EA1;ch v&agrave; &Dstrok;&#x1EA7;u t&#x1B0; Th&agrave;nh ph&#x1ED1; H&#x1ED3; Ch&iacute; Minh c&#x1EA5;p ng&agrave;y 20/12/2005, &dstrok;&abreve;ng k&yacute; thay &dstrok;&#x1ED5;i l&#x1EA7;n th&#x1EE9; 10, ng&agrave;y 20/05/2022.

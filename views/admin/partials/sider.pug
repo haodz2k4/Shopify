@@ -4,16 +4,16 @@
           a.nav-link.active(href='/admin/dashboard') Dashboard
         
         li.nav-item
-          a.nav-link(href='/admin/users') Users
+          a.nav-link(href='/admin/users') Người dùng 
         if localRoles.permissions.includes("product_view")
           li.nav-item
-            a.nav-link(href='/admin/products') Products
+            a.nav-link(href='/admin/products') Sách 
         if localRoles.permissions.includes("product-category_view")
           li.nav-item
-            a.nav-link(href='/admin/product-category') Categories
-        if localRoles.permissions.includes("role_view")
+            a.nav-link(href='/admin/product-category') Danh mục 
+        if localRoles.permissions.includes("roles_view")
           li.nav-item
-            a.nav-link(href='/admin/roles') Role
+            a.nav-link(href='/admin/roles') Vai trò 
         if localRoles.permissions.includes("roles_permission")
           li.nav-item
             a.nav-link(href='/admin/roles/permissions') Phân quyền 
@@ -23,6 +23,8 @@
         if localRoles.permissions.includes("news_view")
           li.nav-item
             a.nav-link(href='/admin/news') Tin tức  
+        li.nav-item
+            a.nav-link(href='/admin/storage') Kho sách  
         if localRoles.permissions.includes("general_view")
           li.nav-item
             a.nav-link(href='/admin/settings/general') Cài đặt chung   

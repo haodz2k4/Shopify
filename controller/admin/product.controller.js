@@ -66,10 +66,14 @@ module.exports.index = async (req,res) =>{
 
     const record = await products.find(find).limit(objectPagination.limit).skip(objectPagination.skip).sort(sort);
     for(const item of record){
-        const createdBy = await account.findOne({
-            _id: item.createdBy
-        })
-        item.createdByfullname = createdBy?.fullName;
+        if(item.createdBy === "Admin"){
+            item.createdBy = "ADMIN"
+        }else{
+            const createdBy = await account.findOne({
+                _id: item.createdBy
+            })
+            item.createdByfullname = createdBy?.fullName;
+        }
     }
     res.render("admin/pages/products/index.pug",{
         product: record,
@@ -231,19 +235,26 @@ module.exports.createPost = async (req,res) =>{
 }
 //[GET] /admin/products/edit/:id
 module.exports.edit = async (req,res) =>{
-    if(!res.locals.localRoles.permissions.includes("product_edit")){
-        res.render("admin/layouts/access-deny.pug")
-        return;
+    try {
+        if(!res.locals.localRoles.permissions.includes("product_edit")){
+            res.render("admin/layouts/access-deny.pug")
+            return;
+        }
+        const record = await products.findOne({
+            _id: req.params.id
+        })
+        const categoryRecord = await productCategory.find({
+            deleted: false,
+            status: "active"
+        });
+        const newCategoryRecord = createTree(categoryRecord);
+        res.render("admin/pages/products/edit.pug",{
+            product: record,
+            categoryRecord: newCategoryRecord
+        });
+    } catch (error) {
+        console.error(error);
     }
-    const record = await products.findById({
-        _id: req.params.id
-    })
-    const categoryRecord = await productCategory.find({});
-    const newCategoryRecord = createTree(categoryRecord);
-    res.render("admin/pages/products/edit.pug",{
-        product: record,
-        categoryRecord: newCategoryRecord
-    });
 }
 //[PATCH] /admin/products/edit/:id
 module.exports.editPatch = async (req,res) =>{

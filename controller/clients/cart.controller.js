@@ -32,7 +32,13 @@ module.exports.addPost = async (req,res) =>{
         return;
     }
     const productId = req.params.productId;
-    const quantity = parseInt(req.body.quantity);
+    let quantity = 0;
+    if(req.body.quantity){
+        
+        quantity = parseInt(req.body.quantity);
+    }else{
+        quantity = 1
+    }
     try {
         const recordCart = await cart.findOne({_id: req.cookies.cartId});
         const productExists = recordCart.products.find(item => item.productId === productId)

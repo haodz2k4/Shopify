@@ -8,6 +8,7 @@ const user = require("../../models/user.model");
 const paginationHelper = require("../../helpers/pagination.helper");
 const rangePriceHelper = require("../../helpers/rangePrice.helper");
 const sortedHelper = require("../../helpers/sorted.helper");
+const {formatCurrency} = require("../../helpers/formatCurrency.helper");
 //[GET] "/products"
 module.exports.index = async (req,res) =>{  
     //handle price range here
@@ -37,7 +38,7 @@ module.exports.index = async (req,res) =>{
             "products.productId": item.id
         })
         item.sold = countSold;
-        item.newPrice = item.price * (100 - item.discountPercentage)/100;
+        item.newPrice = formatCurrency(item.price * (100 - item.discountPercentage)/100);
        
     }
     if(req.query.sortKey === "sold" && req.query.sortValue === "desc"){
@@ -60,7 +61,7 @@ module.exports.category = async (req,res) =>{
     const objPagination = await paginationHelper.objPagination(req);
     const category = await productCategory.findOne({deleted: false, status: "active",slug: req.params.slugCategory});
     const recordProduct = await products.find({deleted: false, status: "active",product_category_id: category.id,price: {$gte: objectRangePrice.minPrice, $lte: objectRangePrice.maxPrice}}).limit(objPagination.limitPages).skip(objPagination.skipPages);
-    const ListProductcategory = await productCategory.find({status: "active", deleted: false})
+    
     objPagination.listPages = Math.ceil(await products.countDocuments({deleted: false,status: "active", product_category_id: req.params.slugCategory}) / objPagination.limitPages);
     const objectButtonSorted = sortedHelper.products(req);
     
@@ -72,9 +73,8 @@ module.exports.category = async (req,res) =>{
         item.newPrice = item.price * (100 - item.discountPercentage)/100;
        
     }
-    res.render("clients/pages/products/index.pug",{
-        product: recordProduct,
-        productCategory: ListProductcategory,
+    res.render("clients/pages/search/index.pug",{
+        products: recordProduct,
         objectPagination: objPagination,
         defaultCategory: category,
         objectRangePrice: objectRangePrice,

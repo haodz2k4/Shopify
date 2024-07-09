@@ -4,10 +4,10 @@ block main
   .container 
     +alertSuccess()
     +alertError()
-    .card.mb-3(style='max-width: 1200px; margin-top: 20px')
+    .card.mb-3(style='max-width: 1200px; margin-top: 20px;height: 800px')
       .row.g-0
         .col-md-6
-          img.img-fluid.rounded-start(src=productDetail.thumbnail, alt='Product Thumbnail')
+          img.img-fluid.rounded-start(src=productDetail.thumbnail, style='width: 500px; height: 800px' alt='Product Thumbnail')
         .col-md-6
           .card-body
             h5.card-title #{productDetail.title}

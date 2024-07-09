@@ -9,6 +9,7 @@ const newsRouter = require("./news.router");
 const settingRouter = require("./setting.router");
 const userRouter = require("./user.router");
 const orderRouter = require("../../router/admin/order.router");
+const storageRouter = require("./storage.router");
 const auth = require("../../middlewares/admin/auth.middleware");
 
 module.exports = (app) =>{
@@ -22,5 +23,6 @@ module.exports = (app) =>{
     app.use("/admin/news",auth.requireAuth,newsRouter);
     app.use("/admin/settings",auth.requireAuth,settingRouter);
     app.use("/admin/users",auth.requireAuth,userRouter);
-    app.use("/admin/order",auth.requireAuth,orderRouter)
+    app.use("/admin/order",auth.requireAuth,orderRouter);
+    app.use("/admin/storage",auth.requireAuth, storageRouter);
 }   

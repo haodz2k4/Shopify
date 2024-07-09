@@ -4,27 +4,75 @@ include ../../mixins/show-alert.pug
 block main 
     +alertSuccess()
     +alertError()
-    .container(style='margin-top: 30px')
-      h2 Sản phẩm nổi bậc
-      .row
-       each item in productFeatured  
-        .col-md-4
-         a(href="/products/detail/"+item.slug style='text-decoration: none') 
-          .card.product-card.mb-4
-            img.card-img-top.product-img(src=item.thumbnail, alt='Product Image' style='height: 350px')
-            .card-body
-              h5.card-title #{item.title}
-              p.card-text Price: $#{item.priceNew}
-              p.card-text Old Price: #{item.price}
-    .container(style='margin-top: 30px')
-      h2 Sản phẩm mới nhất 
-      .row
-        each item in productNews  
-          .col-md-4
-           a(href="/products/detail/"+item.slug style='text-decoration: none') 
-            .card.product-card.mb-4
-              img.card-img-top.product-img(src=item.thumbnail, alt='Product Image' style='height: 350px')
-              .card-body
-                h5.card-title #{item.title}
-                p.card-text Price: $#{item.priceNew}
-                p.card-text Old Price: #{item.price}
+    .container.mt-5
+      #mainCarousel.carousel.slide(data-ride='carousel')
+        ol.carousel-indicators
+          li.active(data-target='#mainCarousel', data-slide-to='0')
+          li(data-target='#mainCarousel', data-slide-to='1')
+          li(data-target='#mainCarousel', data-slide-to='2')
+        .carousel-inner
+          .carousel-item.active
+            img.d-block.w-100(src='https://cdn0.fahasa.com/media/magentothem/banner7/LDP_D-Day_7.7_Slide_840x320.jpg', alt='Banner 1')
+          .carousel-item
+            img.d-block.w-100(src='https://cdn0.fahasa.com/media/magentothem/banner7/Backtoschool_mainbannerT7__MainBanner_Slide_840x320.jpg', alt='Banner 2')
+          .carousel-item
+            img.d-block.w-100(src='https://cdn0.fahasa.com/media/magentothem/banner7/Tapvo_T07_SlideBanner_T07_840x320.jpg', alt='Banner 3')
+        a.carousel-control-prev(href='#mainCarousel', role='button', data-slide='prev')
+          span.carousel-control-prev-icon(aria-hidden='true')
+          span.sr-only Previous
+        a.carousel-control-next(href='#mainCarousel', role='button', data-slide='next')
+          span.carousel-control-next-icon(aria-hidden='true')
+          span.sr-only Next
+      .row.mt-4
+        .col-md-3
+          .ad-card.text-center
+            img.img-fluid(src='https://cdn0.fahasa.com/media/wysiwyg/Thang-07-2024/Diamond_T07_ThienLong_SmallBanner_310x210.jpg', alt='Ad 1')
+            .ad-text
+              p.discount -40%
+              p.title Mua Ngay
+        .col-md-3
+          .ad-card.text-center
+            img.img-fluid(src='https://cdn0.fahasa.com/media/wysiwyg/Thang-07-2024/Diamond_T07_Deli_SmallBanner_310x210.jpg', alt='Ad 2')
+            .ad-text
+              p.discount -30%
+              p.title Mua Ngay
+        .col-md-3
+          .ad-card.text-center
+            img.img-fluid(src='https://cdn0.fahasa.com/media/wysiwyg/Thang-07-2024/Stem_T07_SmallBanner_310x210.jpg', alt='Ad 3')
+            .ad-text
+              p.discount -50%
+              p.title Mua Ngay
+        .col-md-3
+          .ad-card.text-center
+            img.img-fluid(src='https://cdn0.fahasa.com/media/wysiwyg/Thang-07-2024/Diamond_T07_ThienLong_SmallBanner_310x210.jpg', alt='Ad 4')
+            .ad-text
+              p.discount -20%
+              p.title Mua Ngay
+    // end ads
+    .container.mt-5
+      .product-categories.mt-5
+        h2.text-center.mb-4 Danh m&#x1EE5;c s&#x1EA3;n ph&#x1EA9;m
+        .row.text-center 
+          each item in productCategories
+            a(href="/products/"+item.slug  style='text-decoration: none').col-md-2
+              .category-item
+                img.img-fluid(src='https://via.placeholder.com/100/20B2AA/FFFFFF?text=Ngoại+Văn', alt='Category 1')
+                p #{item.title}
+          
+      .highlighted-products
+        h1.text-center.mb-5 Danh S&aacute;ch S&#x1EA3;n Ph&#x1EA9;m N&#x1ED5;i B&#x1EAD;t
+        .row
+          each item in productFeatured
+            form(action="/cart/add/"+item.id method="POST").col-md-3
+              a(href="/products/detail/"+item.slug style='text-decoration: none').card.mb-4
+                img.card-img-top(src=item.thumbnail, alt='Product 1')
+                .card-body
+                  h5.card-title #{item.title}
+                  p.card-text.price
+                    span.current-price #{item.priceNew} 
+                    span.old-price #{item.price} &dstrok;
+                  p.card-text.quantity S&#x1ED1; l&#x1B0;&#x1EE3;ng: #{item.stock} 
+                  button.btn.btn-primary(btn-add-cart=item.id type='submit') Thêm vào giỏ hàng    
+                    i.fa-solid.fa-cart-shopping   
+        .text-center
+          a(href="/products").btn.btn-outline-danger Xem thêm  

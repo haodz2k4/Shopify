@@ -1,15 +1,17 @@
 //require model here
 const product = require("../../models/product.model");
+const ProductCategory = require("../../models/product-category.model");
+//require helper here
+const {formatCurrency} = require("../../helpers/formatCurrency.helper");
 //[GET] "/"
 module.exports.index = async (req,res) =>{
     
     const productFeatured = await product.find({
-        deleted: false,
-        status: "active",
-        featured: "1"
-    }).limit(3).select('-description')
+        featured: '1'
+    }).limit(8);
     for(const item of productFeatured){
-        item.priceNew = (item.price * (100 - item.discountPercentage)/100).toFixed(0); 
+        item.price = formatCurrency(item.price);
+        item.priceNew = formatCurrency((item.price * (100 - item.discountPercentage)/100).toFixed(0)); 
     }
 
     const productNews = await product.find({
@@ -19,10 +21,15 @@ module.exports.index = async (req,res) =>{
     for(const item of productNews){
         item.priceNew = (item.price * (100 - item.discountPercentage)/100).toFixed(0); 
     }
+    const productCategories = await ProductCategory.find({
+        deleted: false,
+        status: "active"
+    })
     
     
     res.render("clients/pages/home/index.pug",{
         productFeatured: productFeatured,
-        productNews: productNews
+        productNews: productNews,
+        productCategories
     });
 }

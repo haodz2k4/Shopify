@@ -1,15 +1,18 @@
 extends ../../layouts/default.pug 
 
 block main 
-    h1 Trang tìm kiếm 
-    .container(style='margin-top: 30px')
+    .highlighted-products
+        h5.mb-5 
         .row
-        each item in productRecord  
-          .col-md-4
-            .card.product-card.mb-4
-              img.card-img-top.product-img(src=item.thumbnail, alt='Product Image' style='height: 350px')
-              .card-body
-                a(href="/products/detail/"+item.slug).card-title #{item.title}
-                p.card-text Price: $#{item.priceNew}
-                p.card-text Old Price: $#{item.price}
-                a.btn.btn-primary(href='#') Add to Category
+          each item in products
+            form(action="/cart/add/"+item.id method="POST").col-md-3
+              a(href="/products/detail/"+item.slug style='text-decoration: none').card.mb-4
+                img.card-img-top(src=item.thumbnail, alt='Product 1')
+                .card-body
+                  h5.card-title #{item.title}
+                  p.card-text.price
+                    span.current-price #{item.priceNew} 
+                    span.old-price #{item.price} &dstrok;
+                  p.card-text.quantity S&#x1ED1; l&#x1B0;&#x1EE3;ng: 10  
+                  button.btn.btn-primary(btn-add-cart=item.id type='submit') Thêm vào giỏ hàng    
+                    i.fa-solid.fa-cart-shopping     

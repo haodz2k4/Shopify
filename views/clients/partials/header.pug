@@ -1,38 +1,31 @@
-include ../mixins/sub-menu.pug
-header.p-3.bg-dark.text-white
-      .container
-        .d-flex.flex-wrap.align-items-center.justify-content-center.justify-content-lg-start
-          a.d-flex.align-items-center.mb-2.mb-lg-0.text-white.text-decoration-none(href='/')
-            svg.bi.me-2(width='40', height='32', role='img', aria-label='Bootstrap')
-              use(xlink:href='#bootstrap')
-          ul.nav.col-12.col-lg-auto.me-lg-auto.mb-2.justify-content-center.mb-md-0
-            li
-              a.nav-link.px-2.text-secondary(href='/') Trang chủ 
-            li
-              a.nav-link.px-2.text-white(href='/About') Về chúng tôi 
-            
-            li  
-              a.nav-link.px-2.text-white(href='#') FAQs
-            li(class="sub-menu")
-                a.nav-link.px-2.text-white(href='/products') Sản phẩm 
-                  +sub-menu(layoutProductCategory)
-            li  
-              a.nav-link.px-2.text-white(href='/news') Tin tức 
-            li  
-              a.nav-link.px-2.text-white(href='/chats') Nhắn tin 
-          form.col-12.col-lg-auto.mb-3.mb-lg-0.me-lg-3(action="/search")
-            input.form-control.form-control-dark(type='search', p laceholder='Search...', aria-label='Search', name="keyword", value=keyword)
-          a(href="/cart").btn.btn-primary.position-relative
-            i.fa-solid.fa-cart-shopping
-            span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger
-              | #{miniCart ? miniCart.products.length : 0}
-              span.visually-hidden unread messages
-          .text-end
-            
-            if user 
-              a(href="/user/profiles" style='text-decoration: none')
-                img(src=(user.avatar ? user.avatar: '/images/logo_default.png'), alt="" style='width: 50px; height: 50px')
-                h6(style='color: white') #{user.fullName} 
+header
+      .top-banner
+        img(src='images/logo.img', alt=' Logo')
+        .promo-banner
+          span.promo-text T&#x1AF;NG B&#x1EEA;NG H&Egrave; SANG R&#x1ED8;N R&Agrave;NG &#x1AF;U &Dstrok;&Atilde;I
+          span.promo-discount -50%
+          button.buy-now MUA NGAY
+        form(action="/search").search-bar
+          .search-icon
+            img(src='images/Grid.png', alt='Grid Icon')
+          input(type='text', placeholder='Sách giáo khoa 2024', name='keyword')
+          button(type='submit')
+            img(src='images/Search.png', alt='Search')
+        .user-actions
+          .icon-menu
+            .icon-item
+              img(src='images/bell.png', alt='Thông Báo')
+              span Th&ocirc;ng B&aacute;o 
+            a(href="/cart" style='text-decoration: none').icon-item
+              img(src='images/cart.png', alt='Giỏ Hàng')
+              span.position-relative Giỏ hàng 
+                span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger
+                  | #{miniCart ? miniCart.products.length : ""}
+            if user
+              a(href="/user/profiles" style='text-decoration: none').icon-item
+                img(src='images/user.png', alt='Tài khoản')
+                span #{user.fullName}   
             else 
-              a(href="/user/login").btn.btn-outline-light.me-2 Login
-              a(href="/user/register").btn.btn-warning Sign-up 
+              a(href="/user/login" style='text-decoration: none').icon-item
+                img(src='images/user.png', alt='Tài khoản')
+                span Tài khoản 

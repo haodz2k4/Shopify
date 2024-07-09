@@ -6,10 +6,6 @@ module.exports.products = (req) =>{
             value: "Mới nhất"
         },
         {
-            name: "position-asc",
-            value: "Cũ nhất"
-        },
-        {
             name: "price-asc",
             value: "Giá thấp nhất"
         },
