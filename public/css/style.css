@@ -330,4 +330,30 @@ footer {
 .ad-text .title {
   font-size: 1rem;
 }
-/* end ads  */
+/* end ads  */ 
+
+
+/* rating  */
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 2rem;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #f7d106;
+}
+
+/* end rating  */

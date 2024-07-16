@@ -33,7 +33,7 @@ block main
               h5 #{item.infoUser.fullName}
               p #{moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
               div
-                - for (let i = 1; i <= 5; i++)
+                - for (let i = 1; i <= item.rating; i++)
                   span.fa.fa-star(class=(i <= item.rating ? "checked" : ""))
             p.mt-2 #{item.comment}
         

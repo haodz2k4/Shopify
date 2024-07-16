@@ -62,9 +62,10 @@ module.exports.index = async (req,res) =>{
                 let count = 0;
                 let Revenue = 0;
                 for(const item of orders){
-                    count += item.products.length;
                     for(const elm of item.products){
                         Revenue += ((elm.price) * (100 - elm.discountPercentage)/100) * elm.quantity;
+                        
+                        count += elm.quantity;
                     }
                     
                 }
