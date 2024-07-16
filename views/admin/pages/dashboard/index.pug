@@ -87,4 +87,37 @@ block main
               | #{statistis.news.active}
             li
               strong Dừng hoạt động 
-              | #{statistis.news.inactive}
+              | #{statistis.news.inactive} 
+    .container.my-5
+      .card(style='width: 1000px')
+        .card-header.bg-primary.text-white
+          h3 Th&#x1ED1;ng k&ecirc; v&agrave; B&aacute;o c&aacute;o
+        .card-body
+          .form-group
+            label(for='period') Th&#x1ED1;ng k&ecirc; theo:
+            select#period.form-control(select-date-statistics)
+              option(value) Chọn 1 thời gian
+              option(value='day' selected=(daySelected === 'day' ? true : false)) Ngày 
+              option(value='week') Tuần 
+              option(value='month') Tháng 
+              option(value='year') Năm
+          .statistics
+            h4 Doanh Thu ngày hôm nay  
+            p
+              | S&#x1ED1; s&aacute;ch &dstrok;&atilde; b&aacute;n: 
+              span#books-sold #{infoStatistisByDate.countOfBooks}
+            p
+              | T&#x1ED5;ng doanh thu: 
+              span#total-revenue #{infoStatistisByDate.Revenue}
+            p C&aacute;c thu&#x1ED9;c t&iacute;nh kh&aacute;c: 
+            h3 Danh sách hóa đơn 
+            ul.list-group 
+              each item in infoStatistisByDate.orders
+                li.list-group-item #{moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')} - Số Lượng #{item.products.length}
+        .card-footer.text-right
+          button.btn.btn-success(btn-exportReport) Xu&#x1EA5;t b&aacute;o c&aacute;o ra Excel
+          button.btn.btn-danger(onclick="exportReport('pdf')") Xu&#x1EA5;t b&aacute;o c&aacute;o ra PDF
+          button.btn.btn-primary(onclick="exportReport('word')") Xu&#x1EA5;t b&aacute;o c&aacute;o ra Word 
+
+    form(action="/admin/dashboard/export-report" method="POST" form-export-report).d-none
+      input(type="text" name='orders' value=infoStatistisByDate)

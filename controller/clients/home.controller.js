@@ -7,7 +7,9 @@ const {formatCurrency} = require("../../helpers/formatCurrency.helper");
 module.exports.index = async (req,res) =>{
     
     const productFeatured = await product.find({
-        featured: '1'
+        featured: '1',
+        status: "active",
+        deleted: false
     }).limit(8);
     for(const item of productFeatured){
         item.price = formatCurrency(item.price);

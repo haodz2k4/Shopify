@@ -1,18 +1,86 @@
 extends ../../layouts/default.pug 
 
 block main 
-    .highlighted-products
-        h5.mb-5 
-        .row
-          each item in products
-            form(action="/cart/add/"+item.id method="POST").col-md-3
-              a(href="/products/detail/"+item.slug style='text-decoration: none').card.mb-4
+    .container.mt-5
+      .row
+        .col-md-3.filter-section
+          h4.text-danger.font-weight-bold L&#x1ECC;C THEO
+          .mb-4
+            h5 DANH M&#x1EE4;C CH&Iacute;NH
+            .form-check
+              input#category1.form-check-input(type='checkbox')
+              label.form-check-label(for='category1') S&aacute;ch Ti&#x1EBF;ng Vi&#x1EC7;t (4325)
+            .form-check
+              input#category2.form-check-input(type='checkbox')
+              label.form-check-label(for='category2') Foreign Books (293)
+            .form-check
+              input#category3.form-check-input(type='checkbox')
+              label.form-check-label(for='category3') V&abreve;n Ph&ograve;ng Ph&#x1EA9;m - D&#x1EE5;ng C&#x1EE5; H&#x1ECD;c Sinh (73)
+            .form-check
+              input#category4.form-check-input(type='checkbox')
+              label.form-check-label(for='category4') &Dstrok;&#x1ED3; Ch&#x1A1;i (29)
+            .form-check
+              input#category5.form-check-input(type='checkbox')
+              label.form-check-label(for='category5') L&#x1B0;u Ni&#x1EC7;m (4)
+            .form-check
+              input#category6.form-check-input(type='checkbox')
+              label.form-check-label(for='category6') B&aacute;ch H&oacute;a T&#x1ED5;ng H&#x1EE3;p (3)
+          .mb-4
+            h5 GI&Aacute;
+            .form-check
+              input#price1.form-check-input(type='checkbox')
+              label.form-check-label(for='price1') 0&dstrok; - 150,000&dstrok; (3670)
+            .form-check
+              input#price2.form-check-input(type='checkbox')
+              label.form-check-label(for='price2') 150,000&dstrok; - 300,000&dstrok; (785)
+            .form-check
+              input#price3.form-check-input(type='checkbox')
+              label.form-check-label(for='price3') 300,000&dstrok; - 500,000&dstrok; (192)
+            .form-check
+              input#price4.form-check-input(type='checkbox')
+              label.form-check-label(for='price4') 500,000&dstrok; - 700,000&dstrok; (39)
+            .form-check
+              input#price5.form-check-input(type='checkbox')
+              label.form-check-label(for='price5') 700,000&dstrok; Tr&#x1EDF; L&ecirc;n (34)
+            div
+              label Ho&#x1EB7;c ch&#x1ECD;n m&#x1EE9;c gi&aacute; ph&ugrave; h&#x1EE3;p
+              .d-flex
+                input.form-control.mr-2(type='number', placeholder='0')
+                input.form-control(type='number', placeholder='0')
+          div
+            h5 TH&#x1AF;&#x1A0;NG HI&#x1EC6;U
+            .form-check
+              input#brand1.form-check-input(type='checkbox')
+              label.form-check-label(for='brand1') OEM (16)
+            .form-check
+              input#brand2.form-check-input(type='checkbox')
+              label.form-check-label(for='brand2') Campus (7)
+            .form-check
+              input#brand3.form-check-input(type='checkbox')
+              label.form-check-label(for='brand3') FAHASA (5)
+        .col-md-9
+          .d-flex.justify-content-between.align-items-center.mb-4
+           
+            .d-flex
+              select.custom-select.mr-2(select-sorting)
+                option(selected='' ) S&#x1EAF;p x&#x1EBF;p theo
+                option(value='') &Dstrok;&#x1ED9; li&ecirc;n quan
+                option(value='price-asc') Gi&aacute; Cao - Th&#x1EA5;p
+                option(value='price-desc') Gi&aacute; Th&#x1EA5;p - Cao
+              select.custom-select
+                option(selected='') C&ograve;n h&agrave;ng
+                option(value='1') C&ograve;n h&agrave;ng
+                option(value='2') H&#x1EBF;t h&agrave;ng
+          .row
+           each item in products
+            .col-md-3
+              .card.mb-4
                 img.card-img-top(src=item.thumbnail, alt='Product 1')
                 .card-body
                   h5.card-title #{item.title}
-                  p.card-text.price
-                    span.current-price #{item.priceNew} 
-                    span.old-price #{item.price} &dstrok;
-                  p.card-text.quantity S&#x1ED1; l&#x1B0;&#x1EE3;ng: 10  
-                  button.btn.btn-primary(btn-add-cart=item.id type='submit') Thêm vào giỏ hàng    
-                    i.fa-solid.fa-cart-shopping     
+                  p.card-text
+                    span.current-price.text-danger #{item.newPrice}
+                    span.old-price.text-muted
+                      del #{item.price} &dstrok;
+                    span.badge.badge-danger 18%
+            

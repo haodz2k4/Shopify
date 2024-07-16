@@ -3,6 +3,7 @@ extends ../../layouts/default.pug
 block main 
     .container 
         h2 Thong tin người dùng 
+        h2 Tổng đơn Hàng: #{totalAll}
         ul 
           li #{order.userInfo.fullName }
           li #{order.userInfo.phone}
@@ -17,6 +18,7 @@ block main
                   th Ảnh 
                   th Tên 
                   th Số Lượng 
+                  th Tổng tiền 
                   th  Thao tác           
             tbody 
                 each item, index in order.products
@@ -25,7 +27,8 @@ block main
                     td 
                       img(src=item.infoProducts.thumbnail, alt="", style='width: 50px; height: 50px')
                     td #{item.infoProducts.title}
-                    td #{item.quantity}
+                    td #{item.quantity} 
+                    td #{item.sum}
                     td  
                       button.btn.btn-secondary Chi Tiết 
             h3 Mua vào ngày #{moment(order.createdAt).format('MMMM Do YYYY, h:mm:ss a')}

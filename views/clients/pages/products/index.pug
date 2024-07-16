@@ -62,11 +62,11 @@ block main
           .d-flex.justify-content-between.align-items-center.mb-4
            
             .d-flex
-              select.custom-select.mr-2
-                option(selected='') S&#x1EAF;p x&#x1EBF;p theo
-                option(value='1') &Dstrok;&#x1ED9; li&ecirc;n quan
-                option(value='2') Gi&aacute; Cao - Th&#x1EA5;p
-                option(value='3') Gi&aacute; Th&#x1EA5;p - Cao
+              select.custom-select.mr-2(select-sorting)
+                option(selected='' ) S&#x1EAF;p x&#x1EBF;p theo
+                option(value='') &Dstrok;&#x1ED9; li&ecirc;n quan
+                option(value='price-asc') Gi&aacute; Cao - Th&#x1EA5;p
+                option(value='price-desc') Gi&aacute; Th&#x1EA5;p - Cao
               select.custom-select
                 option(selected='') C&ograve;n h&agrave;ng
                 option(value='1') C&ograve;n h&agrave;ng

@@ -359,18 +359,20 @@ socket.on("SERVER_RETURN_TYPING",(data) =>{
 })
 //end typing 
 //handle sorting here 
-const btnSorting = document.querySelectorAll("[btn-sorting]");
-if(btnSorting.length > 0){
+const selectSorting = document.querySelector("[select-sorting]");
+if(selectSorting){
     const url = new URL(window.location.href);
-    btnSorting.forEach((item) =>{
-        item.addEventListener("click",() =>{
-            const value = item.getAttribute("btn-sorting");
-            const [sortKey,sortValue] = value.split("-");
-            url.searchParams.set("sortKey",sortKey);
+    selectSorting.addEventListener("change",() =>{
+        const value = selectSorting.value;
+        if(value){
+            const [sortKey, sortValue] = value.split("-");
+            url.searchParams.set("sortKey", sortKey);
             url.searchParams.set("sortValue",sortValue);
-            
-            window.location.href = url.href;
-        })
+        }else{
+            url.searchParams.delete("sortKey");
+            url.searchParams.delete("sortValue");
+        }
+        window.location.href = url.href;
     })
 }
 //show form feed back 

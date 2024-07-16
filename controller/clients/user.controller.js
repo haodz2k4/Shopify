@@ -36,6 +36,16 @@ module.exports.loginPost = async (req,res) =>{
         email: req.body.email,
         password: md5(req.body.password)
     });
+    if(!existsUser){
+        req.flash('error','Tài khoản của bạn không tồn tại');
+        res.redirect("back");
+        return;
+    }
+    if(existsUser.status === 'inactive'){
+        req.flash('error','Tài khoản của bạn đã bị khóa');
+        res.redirect("back");
+        return; 
+    }
     if(existsUser){
         res.cookie("tokenUser",existsUser.tokenUser);
         const recordCart = await cart.findOne({
@@ -45,6 +55,7 @@ module.exports.loginPost = async (req,res) =>{
         res.redirect("/")
         return; 
     }
+    
     req.flash('error','Email hoặc mật khẩu không đúng')
     res.redirect("back");
 }
@@ -177,18 +188,23 @@ module.exports.resetPassword = (req,res) =>{
 module.exports.resetPasswordPost = async (req,res) =>{
     const password = req.body.password;
     const repeatPassword = req.body.confirmPassword;
-    console.log(req.body.password);
-    console.log(req.body.confirmPassword)
     if(password !== repeatPassword){
         req.flash('error','Xác thực mật khẩu không đúng');
         res.redirect("back");
         return;
     }
+    const existsUser = await user.findOne({
+        tokenUser: req.cookies.tokenUser
+    })
     await user.updateOne({
         tokenUser: req.cookies.tokenUser
     },{
         password: md5(password)
+    }) 
+    const recordCart = await cart.findOne({
+        user_id: existsUser.id
     })
+    res.cookie("cartId",recordCart.id);
     res.redirect("/");
 }
 //[GET] "user/profiles/edit"

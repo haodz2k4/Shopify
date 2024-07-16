@@ -12,7 +12,7 @@ module.exports.index = async (req,res) =>{
 
     });
     for(const item of productRecord){
-        item.priceNew = formatCurrency(item.price * (100 - item.discountPercentage)/ 100);
+        item.newPrice = formatCurrency(item.price * (100 - item.discountPercentage)/ 100);
     }
     res.render("clients/pages/search/index.pug",{
         keyword: keyword,

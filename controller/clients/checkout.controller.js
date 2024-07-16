@@ -122,11 +122,18 @@ module.exports.orderDetail = async (req,res) =>{
     const record = await order.findOne({
         _id: orderId
     })
+    let totalAll = 0;
     for(const item of record.products){
         item.infoProducts = await products.findOne({_id: item.productId});
+
+        item.sum = (item.infoProducts.price * (100 - item.infoProducts.discountPercentage)/100) * item.quantity;
+        totalAll += item.sum;
+
+        
         
     }
     res.render("clients/pages/checkout/orderDetail.pug",{
-        order: record
+        order: record,
+        totalAll: totalAll
     })
 }

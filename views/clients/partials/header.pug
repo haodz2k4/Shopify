@@ -8,15 +8,18 @@ header
         form(action="/search").search-bar
           .search-icon
             img(src='images/Grid.png', alt='Grid Icon')
-          input(type='text', placeholder='Sách giáo khoa 2024', name='keyword')
+          input(type='text', placeholder='Sách giáo khoa 2024', name='keyword', value=keyword)
           button(type='submit')
             img(src='images/Search.png', alt='Search')
         .user-actions
           .icon-menu
             .icon-item
               img(src='images/bell.png', alt='Thông Báo')
-              span Th&ocirc;ng B&aacute;o 
-            a(href="/cart" style='text-decoration: none').icon-item
+              span Th&ocirc;ng B&aacute;o  
+            a(href="/chats" style='text-decoration: none').icon-item
+              img(src='images/message.png', alt='Giỏ Hàng')
+              span.position-relative Nhắn tin
+            a(href="/cart" style='text-decoration: none').icon-item 
               img(src='images/cart.png', alt='Giỏ Hàng')
               span.position-relative Giỏ hàng 
                 span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger

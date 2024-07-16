@@ -343,3 +343,28 @@ if(btnLogout){
         window.location.href = '/admin/auth/logout'
     })
 }
+
+const btnExportReport = document.querySelector("[btn-exportReport]");
+if(btnExportReport){
+    const formExportReport = document.querySelector("[form-export-report]");
+    btnExportReport.addEventListener("click",() =>{
+        formExportReport.submit();
+    })
+}
+
+const selectDateStatitics = document.querySelector("[select-date-statistics]");
+if(selectDateStatitics){
+    const url = new URL(window.location.href);
+    selectDateStatitics.addEventListener("change",() =>{
+        const value = selectDateStatitics.value;
+        if(!value){
+            url.searchParams.delete("statistics");
+        }else{
+            url.searchParams.set("statistics",value);
+
+        }
+        
+        window.location.href = url.href;
+        
+    })
+}
