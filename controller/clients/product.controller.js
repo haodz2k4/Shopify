@@ -9,6 +9,7 @@ const paginationHelper = require("../../helpers/pagination.helper");
 const rangePriceHelper = require("../../helpers/rangePrice.helper");
 const sortedHelper = require("../../helpers/sorted.helper");
 const {formatCurrency} = require("../../helpers/formatCurrency.helper");
+const {stock} = require("../../helpers/camulator.helper")
 //[GET] "/products"
 module.exports.index = async (req,res) =>{  
     //handle price range here
@@ -38,7 +39,8 @@ module.exports.index = async (req,res) =>{
             "products.productId": item.id
         })
         item.sold = countSold;
-        item.newPrice = formatCurrency(item.price * (100 - item.discountPercentage)/100);
+        item.newPrice = formatCurrency(item.price * (100 - item.discountPercentage)/100); 
+        item.stock = (await stock(item.id) ? await stock(item.id) : 0)
        
     }
     if(req.query.sortKey === "sold" && req.query.sortValue === "desc"){

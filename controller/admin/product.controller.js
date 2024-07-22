@@ -1,7 +1,9 @@
 //require model here 
 const products = require("../../models/product.model");
 const productCategory = require("../../models/product-category.model");
-const account = require("../../models/account.model");
+const account = require("../../models/account.model"); 
+const Inventory = require("../../models/inventory.model"); 
+const {stock} = require("../../helpers/camulator.helper");
 //require helper here
 const createTree = require("../../helpers/createTree.helper");
 //[GET] /admin/products
@@ -58,14 +60,15 @@ module.exports.index = async (req,res) =>{
     const sortKey = req.query.sortKey;
     const sortValue = req.query.sortValue;
     const sort = {};
-    if(sortKey && sortValue){
+    if(sortKey && sortValue){ 
         sort[sortKey] = sortValue;
     }else{
         sort.position = 'desc'
     }
 
     const record = await products.find(find).limit(objectPagination.limit).skip(objectPagination.skip).sort(sort);
-    for(const item of record){
+    for(const item of record){ 
+        item.stock = (await stock(item.id) ? await stock(item.id) : 0)
         if(item.createdBy === "Admin"){
             item.createdBy = "ADMIN"
         }else{

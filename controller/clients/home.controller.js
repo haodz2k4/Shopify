@@ -2,7 +2,8 @@
 const product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
 //require helper here
-const {formatCurrency} = require("../../helpers/formatCurrency.helper");
+const {formatCurrency} = require("../../helpers/formatCurrency.helper"); 
+const {stock} = require("../../helpers/camulator.helper")
 //[GET] "/"
 module.exports.index = async (req,res) =>{
     
@@ -13,7 +14,8 @@ module.exports.index = async (req,res) =>{
     }).limit(8);
     for(const item of productFeatured){
         item.price = formatCurrency(item.price);
-        item.priceNew = formatCurrency((item.price * (100 - item.discountPercentage)/100).toFixed(0)); 
+        item.priceNew = formatCurrency((item.price * (100 - item.discountPercentage)/100).toFixed(0));  
+        item.stock = (await stock(item.id) ? await stock(item.id) : 0)
     }
 
     const productNews = await product.find({
