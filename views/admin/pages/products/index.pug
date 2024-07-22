@@ -17,7 +17,7 @@ block main
         .col-md-6
           form(action=`/admin/products/change-multi?_method=PATCH` method="POST", form-change-multi)
             .form-row.align-items-center
-              .col-auto
+              .col-auto 
                 label.sr-only(for='selectOption') Select Option
                 select#selectOption.form-control.mb-2(name='typeMulti')
                   option(value='') --- Lựa chọn thay đổi --- 
@@ -137,6 +137,6 @@ block main
             Button.page-link(btn-pagination = objectPagination.pageCurrent + 1) Next 
     form(action="" form-change-status data-path=`/admin/products/change-status` method="POST") 
     form(action="" form-soft-delete data-path=`/admin/products/soft-delete` method="POST") 
-
+    
    else 
     h1 Không có quyèn truy cập 

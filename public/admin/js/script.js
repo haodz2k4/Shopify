@@ -157,10 +157,7 @@ if(formChangeMulti){
     formChangeMulti.addEventListener("submit",(event) =>{
         event.preventDefault();
         const inputId = formChangeMulti.querySelector("input[name='id']");
-        if(inputId.value === ""){
-            alert("Vui lòng chọn ít nhất 1 bản ghi")
-            return;
-        }
+        
         const checkedList = document.querySelectorAll("input[name='ids']:checked");
         const select = formChangeMulti.querySelector("select[name='typeMulti']").value;
         if(select === 'delete-multi'){
@@ -366,5 +363,26 @@ if(selectDateStatitics){
         
         window.location.href = url.href;
         
+    })
+} 
+
+//change quantity 
+const btnChangeQuantity = document.querySelector('[btn-change-quantity]');
+if(btnChangeQuantity){
+    btnChangeQuantity.addEventListener("click",() =>{
+        const checked = document.querySelectorAll("input[name='ids']:checked");
+        const formUpdate = document.querySelector("[form-update]");
+        const list = [];
+        for(const item of checked){
+            const value = item.value;
+            const quantity = item.closest("tr").querySelector("[inp-quantity]").value; 
+            const string =`${value}-${quantity}`;
+            list.push(string);
+
+        } 
+        const inp = formUpdate.querySelector("input");
+        inp.value = list;
+        formUpdate.submit();
+
     })
 }

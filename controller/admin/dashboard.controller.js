@@ -73,10 +73,7 @@ module.exports.index = async (req,res) =>{
                 objectStatistics.countOfBooks  = count;
                 objectStatistics.Revenue = formatCurrency(Revenue); 
                 objectStatistics.orders = orders
-                break; 
-
-            
-
+                break;
         }
     }
     res.render("admin/pages/dashboard/index.pug",{

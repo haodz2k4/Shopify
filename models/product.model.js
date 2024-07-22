@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); 
+const Inventory = require("./inventory.model");
 const {Schema} = mongoose;
 const slug = require('mongoose-slug-updater');
 mongoose.plugin(slug);  
@@ -37,6 +38,16 @@ const productSchema = new Schema({
     
 },{
     timestamps: true
+}) 
+
+productSchema.post("save",async function(doc) { 
+
+    const inventory = new Inventory({
+        product_id: doc._id,
+        quantity: 0
+    }) 
+    await inventory.save();
+
 })
 
 module.exports = mongoose.model("product",productSchema,"products")

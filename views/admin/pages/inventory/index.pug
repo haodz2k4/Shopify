@@ -1,0 +1,44 @@
+extends ../../layouts/default.pug 
+
+block main  
+
+    .container
+      .row
+        .col-md-6.offset-md-3
+          .card.card-custom
+            .card-body
+              h5.card-title T&igrave;m ki&#x1EBF;m v&agrave; C&#x1EAD;p nh&#x1EAD;t
+              form
+                .form-group.search-input
+                  input#searchInput.form-control(type='text', placeholder='Tìm kiếm...')
+                button.btn.btn-primary(type='button' btn-change-quantity) C&#x1EAD;p nh&#x1EAD;t  
+    form(action="/admin/inventories/update", form-update method="post").d-none
+        input(name='ids')
+
+    table.table  
+      thead 
+        tr 
+          th
+            input(type="checkbox", name="check-all")
+          th #
+          th Tên sản phẩm  
+          th Ảnh  
+          th Giá tiền 
+          th Số Lượng
+          th Thao tác  
+      tbody  
+       each item, index in inventories
+        tr 
+          td
+            input(type="checkbox", name="ids", value=item.id)
+          td #{index + 1}
+          td #{item.product_id.title}
+          td 
+            img(src=item.product_id.thumbnail, alt="", style='width: 70px')
+          td #{item.product_id.price}
+          td 
+            input(type="number" inp-quantity value=item.quantity style='width: 50px')
+          td  
+            .btn-group(role='group', aria-label='Basic mixed styles example')
+                button.btn.btn-danger(type='button') Xóa 
+                button.btn.btn-primary Chi tiết  

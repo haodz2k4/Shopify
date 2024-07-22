@@ -7,9 +7,9 @@ const authRouter = require("./auth.router");
 const myAccountRouter = require("./my-account.router");
 const newsRouter = require("./news.router");
 const settingRouter = require("./setting.router");
-const userRouter = require("./user.router");
+const userRouter = require("./user.router"); 
+const inventoryRouter = require("./inventory.router");
 const orderRouter = require("../../router/admin/order.router");
-const storageRouter = require("./storage.router");
 const auth = require("../../middlewares/admin/auth.middleware");
 
 module.exports = (app) =>{
@@ -23,6 +23,6 @@ module.exports = (app) =>{
     app.use("/admin/news",auth.requireAuth,newsRouter);
     app.use("/admin/settings",auth.requireAuth,settingRouter);
     app.use("/admin/users",auth.requireAuth,userRouter);
-    app.use("/admin/order",auth.requireAuth,orderRouter);
-    app.use("/admin/storage",auth.requireAuth, storageRouter);
+    app.use("/admin/order",auth.requireAuth,orderRouter); 
+    app.use("/admin/inventories",auth.requireAuth,inventoryRouter);
 }   
