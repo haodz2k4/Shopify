@@ -41,7 +41,7 @@ block main
                   a(href="" style='text-decoration: none')  #{item.inforProducts.title}
                 td(price=`${item.inforProducts.price}` discount=item.inforProducts.discountPercentage ) #{item.inforProducts.priceNew}
                 td 
-                  input(type="number", name="",value=item.quantity min=1 max=item.inforProducts.stock   style='width: 50px' inp-quantity=item.productId)
+                  input(type="number", name="",value=item.quantity min=1 max=item.stock   style='width: 50px' inp-quantity=item.productId)
                 td(total) #{item.sum}
                 td 
                   a(href="/cart/delete/"+item.inforProducts.id).btn.btn-danger

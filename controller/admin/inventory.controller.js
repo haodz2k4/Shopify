@@ -1,10 +1,16 @@
 const Inventory = require("../../models/inventory.model");
+const Product = require("../../models/product.model")
 //[get] "/admin/inventories"
 module.exports.index  = async (req, res) =>{
 
     const inventories = await Inventory.find({
         deleted: false
-    }).populate('product_id')
+    })
+    for(const item of inventories){
+        item.product = await Product.findOne({
+            _id: item.product_id
+        })
+    }
     res.render("admin/pages/inventory/index.pug",{
         inventories
     })

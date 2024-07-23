@@ -1,6 +1,8 @@
 //require model here
 const cart = require("../../models/cart.model");
-const products = require("../../models/product.model")
+const products = require("../../models/product.model");
+
+const { stock } = require("../../helpers/camulator.helper");
 //[GET] "/cart"
 module.exports.index = async (req,res) =>{
     if(!res.locals.user){
@@ -12,9 +14,11 @@ module.exports.index = async (req,res) =>{
     for (const item of recordCart.products) {
         const inforProducts = await products.findOne({
             _id: item.productId
-        }).select("-description")
-        
-        item.inforProducts = inforProducts
+        }).select("-description") 
+        const counts = await stock(item.productId)
+        item.stock = counts;
+        item.inforProducts = inforProducts;
+        item.inforProducts.stock = (await stock(item.id) ? await stock(item.id) : 0)
         item.inforProducts.priceNew = item.inforProducts.price * (100 - item.inforProducts.discountPercentage)/100;
         item.sum = item.inforProducts.priceNew * item.quantity;
         totalPrice += item.sum;
@@ -30,7 +34,9 @@ module.exports.addPost = async (req,res) =>{
     if(!res.locals.user){
         res.redirect("/user/login");
         return;
-    }
+    } 
+
+    
     const productId = req.params.productId;
     let quantity = 0;
     if(req.body.quantity){

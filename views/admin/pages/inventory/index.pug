@@ -32,10 +32,10 @@ block main
           td
             input(type="checkbox", name="ids", value=item.id)
           td #{index + 1}
-          td #{item.product_id.title}
+          td #{item.product.title}
           td 
-            img(src=item.product_id.thumbnail, alt="", style='width: 70px')
-          td #{item.product_id.price}
+            img(src=item.product.thumbnail, alt="", style='width: 70px')
+          td #{item.product.price}
           td 
             input(type="number" inp-quantity value=item.quantity style='width: 50px')
           td  

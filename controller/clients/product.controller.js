@@ -89,6 +89,7 @@ module.exports.detail = async (req,res) =>{
         slug: req.params.slug
     })
     record.priceNew = record.price * (100 - record.discountPercentage)/100;
+    record.stock = await (stock(record.id))
     const listFeedback = await feedback.find({productId: record.id});
     for(const item of listFeedback){
         const infoUser = await user.findOne({_id: item.userId});

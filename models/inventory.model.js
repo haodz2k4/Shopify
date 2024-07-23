@@ -1,6 +1,6 @@
 const {Schema, model, Types} = require("mongoose");
 const inventorySchema = new Schema({
-    product_id: {type: Types.ObjectId, ref: 'product'},
+    product_id: String,
     quantity: Number,
     deleted: {
         type: Boolean,
