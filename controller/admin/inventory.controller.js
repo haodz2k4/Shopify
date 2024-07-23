@@ -1,20 +1,30 @@
 const Inventory = require("../../models/inventory.model");
 const Product = require("../../models/product.model")
-//[get] "/admin/inventories"
-module.exports.index  = async (req, res) =>{
-
-    const inventories = await Inventory.find({
-        deleted: false
-    })
-    for(const item of inventories){
-        item.product = await Product.findOne({
-            _id: item.product_id
-        })
+const mongoose = require("mongoose");
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
+module.exports.index = async (req, res) => {
+    try {
+        const inventories = await Inventory.find({ deleted: false });
+        for (const item of inventories) {
+            if (isValidObjectId(item.product_id)) {
+                const product = await Product.findOne({ _id: item.product_id });
+                if (product) {
+                    item.abc = product;
+                } else {
+                    item.abc = {}; // Hoặc một giá trị mặc định khác nếu sản phẩm không tồn tại
+                }
+            } else {
+                item.abc = {}; // Hoặc một giá trị mặc định khác nếu _id không hợp lệ
+            }
+        }
+        console.log(inventories);
+        res.render("admin/pages/inventory/index.pug", { inventories });
+    } catch (error) {
+        console.error("Error fetching inventories:", error);
+        res.status(500).send("Internal Server Error");
     }
-    res.render("admin/pages/inventory/index.pug",{
-        inventories
-    })
-}
+};
+
 //[POST] "/admin/inventories/update"
 module.exports.update = async (req, res) =>{
 

@@ -13,12 +13,12 @@ module.exports.index = async (req,res) =>{
     let totalPrice = 0;
     for (const item of recordCart.products) {
         const inforProducts = await products.findOne({
-            _id: item.productId
-        }).select("-description") 
+            _id: item.productId,
+            deleted: false
+        }).select("-description")
         const counts = await stock(item.productId)
         item.stock = counts;
         item.inforProducts = inforProducts;
-        item.inforProducts.stock = (await stock(item.id) ? await stock(item.id) : 0)
         item.inforProducts.priceNew = item.inforProducts.price * (100 - item.inforProducts.discountPercentage)/100;
         item.sum = item.inforProducts.priceNew * item.quantity;
         totalPrice += item.sum;

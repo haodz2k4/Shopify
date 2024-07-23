@@ -4,6 +4,7 @@ const products = require("../../models/product.model");
 const user = require("../../models/user.model");
 const feedback = require("../../models/feedback.models");
 const cart = require("../../models/cart.model");
+const Inventory = require("../../models/inventory.model")
 //[GET] "/checkout"
 module.exports.index = (req,res) =>{
     res.render("clients/pages/checkout/index.pug")
@@ -52,7 +53,11 @@ module.exports.order = async (req,res) =>{
         const [productId,quantity] = item.split("-");
         const recordProducts = await products.findOne({
             _id: productId
-        });
+        }); 
+        const inventory = await Inventory.findOne({product_id: productId});
+        console.log(productId)
+        const substract = inventory.quantity - parseInt(quantity);
+        const update = await Inventory.findByIdAndUpdate(inventory.id,{quantity: substract})
         listProducts.push({
             productId: productId,
             price: recordProducts.price,
@@ -136,4 +141,4 @@ module.exports.orderDetail = async (req,res) =>{
         order: record,
         totalAll: totalAll
     })
-}
+} 
