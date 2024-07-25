@@ -40,6 +40,7 @@ module.exports.index = async (req,res) =>{
         })
         item.sold = countSold;
         item.newPrice = formatCurrency(item.price * (100 - item.discountPercentage)/100); 
+        item.price = formatCurrency(item.price);
         item.stock = (await stock(item.id) ? await stock(item.id) : 0)
        
     }
@@ -61,12 +62,11 @@ module.exports.category = async (req,res) =>{
     //handle price range here
     const objectRangePrice = await rangePriceHelper(req);
     const objPagination = await paginationHelper.objPagination(req);
-    const category = await productCategory.findOne({deleted: false, status: "active",slug: req.params.slugCategory});
+    const category = await productCategory.findOne({deleted: false,slug: req.params.slugCategory});
     const recordProduct = await products.find({deleted: false, status: "active",product_category_id: category.id,price: {$gte: objectRangePrice.minPrice, $lte: objectRangePrice.maxPrice}}).limit(objPagination.limitPages).skip(objPagination.skipPages);
     
     objPagination.listPages = Math.ceil(await products.countDocuments({deleted: false,status: "active", product_category_id: req.params.slugCategory}) / objPagination.limitPages);
     const objectButtonSorted = sortedHelper.products(req);
-    
     for(const item of recordProduct){
         const countSold = await order.countDocuments({
             "products.productId": item.id
@@ -75,10 +75,12 @@ module.exports.category = async (req,res) =>{
         item.newPrice = item.price * (100 - item.discountPercentage)/100;
        
     }
+    const categories = await productCategory.find({deleted: false, status: "active"});
     res.render("clients/pages/search/index.pug",{
         products: recordProduct,
         objectPagination: objPagination,
-        defaultCategory: category,
+        category: categories,
+        checkCategory: category,
         objectRangePrice: objectRangePrice,
         listButtonSorted: objectButtonSorted
     });
@@ -87,7 +89,11 @@ module.exports.category = async (req,res) =>{
 module.exports.detail = async (req,res) =>{
     const record = await products.findOne({
         slug: req.params.slug
-    })
+    }) 
+    if(!record){
+        res.redirect("back");
+        return;
+    }
     record.priceNew = record.price * (100 - record.discountPercentage)/100;
     record.stock = await (stock(record.id))
     const listFeedback = await feedback.find({productId: record.id});

@@ -68,13 +68,11 @@ module.exports.profile = async (req,res) =>{
     const userId = recordUser.id;
     const recordOrder = await order.find({ "userInfo.userId": userId });
     for(const item of recordOrder){
-
         for(product of item.products){
             
-            const infoProduct = await products.findOne({_id: product.productId});
+            const infoProduct = await products.findById(product.productId);
             product.infoProduct = infoProduct
         }
-        
         
     }
     

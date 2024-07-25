@@ -4,16 +4,7 @@ block main
     
     .container 
         h2 Hiện đang có #{cart.products.length} sản phẩm trong giỏ hàng 
-        .container.text-center
-          .row.align-items-start
-            .col
-              button.btn.btn-warning Xóa 
-            .col
-              button.btn.btn-danger thêm vào mục yêu thích 
-                i.fa-solid.fa-heart 
-                  
-            .col
-              | One of three columns
+       
         table.table(check-cart-multi)
           thead
             tr 

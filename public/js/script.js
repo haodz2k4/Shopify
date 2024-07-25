@@ -243,27 +243,21 @@ if(checkBoxCategory.length > 0){
 }
 //end filter
 //start price range 
-const priceRange = document.querySelector("[price-range]");
-if(priceRange){
-    const button = priceRange.querySelector("button");
+const priceRange = document.querySelectorAll("[price-range]");
+if(priceRange.length > 0){ 
     const url = new URL(window.location.href);
-    button.addEventListener("click",() =>{
-        const minPrice = priceRange.querySelector("input[name='minPrice']").value;
-        const maxPrice = priceRange.querySelector("input[name='maxPrice']").value;
-        if(minPrice >= maxPrice){
-            alert("Giá trị bắt đầu phải nhỏ hơn giá trị xuất phát");
-            return;
-        }
-        if(minPrice && maxPrice){
-            url.searchParams.set("minPrice",minPrice);
-            url.searchParams.set("maxPrice",maxPrice);
-        }else{
-            alert("Bạn chưa nhập gì cả");
-            return;
-        }
-        
+    priceRange.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            const value = item.value;
 
-        window.location.href = url.href
+            const [minPrice, maxPrice] = value.split("-");
+            url.searchParams.set("minPrice",minPrice);
+            url.searchParams.set("maxPrice",maxPrice)
+            
+            window.location.href = url.href;
+            
+        })
+        
     })
 }
 //handle chating side clients here
@@ -392,6 +386,20 @@ if(showFeedback.length > 0){
                 formFeedback.classList.toggle("d-none");
             }
             title.innerHTML = `Bình Luận Sản Phẩm ${name}`
+        })
+    })
+}
+
+const checkCategory = document.querySelectorAll("[check-category]");
+if(checkCategory.length > 0){ 
+   
+    checkCategory.forEach((item) =>{
+        item.addEventListener("click",() =>{
+            const value = item.value;
+            console.log(value)
+
+            const url = `/products/${value}`
+            window.location.href = url;
         })
     })
 }

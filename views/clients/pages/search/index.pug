@@ -6,42 +6,13 @@ block main
         .col-md-3.filter-section
           h4.text-danger.font-weight-bold L&#x1ECC;C THEO
           .mb-4
-            h5 DANH M&#x1EE4;C CH&Iacute;NH
-            .form-check
-              input#category1.form-check-input(type='checkbox')
-              label.form-check-label(for='category1') S&aacute;ch Ti&#x1EBF;ng Vi&#x1EC7;t (4325)
-            .form-check
-              input#category2.form-check-input(type='checkbox')
-              label.form-check-label(for='category2') Foreign Books (293)
-            .form-check
-              input#category3.form-check-input(type='checkbox')
-              label.form-check-label(for='category3') V&abreve;n Ph&ograve;ng Ph&#x1EA9;m - D&#x1EE5;ng C&#x1EE5; H&#x1ECD;c Sinh (73)
-            .form-check
-              input#category4.form-check-input(type='checkbox')
-              label.form-check-label(for='category4') &Dstrok;&#x1ED3; Ch&#x1A1;i (29)
-            .form-check
-              input#category5.form-check-input(type='checkbox')
-              label.form-check-label(for='category5') L&#x1B0;u Ni&#x1EC7;m (4)
-            .form-check
-              input#category6.form-check-input(type='checkbox')
-              label.form-check-label(for='category6') B&aacute;ch H&oacute;a T&#x1ED5;ng H&#x1EE3;p (3)
-          .mb-4
-            h5 GI&Aacute;
-            .form-check
-              input#price1.form-check-input(type='checkbox')
-              label.form-check-label(for='price1') 0&dstrok; - 150,000&dstrok; (3670)
-            .form-check
-              input#price2.form-check-input(type='checkbox')
-              label.form-check-label(for='price2') 150,000&dstrok; - 300,000&dstrok; (785)
-            .form-check
-              input#price3.form-check-input(type='checkbox')
-              label.form-check-label(for='price3') 300,000&dstrok; - 500,000&dstrok; (192)
-            .form-check
-              input#price4.form-check-input(type='checkbox')
-              label.form-check-label(for='price4') 500,000&dstrok; - 700,000&dstrok; (39)
-            .form-check
-              input#price5.form-check-input(type='checkbox')
-              label.form-check-label(for='price5') 700,000&dstrok; Tr&#x1EDF; L&ecirc;n (34)
+            h5 DANH M&#x1EE4;C CH&Iacute;NH 
+            each item in category
+              .form-check
+                input#category1.form-check-input(type='checkbox' value=item.slug checked=(checkCategory ? (item.id === checkCategory.id ? true : false) : false) check-category)
+                label.form-check-label(for='category1' ) #{item.title}
+            
+          
             div
               label Ho&#x1EB7;c ch&#x1ECD;n m&#x1EE9;c gi&aacute; ph&ugrave; h&#x1EE3;p
               .d-flex

@@ -101,10 +101,10 @@ block main
                                 tr
                                   td #{index}
                                   td 
-                                    img(src=product.infoProduct.thumbnail, alt="" style='width: 50px; height: 50px')
-                                  td #{product.infoProduct.title}
+                                    img(src=product.infoProduct ?  product.infoProduct.thumbnail : "", alt="" style='width: 50px; height: 50px')
+                                  td #{product.infoProduct ?  product.infoProduct.title : ""}
                                   td #{product.quantity}
                                   td 
-                                    a(href="/products/detail/"+product.infoProduct.slug).btn.btn-outline-info Chi tiết 
+                                    a(href="/products/detail/"+(product.infoProduct ?  product.infoProduct.slug : "abc")).btn.btn-outline-info Chi tiết 
                  else 
                     h1.text-center Bạn chưa mua bất cứ gì    
